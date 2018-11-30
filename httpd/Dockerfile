@@ -1,3 +1,5 @@
+FROM dbmi/pic-sure-ui:Nov-30-2018 AS pic-sure-ui
+
 FROM httpd:2.4.27-alpine
 
 RUN apk add --update openssl sed
@@ -19,4 +21,7 @@ RUN sed -i '/^#LoadModule ssl_module modules\/mod_ssl.so/s/^#//' ${HTTPD_PREFIX}
 RUN sed -i '/^#LoadModule rewrite_module modules\/mod_rewrite.so/s/^#//' ${HTTPD_PREFIX}/conf/httpd.conf
 RUN sed -i '/^#LoadModule socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//' ${HTTPD_PREFIX}/conf/httpd.conf
 RUN mkdir /usr/local/apache2/logs/ssl_mutex
+
+COPY --from=pic-sure-ui /usr/local/apache2/htdocs /usr/local/apache2/htdocs
+
 
