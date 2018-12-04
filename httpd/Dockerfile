@@ -1,4 +1,5 @@
 FROM dbmi/pic-sure-ui:Nov-30-2018 AS pic-sure-ui
+FROM dbmi//pic-sure-auth-ui:Dec-2-2018 as pic-sure-auth-ui
 
 FROM httpd:2.4.27-alpine
 
@@ -22,6 +23,5 @@ RUN sed -i '/^#LoadModule rewrite_module modules\/mod_rewrite.so/s/^#//' ${HTTPD
 RUN sed -i '/^#LoadModule socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//' ${HTTPD_PREFIX}/conf/httpd.conf
 RUN mkdir /usr/local/apache2/logs/ssl_mutex
 
+COPY --from=pic-sure-auth-ui /usr/local/apache2/htdocs /usr/local/apache2/htdocs
 COPY --from=pic-sure-ui /usr/local/apache2/htdocs /usr/local/apache2/htdocs
-
-
