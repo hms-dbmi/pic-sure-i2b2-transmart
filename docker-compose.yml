@@ -190,16 +190,12 @@ services:
     build:
       context: pic-sure-auth-services
       dockerfile: Dockerfile
-    command: --debug *:8787
     #depends_on:
     #  - irctdb
     env_file:
       - ${PICSUREAUTH_ENV}
     expose:
       - 8080
-    ports:
-      - 8080:8080
-      - 8787:8787
     networks:
       - public
 
