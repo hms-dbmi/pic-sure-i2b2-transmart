@@ -187,11 +187,12 @@ services:
       - public
 
   picsureauth:
-    build:
-      context: pic-sure-auth-services
-      dockerfile: Dockerfile
-    #depends_on:
-    #  - irctdb
+    image: pic-sure-auth-services:${psama_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    depends_on:
+      - irctdb
     env_file:
       - ${PICSUREAUTH_ENV}
     expose:

@@ -1,5 +1,5 @@
-FROM dbmi/pic-sure-ui:Nov-30-2018 AS pic-sure-ui
-FROM dbmi//pic-sure-auth-ui:Dec-2-2018 as pic-sure-auth-ui
+FROM dbmi/pic-sure-ui:Dec-13-18 AS pic-sure-ui
+FROM dbmi/pic-sure-auth-ui:Dec-13-18 as pic-sure-auth-ui
 
 FROM httpd:2.4.27-alpine
 

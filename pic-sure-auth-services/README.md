@@ -1,2 +1,0 @@
-# pic-sure-auth-services
-
