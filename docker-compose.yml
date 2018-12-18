@@ -12,6 +12,16 @@ services:
     networks:
       - public
 
+  httpd-auth:
+    image: dbmi/pic-sure-auth-ui:Dec-13-18
+    restart: always
+    ports:
+      - 8081:80
+    expose:
+      - 80
+      - 443
+    networks:
+      - public
   # i2b2transmart stack ##
   # transmart
   transmart:
