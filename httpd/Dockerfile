@@ -1,5 +1,5 @@
 FROM dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2 AS pic-sure-ui
-FROM dbmi/pic-sure-auth-ui:Dec-13-18 as pic-sure-auth-ui
+FROM dbmi/pic-sure-auth-ui:Jan-04-19 as pic-sure-auth-ui
 
 FROM httpd:2.4.27-alpine
 
