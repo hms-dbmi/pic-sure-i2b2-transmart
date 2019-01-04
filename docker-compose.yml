@@ -210,6 +210,22 @@ services:
     networks:
       - public
 
+  ## HPDS stack
+  nhaneshpds:
+    image: dbmi/pic-sure-hpds-nhanes:18.1-Quickstart
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    env_file:
+      - ${ENV_FILE}
+    restart: always
+    depends_on:
+      - httpd
+    networks:
+      - public
+    expose:
+      - 8080
+
   # Uncomment this image if you want to use docker image for MySQL DB
   # IRCT DB
   # irctdb:
