@@ -13,7 +13,7 @@ services:
       - public
 
   httpd-auth:
-    image: dbmi/pic-sure-auth-ui:Dec-13-18
+    image: dbmi/pic-sure-auth-ui:${picsureauth_ui_version}
     restart: always
     ports:
       - 8081:80
@@ -36,7 +36,6 @@ services:
       - httpd
       - solr
       - rserve
-    #  - db
     volumes:
       - rserve-jobs:/tmp:rw
     networks:
@@ -186,7 +185,7 @@ services:
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     depends_on:
       - httpd
-      #- irctdb
+#      - irctdb
     env_file:
       - ${PICSURE2_ENV}
     restart: always
@@ -197,12 +196,12 @@ services:
       - public
 
   picsureauth:
-    image: pic-sure-auth-services:${psama_version}
+    image: dbmi/pic-sure-auth-services:${psama_version}
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
-    depends_on:
-      - irctdb
+#    depends_on:
+#      - irctdb
     env_file:
       - ${PICSUREAUTH_ENV}
     expose:
