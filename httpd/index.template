@@ -20,7 +20,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
       <div class="container">
-        <a class="navbar-brand" href="$DOCKER_IP">AvlLab</a>
+        <a class="navbar-brand" href="/">AvlLab</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
 			aria-label="Toggle navigation">
@@ -68,11 +68,7 @@
             <tr><td>version:</td><td><b>$DOCKER_VERSION</b></td></tr>
 
             <tr><th colspan="2"><h2>Services</h2></th></tr>
-            <tr><td>fractalis:</td><td><b>$fractalis_version</b></td></tr>
-            <tr><td>pic-sure:</td><td><b>$picsure2_version</b></td></tr>
-            <tr><td>psama:</td><td><b>$psama_version</b></td></tr>
-            <tr><td>i2b2-wildfly:</td><td><b>$i2b2_wildfly_version</b></td></tr>
-            <tr><td>i2b2/tranSmart:</td><td><b>$i2b2transmart_version</b></td></tr>
+            $DOCKER_SERVICES_LIST
             </tbody>
           </table>
         </div>
