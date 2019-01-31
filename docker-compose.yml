@@ -86,7 +86,7 @@ services:
       - public
 
   picsure-db:
-    image: pic-sure-auth-microapp_picsureauthdb
+    image: dbmi/auth-db:5.7.22_initial_schema
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
