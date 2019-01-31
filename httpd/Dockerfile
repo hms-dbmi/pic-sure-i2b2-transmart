@@ -1,5 +1,5 @@
-FROM dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2 AS pic-sure-ui
-FROM dbmi/pic-sure-auth-ui:Jan-04-19 as pic-sure-auth-ui
+FROM dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2 AS picsure-ui
+FROM psama:latest AS picsure-admin-ui
 
 FROM httpd:2.4.27-alpine
 
@@ -23,5 +23,8 @@ RUN sed -i '/^#LoadModule rewrite_module modules\/mod_rewrite.so/s/^#//' ${HTTPD
 RUN sed -i '/^#LoadModule socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//' ${HTTPD_PREFIX}/conf/httpd.conf
 RUN mkdir /usr/local/apache2/logs/ssl_mutex
 
-COPY --from=pic-sure-auth-ui /usr/local/apache2/htdocs /usr/local/apache2/htdocs
-COPY --from=pic-sure-ui /usr/local/apache2/htdocs /usr/local/apache2/htdocs
+COPY --from=picsure-admin-ui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/admin
+COPY --from=picsure-ui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/picsureui
+
+COPY htaccess ${HTTPD_PREFIX}/htdocs/admin/.htaccess
+COPY htaccess ${HTTPD_PREFIX}/htdocs/admin/picsureui/.htaccess
