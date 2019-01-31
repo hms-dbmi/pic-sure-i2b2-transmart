@@ -7,9 +7,9 @@ On a new server, or docker machine, run the following commands to install and st
 
 ```
 
-alias dcom='docker-compose --file $HOME/pic-sure-i2b2-transmart/docker-compose.yml'
+alias dcom='docker-compose --file /var/tmp/docker-compose.yml'
 
-cd $HOME
+cd /var/tmp
 rm -fR pic-sure-i2b2-transmart
 git clone https://github.com/hms-dbmi/pic-sure-i2b2-transmart.git
 cd pic-sure-i2b2-transmart/

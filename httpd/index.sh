@@ -1,9 +1,5 @@
 #!/bin/bash -x
 
-dcom_stop() {
-  docker-compose --file ../docker-compose.yml stop $1
-}
-
 docker system info > info.txt
 export DOCKER_MACHINE_NAME=`egrep -e "^Name: " info.txt | cut -d" " -f 2`
 export DOCKER_VERSION=`docker --version`
