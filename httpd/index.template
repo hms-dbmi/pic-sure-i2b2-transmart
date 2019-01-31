@@ -64,7 +64,6 @@
           <tbody>
             <tr><th colspan="2"><h3>Docker</h3></th></tr>
             <tr><td>machine name:</td><td><b>$DOCKER_MACHINE_NAME</b></td></tr>
-            <tr><td>machine ip:</td><td><b>$DOCKER_IP</b></td></tr>
             <tr><td>version:</td><td><b>$DOCKER_VERSION</b></td></tr>
 
             <tr><th colspan="2"><h2>Services</h2></th></tr>
