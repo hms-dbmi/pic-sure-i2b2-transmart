@@ -24,7 +24,7 @@ services:
     depends_on:
       - rserve
     volumes:
-      - /usr/local/docker-conf/transmart/.grails/transmartConfig:/root/.grails/transmartConfig
+      - ./transmart/transmartConfig:/root/.grails/transmartConfig
       - rserve-jobs:/tmp:rw
     networks:
       - public
