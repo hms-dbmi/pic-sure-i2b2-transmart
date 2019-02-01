@@ -49,8 +49,7 @@ services:
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
-    env_file:
-      - ${ENV_FILE}
+    env_file: .env
     restart: always
     networks:
       - public
@@ -88,7 +87,7 @@ services:
       context: .
       dockerfile: ./fractalis/Dockerfile
       args:
-        fractalis_version: ${fractalis_version}
+        fractalis_version: 1.3.1
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
