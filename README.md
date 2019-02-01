@@ -20,7 +20,7 @@ dcom pull
 dcom build
 dcom up -d
 
-cd httpd
+cd httpd/utilities
 ./index.sh
 cd ..
 
