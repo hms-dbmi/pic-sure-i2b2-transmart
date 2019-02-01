@@ -10,8 +10,8 @@ services:
       - 443:443
     env_file: .env
     volumes:
-      - ./httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
-      - ./httpd/htdocs/admin/settings:/usr/local/apache2/htdocs/admin/settings
+      - /usr/local/docker-conf/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
+      - /usr/local/docker-conf/httpd/htdocs/admin/settings:/usr/local/apache2/htdocs/admin/settings
     networks:
       - public
 
@@ -24,7 +24,7 @@ services:
     depends_on:
       - rserve
     volumes:
-      - ./transmart/transmartConfig:/root/.grails/transmartConfig
+      - /usr/local/docker-conf/transmart/transmartConfig:/root/.grails/transmartConfig
       - rserve-jobs:/tmp:rw
     networks:
       - public
