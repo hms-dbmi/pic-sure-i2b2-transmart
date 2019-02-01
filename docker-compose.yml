@@ -10,8 +10,8 @@ services:
       - 443:443
     env_file: .env
     volumes:
-      - /usr/local/docker-conf/httpd/htdocs/picsureui:/usr/local/apache2/htdocs/picsureui
-      - /usr/local/docker-conf/httpd/htdocs/admin/overrides:/usr/local/apache2/htdocs/admin/overrides
+      - ./httpd/htdocs/picsureui:/usr/local/apache2/htdocs/picsureui
+      - ./httpd/htdocs/admin/overrides:/usr/local/apache2/htdocs/admin/overrides
     networks:
       - public
 
