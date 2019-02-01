@@ -7,7 +7,7 @@ On a new server, or docker machine, run the following commands to install and st
 
 ```
 
-alias dcom='docker-compose --file /var/tmp/docker-compose.yml'
+alias dcom='docker-compose --file /var/tmp/pic-sure-i2b2-transmart/docker-compose.yml'
 
 cd /var/tmp
 rm -fR pic-sure-i2b2-transmart
