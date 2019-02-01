@@ -24,6 +24,7 @@ cd httpd/utilities
 ./index.sh
 cd ..
 
+
 ```
 
 If all commands run successfully, navigate your desktop browser to the public IP address of the instance (or to the docker-machine's IP address, if you are running this stack locally).
