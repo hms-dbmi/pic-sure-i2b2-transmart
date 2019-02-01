@@ -8,9 +8,9 @@ grails {
 
 			auth0 {
 				active = false
-				clientId = 'ywAq4Xu4Kl3uYNdm3m05Cc5ow0OibvXt'
-				clientSecret = 'nQWNixJHJ_jRWd6ZuFY9XJNdt9-gDvqBkpN9b80qHn7ySpCUfTdwIm0F85UZgbB4'
-				domain = 'avillachlab.auth0.com'
+				clientId = '$AUTH0_CLIENT_ID'
+				clientSecret = '$AUTH0_CLIENT_SECRET'
+				domain = '$AUTH0_DOMAIN'
 				useRecaptcha = false
 				registrationEnabled = false
 				webtaskBaseUrl = 'https://avillachlab.us.webtask.io'
@@ -58,28 +58,28 @@ grails {
 	}
 }
 
-com.recomdata.appTitle = 'i2b2/tranSMART Gabe NHANES'
-com.recomdata.largeLogo = 'transmartlogoHMS.jpg'
+com.recomdata.appTitle = '$TM_APP_TITLE'
+com.recomdata.largeLogo = '$TM_LARGE_LOGO'
 
-edu.harvard.transmart.email.notify = 'gabor_korodi@hms.harvard.edu'
-edu.harvard.transmart.email.logo = '/images/info_security_logo_rgb.png'
+edu.harvard.transmart.email.notify = '$TM_EMAIL_NOTIFY'
+edu.harvard.transmart.email.logo = '$TM_EMAIL_LOGO'
 
 org.transmart.security.oauthEnabled = true
-org.transmart.security.oauth.service_url = 'http://ec2-54-89-191-200.compute-1.amazonaws.com'
+org.transmart.security.oauth.service_url = '$TM_OAUTH_SERVICE_URL'
 org.transmart.security.oauth.login_endpoint = '/admin/login'
-org.transmart.security.oauth.service_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F2aWxsYWNobGFiLmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDExMDU3NTU5OTQ3MDYzNjg3ODkyMCIsImF1ZCI6Inl3QXE0WHU0S2wzdVlOZG0zbTA1Q2M1b3cwT2lidlh0IiwiaWF0IjoxNTQ2OTY2NjQzLCJleHAiOjE1NDg5NzU2MDB9.0ee6v-ftcO2May0mpy8fLTD82w6Abey5MxEOCRrAlkU'
-org.transmart.security.oauth.application_id = '8026b745-5318-4778-97ea-8b08388bda24'
+org.transmart.security.oauth.service_token = '$TM_OAUTH_SERVICE_TOKEN'
+org.transmart.security.oauth.application_id = '$TM_OAUTH_SERVICE_APP_ID'
 
-com.recomdata.adminEmail = 'gabor_korodi@hms.harvard.edu'
-com.recomdata.contactUs = 'gabor_korodi@hms.harvard.edu'
+com.recomdata.adminEmail = '$TM_ADMIN_EMAIL'
+com.recomdata.contactUs = '$TM_CONTACT_US'
 
 com.rwg.solr.scheme = 'http'
-com.rwg.solr.host   = '192.168.99.100:8983'
+com.rwg.solr.host   = '$TM_SOLR_HOST'
 com.rwg.solr.browse.path   = '/solr/rwg/select/'
 
 
 //Configurations for solr.
-com.recomdata.solr.baseURL = 'http://192.168.99.100:8983'
+com.recomdata.solr.baseURL = '$TM_SOLR_BASE_URL'
 //This is needed because solr won't allow a return of all records.
 com.recomdata.solr.maxRows = '1000000'
 //This is the number of results we display before drawing the "More [+]" text.
@@ -135,8 +135,8 @@ grails {
     mail {
         host = 'smtp.gmail.com'
         port = 465
-        username = 'hms.dbmi.data.infrastructure@gmail.com'
-        password = 'NsSbuFr8zVLtVgCH'
+        username = '$TM_GRAILS_MAIL_USERNAME'
+        password = '$TM_GRAILS_MAIL_PASSWORD'
         props = ['mail.smtp.auth': 'true',
                  'mail.smtp.socketFactory.port': '465',
                  'mail.smtp.socketFactory.class': 'javax.net.ssl.SSLSocketFactory',
