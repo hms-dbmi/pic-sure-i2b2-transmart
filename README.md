@@ -19,10 +19,7 @@ dcom  down
 dcom pull
 dcom build
 dcom up -d
-
-cd httpd/utilities
-./index.sh
-cd ..
+httpd/utilties/index.sh
 
 
 ```
