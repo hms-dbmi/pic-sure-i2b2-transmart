@@ -1,3 +1,14 @@
 {
-  "_comment":"this file is empty for now"
+	"_comment":"settings for the pic-sure ui webapp",
+  "resources":[
+		{
+			"id" : "PrecisionLink",
+			"name" : "PrecisionLink",
+			"basePath" : "/picsure",
+			"basePui" : "/i2b2-wildfly-count-only/Demo", 
+			"resourcePath" : "/i2b2-wildfly-count-only"
+		}
+		],
+  "helpLink": "mailto:bchbiobank4discovery@childrens.harvard.edu",
+  "advancedSearchLink": "/transmart/"
 }

@@ -25,3 +25,8 @@ RUN mkdir /usr/local/apache2/logs/ssl_mutex
 
 COPY --from=picsure-admin-ui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/admin
 COPY --from=picsure-ui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/picsureui
+
+# Temporary fix for picsureui
+COPY extras/index.html ${HTTPD_PREFIX}/htdocs/picsureui
+COPY extras/main3.js ${HTTPD_PREFIX}/htdocs/picsureui
+COPY extras/login.hbs ${HTTPD_PREFIX}/htdocs/picsureui/hpds
