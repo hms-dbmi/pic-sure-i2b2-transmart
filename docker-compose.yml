@@ -11,8 +11,8 @@ services:
     env_file: .env
     volumes:
       - /usr/local/docker-conf/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
-      - /usr/local/docker-conf/httpd/htdocs/picsureui/settings/settings.json:/usr/local/apache2/htdocs/picsureui/picSure/settings.json
       - /usr/local/docker-conf/httpd/htdocs/psama/settings:/usr/local/apache2/htdocs/psama/settings
+      - /usr/local/docker-conf/httpd/htdocs/psama/settings/settings.json:/usr/local/apache2/htdocs/psama/picSure/settings.json
     networks:
       - public
 
