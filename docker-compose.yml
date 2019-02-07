@@ -11,7 +11,8 @@ services:
     env_file: .env
     volumes:
       - /usr/local/docker-conf/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
-      - /usr/local/docker-conf/httpd/htdocs/admin/settings:/usr/local/apache2/htdocs/admin/settings
+      - /usr/local/docker-conf/httpd/htdocs/picsureui/settings/settings.json:/usr/local/apache2/htdocs/picsureui/picSure/settings.json
+      - /usr/local/docker-conf/httpd/htdocs/psama/settings:/usr/local/apache2/htdocs/psama/settings
     networks:
       - public
 
@@ -183,6 +184,7 @@ services:
 
   picsureauth:
     image: dbmi/pic-sure-auth-services:Jan-29-2019
+    env_file: .env
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
