@@ -8,11 +8,11 @@ services:
     ports:
       - 80:80
       - 443:443
-    env_file: .env
+    env_file:
+      - .env
     volumes:
       - /usr/local/docker-conf/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
-      - /usr/local/docker-conf/httpd/htdocs/psama/settings:/usr/local/apache2/htdocs/psama/settings
-      - /usr/local/docker-conf/httpd/htdocs/psama/settings/settings.json:/usr/local/apache2/htdocs/psama/picSure/settings.json
+      - /usr/local/docker-conf/httpd/htdocs/psama/settings/:/usr/local/apache2/htdocs/psama/settings/
     networks:
       - public
 
@@ -176,7 +176,7 @@ services:
     expose:
       - 3306
     volumes:
-      - picsure-db:/var/lib/mysql
+      - picsure-db:/mysql/data
     environment:
       - MYSQL_ROOT_PASSWORD=${AUTH_MYSQL_ROOT_PASSWORD:-password}
     networks:
@@ -190,6 +190,8 @@ services:
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     depends_on:
       - picsure-db
+    volumes:
+      - /usr/local/docker-conf/picsureauth/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml
     expose:
       - 8080
     networks:
