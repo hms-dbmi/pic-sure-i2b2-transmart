@@ -177,6 +177,7 @@ services:
       - 3306
     volumes:
       - picsure-db:/mysql/data
+      - /usr/local/docker-conf/picsure-db/seed:/tmp/seed
     environment:
       - MYSQL_ROOT_PASSWORD=${AUTH_MYSQL_ROOT_PASSWORD:-password}
     networks:
@@ -191,7 +192,7 @@ services:
     depends_on:
       - picsure-db
     volumes:
-      - /usr/local/docker-conf/picsureauth/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml
+      - /usr/local/docker-conf/picsureauth/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     expose:
       - 8080
     networks:
