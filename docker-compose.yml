@@ -184,7 +184,7 @@ services:
       - public
 
   picsureauth:
-    image: dbmi/pic-sure-auth-services:Jan-29-2019
+    image: dbmi/pic-sure-auth-services:jason_udn_deployment_c11b8b9
     env_file: .env
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"

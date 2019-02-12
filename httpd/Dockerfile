@@ -1,6 +1,5 @@
-FROM dbmi/pic-sure-hpds-ui-udn:jason_udn_deployment_8d6a5c8 AS picsureui
-#FROM dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2 AS picsureui
-FROM dbmi/pic-sure-auth-ui:picsure-185-auth0-integration_70274e4 AS psamaui
+FROM dbmi/pic-sure-hpds-ui-udn:jason_udn_deployment_7f94a48 AS picsureui
+FROM dbmi/pic-sure-auth-ui:jason_udn_deployment_c8a0d54 AS psamaui
 
 FROM httpd:2.4.27-alpine
 
