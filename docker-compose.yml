@@ -175,9 +175,6 @@ services:
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     expose:
       - 3306
-    volumes:
-      - picsure-db:/mysql/data
-      - /usr/local/docker-conf/picsure-db/seed:/tmp/seed
     environment:
       - MYSQL_ROOT_PASSWORD=${AUTH_MYSQL_ROOT_PASSWORD:-password}
     networks:
@@ -211,7 +208,6 @@ services:
       - 8080
 
 volumes:
-  picsure-db:
   # shared volume for R jobs
   rserve-jobs:
 
