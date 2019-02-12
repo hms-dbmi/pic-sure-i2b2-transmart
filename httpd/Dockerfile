@@ -1,4 +1,5 @@
-FROM dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2 AS picsure-ui
+FROM dbmi/pic-sure-hpds-ui-udn:jason_udn_deployment_8d6a5c8 AS picsure-ui
+#FROM dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2 AS picsure-ui
 FROM dbmi/pic-sure-auth-ui:picsure-185-auth0-integration_70274e4 AS picsure-admin-ui
 
 FROM httpd:2.4.27-alpine
