@@ -12,7 +12,7 @@ services:
       - .env
     volumes:
       - /usr/local/docker-conf/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
-      - /usr/local/docker-conf/httpd/htdocs/psama/settings/:/usr/local/apache2/htdocs/psama/settings/
+      - /usr/local/docker-conf/httpd/htdocs/psamaui/settings/:/usr/local/apache2/htdocs/psamaui/settings/
     networks:
       - public
 
@@ -198,7 +198,7 @@ services:
     networks:
       - public
 
-  nhaneshpds:
+  hpds:
     image: dbmi/pic-sure-hpds-nhanes:18.1-Quickstart
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"

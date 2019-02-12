@@ -1,6 +1,6 @@
-FROM dbmi/pic-sure-hpds-ui-udn:jason_udn_deployment_8d6a5c8 AS picsure-ui
-#FROM dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2 AS picsure-ui
-FROM dbmi/pic-sure-auth-ui:picsure-185-auth0-integration_70274e4 AS picsure-admin-ui
+FROM dbmi/pic-sure-hpds-ui-udn:jason_udn_deployment_8d6a5c8 AS picsureui
+#FROM dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2 AS picsureui
+FROM dbmi/pic-sure-auth-ui:picsure-185-auth0-integration_70274e4 AS psamaui
 
 FROM httpd:2.4.27-alpine
 
@@ -24,8 +24,8 @@ RUN sed -i '/^#LoadModule rewrite_module modules\/mod_rewrite.so/s/^#//' ${HTTPD
 RUN sed -i '/^#LoadModule socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//' ${HTTPD_PREFIX}/conf/httpd.conf
 RUN mkdir /usr/local/apache2/logs/ssl_mutex
 
-COPY --from=picsure-admin-ui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/psama
-COPY --from=picsure-ui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/picsureui
+COPY --from=psamaui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/psamaui
+COPY --from=picsureui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/picsureui
 
 # Temporary fix for picsureui
 COPY extras/index.html ${HTTPD_PREFIX}/htdocs/picsureui
