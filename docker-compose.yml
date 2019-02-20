@@ -150,8 +150,10 @@ services:
     expose:
       - 9090
 
-  picsure2:
+  picsure:
     image: dbmi/picsure2:0.0.0.irct_included2
+    volumes:
+      - /usr/local/docker-conf/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
@@ -165,7 +167,7 @@ services:
       - public
 
   picsure-db:
-    image: dbmi/picsure-db:jason_udn_deployment_c8a0d5
+    image: dbmi/psama-db:picsure-185-auth0-integration_aecce61a
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
@@ -176,18 +178,8 @@ services:
     networks:
       - public
 
-  mysqldb:
-    image: mysql:5.7.24
-    expose:
-      - 3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=${PICSUREDB_ROOT_PASSWORD:-password}
-    networks:
-      - public
-
   psama:
-    #image: dbmi/pic-sure-auth-services:jason_udn_deployment_c11b8b9
-    image: dbmi/psama-service:latest
+    image: dbmi/psama:picsure-185-auth0-integration_aecce61a
     env_file: .env
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
