@@ -176,8 +176,18 @@ services:
     networks:
       - public
 
-  picsureauth:
-    image: dbmi/pic-sure-auth-services:jason_udn_deployment_c11b8b9
+  mysqldb:
+    image: mysql:5.7.24
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${PICSUREDB_ROOT_PASSWORD:-password}
+    networks:
+      - public
+
+  psama:
+    #image: dbmi/pic-sure-auth-services:jason_udn_deployment_c11b8b9
+    image: dbmi/psama-service:latest
     env_file: .env
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
