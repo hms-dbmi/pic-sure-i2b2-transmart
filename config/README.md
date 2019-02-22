@@ -53,18 +53,45 @@ This document lists all variables that need to have an actual value.
 
 All values that need to be replaced are noted as "__VARIABLE_VALUE__". Depending on the variable, it either requires a string value, within quotes, a numeric value, or a boolean value (true or false). The descriptions below for each variable will indicate the type and if possible, suggestions for a value.
 
-# transmart
+## i2b2/tranSmart
 
 i2b2/tranSmart is a Java application, running on a Tomcat application server.
 
+###  variables
+Name | Description | Sample Value
+-----|-------------|------------------
+`TM_EMAIL_NOTIFY` | A valid email address, that will receive notifications from the app about user interactions |  
+`TM_ADMIN_EMAIL`| |
+`TM_CONTACT_US`| |
+`TM_OAUTH_SERVICE_URL` | external authentication service URL | http:/
+`TM_OAUTH_LOGIN_URL` | | /psama/login
+`TM_OAUTH_SERVICE_TOKEN` | | 
+`TM_OAUTH_SERVICE_APP_ID` | | 1111b111-1111-1111-11aa-1a11111aaa11
+`TM_SOLR_HOST` | | localhost:8983
+`TM_SOLR_BASE_URL` | | http://localhost:8983
+`TM_GRAILS_MAIL_HOST` | | smtp.gmail.com
+`TM_GRAILS_MAIL_USERNAME` | | 
+`TM_GRAILS_MAIL_PASSWORD` | |
+
+
 # fractalis
 
-Fractalis is a plugin to i2b2/tranSmart
+Fractalis is a python based back-end service for the fractalis i2b2/tranSmart plugin. In conjunction with `worker`, `redis` and `rabbitmq` services, it interacts with datasources, to produce a rich data exploration environment
+
+### variables
+
+Name | Description | Sample Value
+-----|-------------|------------------
+`AUTH_CLIENT_SECRET` | Authentication secret used for secure communication with available datasources |
+
 
 # httpd
 
 This service provides the web server to house the front-end components for the entire stack. All services that include a front-end UI component are built as a subdirectory under the main document root. The service is based on Apache2 webserver. The files stored in this directory are used to configure each component.
 
+### `psamaui` variables
+
+### `picsureui` variables
 
 # psama
 
@@ -72,7 +99,28 @@ This service is the back-end portion of the **PIC-SURE Auth Microapp** component
 
 The service is a Java based application, running on a WildFly application server. The configuration is stored in the standalone.xml file, which is placed at the standard path of 
 
+### variables
+Name | Description | Sample Value
+-----|-------------|------------------
+`DB_HOST` | The DNS name or IP address of the MySQL database, where the configuration data is stored. The database name is `auth` and stores information, such as resource definitions, query parameters for each user and some user information |
+`DB_PORT` | The port where the MySQL database is listenting on. | 3306
+`DB_USER` | The username for the MySQL database. |
+`DB_PASSWORD`| The password, corresponding to the `DB_USER` username for the MySQL database |
+
 # picsure
+
+This service is the back-end portion of **PIC-SURE UI** component. It provides query capabilities to several configured data sources, with authentication, auditing and authorization capabilities.
+
+### variables
+Name | Description | Sample Value
+-----|-------------|------------------
+`DB_HOST` | The DNS name or IP address of the MySQL database, where the configuration data is stored. The database name is `picsure` and stores information, such as resource definitions, query parameters for each user and some user information |
+`DB_PORT` | The port where the MySQL database is listenting on. | 3306
+`DB_USER` | The username for the MySQL database. |
+`DB_PASSWORD`| The password, corresponding to the `DB_USER` username for the MySQL database |
+
+
+
 
 
 ## standalone.xml
