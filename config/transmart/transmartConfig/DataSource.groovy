@@ -1,13 +1,12 @@
-
 dataSource {
 	dbCreate = 'none'
 	dialect = 'org.hibernate.dialect.Oracle10gDialect'
 	driverClassName = 'oracle.jdbc.OracleDriver'
 	jmxExport = true
 	pooled = true
-  url = "jdbc:oracle:thin:@$I2B2_DB_HOST:$I2B2_DB_PORT/$I2B2_DB_NAME"
-  username = "$I2B2_DB_USER"
-  password = "$I2B2_DB_PASSWORD"
+  url = "jdbc:oracle:thin:@__I2B2_DB_HOST__:__I2B2_DB_PORT__/__I2B2_DB_NAME__"
+  username = "__I2B2_DB_USER__"
+  password = "__I2B2_DB_PASSWORD__"
 	properties {
 		defaultTransactionIsolation = java.sql.Connection.TRANSACTION_READ_COMMITTED
 		initialSize = 5

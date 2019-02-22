@@ -8,9 +8,9 @@ grails {
 
 			auth0 {
 				active = false
-				clientId = '$AUTH0_CLIENT_ID'
-				clientSecret = '$AUTH0_CLIENT_SECRET'
-				domain = '$AUTH0_DOMAIN'
+				clientId = '__AUTH0_CLIENT_ID__'
+				clientSecret = '__AUTH0_CLIENT_SECRET__'
+				domain = '__AUTH0_DOMAIN__'
 				useRecaptcha = false
 				registrationEnabled = false
 				webtaskBaseUrl = 'https://avillachlab.us.webtask.io'
@@ -58,28 +58,28 @@ grails {
 	}
 }
 
-com.recomdata.appTitle = '$TM_APP_TITLE'
-com.recomdata.largeLogo = '$TM_LARGE_LOGO'
+com.recomdata.appTitle = 'i2b2/tranSMART'
+com.recomdata.largeLogo = 'transmartlogoHMS.jpg'
 
-edu.harvard.transmart.email.notify = '$TM_EMAIL_NOTIFY'
-edu.harvard.transmart.email.logo = '$TM_EMAIL_LOGO'
+edu.harvard.transmart.email.notify = '__TM_EMAIL_NOTIFY__'
+edu.harvard.transmart.email.logo = '__TM_EMAIL_LOGO__'
 
 org.transmart.security.oauthEnabled = true
-org.transmart.security.oauth.service_url = '$TM_OAUTH_SERVICE_URL'
-org.transmart.security.oauth.login_endpoint = '/admin/login'
-org.transmart.security.oauth.service_token = '$TM_OAUTH_SERVICE_TOKEN'
-org.transmart.security.oauth.application_id = '$TM_OAUTH_SERVICE_APP_ID'
+org.transmart.security.oauth.service_url = '__TM_OAUTH_SERVICE_URL__'
+org.transmart.security.oauth.login_endpoint = '__TM_OAUTH_LOGIN_URL__'
+org.transmart.security.oauth.service_token = '__TM_OAUTH_SERVICE_TOKEN__'
+org.transmart.security.oauth.application_id = '__TM_OAUTH_SERVICE_APP_ID__'
 
-com.recomdata.adminEmail = '$TM_ADMIN_EMAIL'
-com.recomdata.contactUs = '$TM_CONTACT_US'
+com.recomdata.adminEmail = '__TM_ADMIN_EMAIL__'
+com.recomdata.contactUs = '__TM_CONTACT_US__'
 
 com.rwg.solr.scheme = 'http'
-com.rwg.solr.host   = '$TM_SOLR_HOST'
+com.rwg.solr.host   = '__TM_SOLR_HOST__'
 com.rwg.solr.browse.path   = '/solr/rwg/select/'
 
 
 //Configurations for solr.
-com.recomdata.solr.baseURL = '$TM_SOLR_BASE_URL'
+com.recomdata.solr.baseURL = '__TM_SOLR_BASE_URL__'
 //This is needed because solr won't allow a return of all records.
 com.recomdata.solr.maxRows = '1000000'
 //This is the number of results we display before drawing the "More [+]" text.
@@ -103,7 +103,7 @@ edu.harvard.transmart.sampleBreakdownMap = [
 	"id":"Aliquots in Cohort"
 ]
 
-String jobsDirectory = '/tmp' // '/var/tmp/jobs/'
+String jobsDirectory = '/tmp'
 RModules.tempFolderDirectory = jobsDirectory
 RModules.external = true
 com.recomdata.plugins.tempFolderDirectory = RModules.tempFolderDirectory
@@ -122,8 +122,6 @@ log4j = {
 	      'org.hibernate',
 	      'net.sf.ehcache.hibernate'
 	debug sql: 'org.hibernate.SQL'
-	// trace sql: 'org.hibernate.type.descriptor.sql.BasicBinder'
-
 	root {
 		debug 'file'
 	}
@@ -133,10 +131,10 @@ org.transmart.configFine = true
 
 grails {
     mail {
-        host = 'smtp.gmail.com'
+        host = '__TM_GRAILS_MAIL_HOST__'
         port = 465
-        username = '$TM_GRAILS_MAIL_USERNAME'
-        password = '$TM_GRAILS_MAIL_PASSWORD'
+        username = '__TM_GRAILS_MAIL_USERNAME__'
+        password = '__TM_GRAILS_MAIL_PASSWORD__'
         props = ['mail.smtp.auth': 'true',
                  'mail.smtp.socketFactory.port': '465',
                  'mail.smtp.socketFactory.class': 'javax.net.ssl.SSLSocketFactory',

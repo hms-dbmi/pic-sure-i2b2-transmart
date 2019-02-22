@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding='UTF-8'?>
+<?xml version="1.0" ?>
 
 <server xmlns="urn:jboss:domain:7.0">
     <extensions>
@@ -37,7 +37,7 @@
         <security-realms>
             <security-realm name="ManagementRealm">
                 <authentication>
-                    <local default-user="$local" skip-group-loading="true"/>
+                    <local default-user="__JBOSS_USER_IDENTITY__" skip-group-loading="true"/>
                     <properties path="mgmt-users.properties" relative-to="jboss.server.config.dir"/>
                 </authentication>
                 <authorization map-groups-to-roles="false">
@@ -51,7 +51,7 @@
                     </ssl>
                 </server-identities>
                 <authentication>
-                    <local default-user="$local" allowed-users="*" skip-group-loading="true"/>
+                    <local default-user="__JBOSS_USER_IDENTITY__" allowed-users="*" skip-group-loading="true"/>
                     <properties path="application-users.properties" relative-to="jboss.server.config.dir"/>
                 </authentication>
                 <authorization>
@@ -82,7 +82,7 @@
             <role-mapping>
                 <role name="SuperUser">
                     <include>
-                        <user name="$local"/>
+                        <user name="__JBOSS_USER_IDENTITY__"/>
                     </include>
                 </role>
             </role-mapping>
@@ -150,8 +150,8 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <datasource jndi-name="java:jboss/datasources/AuthDS" pool-name="AuthDS" use-java-context="true">
-                    <connection-url>jdbc:mysql://${env.AUTH_MYSQLADDRESS}:${env.AUTH_DB_PORT}/auth?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
+                <datasource jndi-name="java:jboss/datasources/PicsureDS" pool-name="PicsureDS" use-java-context="true">
+                    <connection-url>jdbc:mysql://__PICSURE_DB_HOST__:__PICSURE_DB_PORT__/picsure?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
                     <driver>mysql</driver>
                     <pool>
                         <min-pool-size>5</min-pool-size>
@@ -159,8 +159,8 @@
                         <prefill>true</prefill>
                     </pool>
                     <security>
-                        <user-name>${env.AUTH_DB_CONNECTION_USER}</user-name>
-                        <password>${env.AUTH_MYSQLPASS}</password>
+                        <user-name>__PICSURE_DB_USER__</user-name>
+                        <password>__PICSURE_DB_PASSWORD__</password>
                     </security>
                     <validation>
                         <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker"/>
@@ -181,20 +181,24 @@
             </datasources>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:deployment-scanner:2.0">
-            <deployment-scanner path="deployments" relative-to="jboss.server.base.dir" scan-interval="5000" runtime-failure-causes-rollback="${jboss.deployment.scanner.rollback.on.failure:false}"/>
+            <deployment-scanner path="deployments" relative-to="jboss.server.base.dir" scan-interval="5000"
+              runtime-failure-causes-rollback="__JBOSS_DEP_SCANNER_ROLLBACK_ONFAIL__"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:discovery:1.0"/>
         <subsystem xmlns="urn:jboss:domain:ee:4.0">
             <spec-descriptor-property-replacement>false</spec-descriptor-property-replacement>
             <concurrent>
                 <context-services>
-                    <context-service name="default" jndi-name="java:jboss/ee/concurrency/context/default" use-transaction-setup-provider="true"/>
+                    <context-service name="default" jndi-name="java:jboss/ee/concurrency/context/default"
+                      use-transaction-setup-provider="true"/>
                 </context-services>
                 <managed-thread-factories>
-                    <managed-thread-factory name="default" jndi-name="java:jboss/ee/concurrency/factory/default" context-service="default"/>
+                    <managed-thread-factory name="default" jndi-name="java:jboss/ee/concurrency/factory/default"
+                      context-service="default"/>
                 </managed-thread-factories>
                 <managed-executor-services>
-                    <managed-executor-service name="default" jndi-name="java:jboss/ee/concurrency/executor/default" context-service="default" hung-task-threshold="60000" keepalive-time="5000"/>
+                    <managed-executor-service name="default" jndi-name="java:jboss/ee/concurrency/executor/default"
+                      context-service="default" hung-task-threshold="60000" keepalive-time="5000"/>
                 </managed-executor-services>
                 <managed-scheduled-executor-services>
                     <managed-scheduled-executor-service name="default" jndi-name="java:jboss/ee/concurrency/scheduler/default" context-service="default" hung-task-threshold="60000" keepalive-time="3000"/>
@@ -232,7 +236,7 @@
             </timer-service>
             <remote connector-ref="http-remoting-connector" thread-pool-name="default">
                 <channel-creation-options>
-                    <option name="READ_TIMEOUT" value="${prop.remoting-connector.read.timeout:20}" type="xnio"/>
+                    <option name="READ_TIMEOUT" value="20" type="xnio"/>
                     <option name="MAX_OUTBOUND_MESSAGES" value="1234" type="remoting"/>
                 </channel-creation-options>
             </remote>
@@ -269,7 +273,7 @@
                 </security-domain>
             </security-domains>
             <security-realms>
-                <identity-realm name="local" identity="$local"/>
+                <identity-realm name="local" identity="__JBOSS_USER_IDENTITY__"/>
                 <properties-realm name="ApplicationRealm">
                     <users-properties path="application-users.properties" relative-to="jboss.server.config.dir" digest-realm-name="ApplicationRealm"/>
                     <groups-properties path="application-roles.properties" relative-to="jboss.server.config.dir"/>
@@ -343,7 +347,7 @@
                 </sasl-authentication-factory>
                 <configurable-sasl-server-factory name="configured" sasl-server-factory="elytron">
                     <properties>
-                        <property name="wildfly.sasl.local-user.default-user" value="$local"/>
+                        <property name="wildfly.sasl.local-user.default-user" value="__JBOSS_USER_IDENTITY__"/>
                     </properties>
                 </configurable-sasl-server-factory>
                 <mechanism-provider-filtering-sasl-server-factory name="elytron" sasl-server-factory="global">
@@ -422,21 +426,19 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:jsf:1.1"/>
         <subsystem xmlns="urn:jboss:domain:mail:3.0">
-<!--            <mail-session name="default" jndi-name="java:jboss/mail/Default">-->
-            <mail-session name="java:jboss/mail/gmail" from="hms.dbmi.data.infrastructure@gmail.com" jndi-name="java:jboss/mail/gmail" debug="false">
-<!--                <smtp-server outbound-socket-binding-ref="mail-smtp"/>-->
-                <smtp-server outbound-socket-binding-ref="mail-smtp-gmail" tls="true" username="hms.dbmi.data.infrastructure@gmail.com" password="${env.MAIL_PASSWORD}"/>
+            <mail-session name="default" jndi-name="java:jboss/mail/Default">
+                <smtp-server outbound-socket-binding-ref="mail-smtp"/>
+            </mail-session>
+            <mail-session name="gmail" from="__PICSURE_FROM_ADDRESS__" jndi-name="java:jboss/mail/gmail">
+                <smtp-server password="__PICSURE_GMAIL_PASSWORD__" username="__PICSURE_GMAIL_USERNAME__" ssl="true" 
+                    outbound-socket-binding-ref="mail-smtp-gmail"/>
             </mail-session>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:naming:2.0">
-            <bindings>
-                <simple name="java:global/client_secret" value="${env.AUTH_CLIENT_SECRET}"/>
-                <simple name="java:global/client_id" value="${env.AUTH_CLIENT_ID}"/>
-                <simple name="java:global/user_id_claim" value="${env.AUTH_USER_ID_CLAIM:sub}"/>
-                <simple name="java:global/auth0token" value="${env.AUTH0TOKEN}"/>
-                <simple name="java:global/auth0host" value="${env.AUTH0HOST:https://avillachlab.auth0.com}"/>
-                <simple name="systemName" value="${env.systemName}"/>
-            </bindings>
+          <bindings>
+              <simple name="java:global/client_secret" value="__PICSURE_CLIENT_SECRET__"/>
+              <simple name="java:global/user_id_claim" value="__PICSURE_USERID_CLAIM__"/>
+          </bindings>
             <remote-naming/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:pojo:1.0"/>
@@ -509,11 +511,11 @@
                 <websockets/>
             </servlet-container>
             <handlers>
-                <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
+                <file name="welcome-content" path="__JBOSS_HOME_DIR__/welcome-content"/>
             </handlers>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:webservices:2.0">
-            <wsdl-host>${jboss.bind.address:127.0.0.1}</wsdl-host>
+            <wsdl-host>__JBOSS_BIND_ADDRESS__</wsdl-host>
             <endpoint-config name="Standard-Endpoint-Config"/>
             <endpoint-config name="Recording-Endpoint-Config">
                 <pre-handler-chain name="recording-handlers" protocol-bindings="##SOAP11_HTTP ##SOAP11_HTTP_MTOM ##SOAP12_HTTP ##SOAP12_HTTP_MTOM">
@@ -526,25 +528,25 @@
     </profile>
     <interfaces>
         <interface name="management">
-            <inet-address value="${jboss.bind.address.management:127.0.0.1}"/>
+            <inet-address value="__JBOSS_BIND_MANAGEMENT_ADDRESS__"/>
         </interface>
         <interface name="public">
-            <inet-address value="${jboss.bind.address:127.0.0.1}"/>
+            <inet-address value="__JBOSS_BIND_ADDRESS__"/>
         </interface>
     </interfaces>
-    <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
-        <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
-        <socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9993}"/>
-        <socket-binding name="ajp" port="${jboss.ajp.port:8009}"/>
-        <socket-binding name="http" port="${jboss.http.port:8080}"/>
-        <socket-binding name="https" port="${jboss.https.port:8443}"/>
+    <socket-binding-group name="standard-sockets" default-interface="public" port-offset="__JBOSS_SOCKET_BINDING_PORT_OFFSET__">
+        <socket-binding name="management-http" interface="management" port="__JBOSS_MANAGEMENT_HTTP_PORT__"/>
+        <socket-binding name="management-https" interface="management" port="__JBOSS_MANAGEMENT_HTTPS_PORT__"/>
+        <socket-binding name="ajp" port="__JBOSS_AJP_PORT__"/>
+        <socket-binding name="http" port="__JBOSS_HTTP_PORT__"/>
+        <socket-binding name="https" port="__JBOSS_HTTPS_PORT__"/>
         <socket-binding name="txn-recovery-environment" port="4712"/>
         <socket-binding name="txn-status-manager" port="4713"/>
-<!--        <outbound-socket-binding name="mail-smtp">-->
-        <outbound-socket-binding name="mail-smtp-gmail" source-port="0" fixed-source-port="false">
-<!--            <remote-destination host="localhost" port="25"/>-->
-            <remote-destination host="smtp.gmail.com" port="587"/>
-<!--            <remote-destination host="smtp.gmail.com" port="465"/>-->
-            <!-- TLS: 587, SSL: 465 -->
+        <outbound-socket-binding name="mail-smtp">
+            <remote-destination host="localhost" port="25"/>
+        </outbound-socket-binding>
+        <outbound-socket-binding name="mail-smtp-gmail">
+            <remote-destination host="smtp.gmail.com" port="25"/>
         </outbound-socket-binding>
     </socket-binding-group>
+</server>
