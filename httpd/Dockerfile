@@ -25,3 +25,5 @@ RUN mkdir /usr/local/apache2/logs/ssl_mutex
 
 COPY --from=psamaui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
 COPY --from=picsureui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/picsureui
+
+COPY psamaui_login_login.js ${HTTPD_PREFIX}/htdocs/psamaui/login/login.js
