@@ -1,0 +1,25 @@
+{ 
+	"client_id":"__AUTH0_CLIENT_ID__",
+	"resources":[
+		{
+			"id" : "NHANES1",
+			"name" : "NHANES 1",
+			"queryPath" : "/picsure/queryService/runQuery",
+			"queryStatusBasePath" : "/picsure/resultService/resultStatus/",
+			"queryResultBasePath" : "/picsure/resultService/result/",
+			"pathPath" : "/picsure/resourceService/jsonPath",
+			"findPath" : "/picsure/resourceService/find",
+			"basePui" : "/i2b2-nhanes-count-only/Demo/laboratory/laboratory"
+		},{
+			"id" : "NHANES2",
+			"name" : "NHANES 2",
+			"queryPath" : "/picsure/queryService/runQuery",
+			"queryStatusBasePath" : "/picsure/resultService/resultStatus/",
+			"queryResultBasePath" : "/picsure/resultService/result/",
+			"pathPath" : "/picsure/resourceService/jsonPath",
+			"findPath" : "/picsure/resourceService/find",
+			"basePui" : "/i2b2-nhanes-count-only/Demo/laboratory/laboratory"
+		}
+	]
+
+}
