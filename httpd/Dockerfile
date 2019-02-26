@@ -23,5 +23,5 @@ RUN sed -i '/^#LoadModule rewrite_module modules\/mod_rewrite.so/s/^#//' ${HTTPD
 RUN sed -i '/^#LoadModule socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//' ${HTTPD_PREFIX}/conf/httpd.conf
 RUN mkdir /usr/local/apache2/logs/ssl_mutex
 
-COPY --from=psamaui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/psamaui
+COPY --from=psamaui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
 COPY --from=picsureui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/picsureui
