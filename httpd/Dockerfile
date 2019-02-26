@@ -1,4 +1,4 @@
-FROM dbmi/pic-sure-hpds-ui-udn:jason_udn_deployment_7f94a48 AS picsureui
+FROM dbmi/pic-sure-ui:master_7e8babf AS picsureui
 FROM dbmi/psama-ui:3dea3ede AS psamaui
 
 FROM httpd:2.4.27-alpine
