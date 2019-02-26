@@ -167,7 +167,7 @@ services:
       - public
 
   picsure-db:
-    image: dbmi/psama-db:picsure-185-auth0-integration_aecce61a
+    image: dbmi/psama-db:3dea3ede
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
@@ -179,7 +179,7 @@ services:
       - public
 
   psama:
-    image: dbmi/psama:picsure-185-auth0-integration_aecce61a
+    image: dbmi/psama:3dea3ede
     env_file: .env
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
