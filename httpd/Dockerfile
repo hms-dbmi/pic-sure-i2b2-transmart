@@ -1,5 +1,6 @@
 FROM dbmi/pic-sure-ui:master_7e8babf AS picsureui
-FROM dbmi/psama-ui:3dea3ede AS psamaui
+#FROM dbmi/psama-ui:3dea3ede AS psamaui
+FROM dbmi/pic-sure-auth-ui:jason_udn_deployment_4293a8d AS psamaui
 
 FROM httpd:2.4.27-alpine
 
@@ -26,4 +27,4 @@ RUN mkdir /usr/local/apache2/logs/ssl_mutex
 COPY --from=psamaui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
 COPY --from=picsureui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/picsureui
 
-COPY psamaui_login_login.js ${HTTPD_PREFIX}/htdocs/psamaui/login/login.js
+#COPY psamaui_login_login.js ${HTTPD_PREFIX}/htdocs/psamaui/login/login.js
