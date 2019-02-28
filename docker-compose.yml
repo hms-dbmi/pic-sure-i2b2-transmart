@@ -181,7 +181,7 @@ services:
       - public
 
   psama:
-    image: dbmi/psama:3dea3ede
+    image: dbmi/pic-sure-auth-services:jason_udn_deployment_283e04b
     env_file: .env
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
