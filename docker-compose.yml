@@ -124,7 +124,7 @@ services:
       - public
 
   irct:
-    image: dbmi/irct:1.4.2c
+    image: dbmi/irct:1.4.2_master_808c596
     volumes:
       - /usr/local/docker-conf/irct/wildfly/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     labels:
