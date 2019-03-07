@@ -197,18 +197,6 @@ services:
     networks:
       - public
 
-  hpds:
-    image: dbmi/pic-sure-hpds-nhanes:18.1-Quickstart
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
-    restart: always
-    env_file: .env
-    networks:
-      - public
-    expose:
-      - 8080
-
 volumes:
   # shared volume for R jobs
   rserve-jobs:
