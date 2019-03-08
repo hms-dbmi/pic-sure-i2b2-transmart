@@ -29,6 +29,16 @@ you can still use the mapped path in the docker-compose.yml file on the server d
 │       └── psamaui
 │           └── settings
 │               └── settings.json
+├── irct
+│   └── wildfly
+│       └── standalone
+│           └── configuration
+│               └── standalone.xml
+├── i2b2-wildfly
+│   └── wildfly
+│       └── standalone
+│           └── configuration
+│               └── standalone.xml
 ├── psama
 │   └── standalone
 │       └── configuration

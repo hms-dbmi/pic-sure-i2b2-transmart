@@ -124,7 +124,7 @@ services:
       - public
 
   irct:
-    image: dbmi/irct:1.4.2c
+    image: dbmi/irct:1.4.2_master_808c596
     volumes:
       - /usr/local/docker-conf/irct/wildfly/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     labels:
@@ -155,7 +155,7 @@ services:
       - 9090
 
   picsure:
-    image: dbmi/picsure2:0.0.0.irct_included2
+    image: dbmi/picsure2:master_a08f42c
     volumes:
       - /usr/local/docker-conf/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     labels:
@@ -196,18 +196,6 @@ services:
       - 8080
     networks:
       - public
-
-  hpds:
-    image: dbmi/pic-sure-hpds-nhanes:18.1-Quickstart
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
-    restart: always
-    env_file: .env
-    networks:
-      - public
-    expose:
-      - 8080
 
 volumes:
   # shared volume for R jobs
