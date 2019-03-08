@@ -141,6 +141,8 @@ services:
 
   i2b2-wildfly:
     image: dbmi/i2b2-wildfly:1.7.09c-18.1-beta-hotfix
+    volumes:
+      - /usr/local/docker-conf/i2b2-wildfly/wildfly/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
