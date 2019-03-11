@@ -49,6 +49,10 @@ If the IP address of the node is **192.168.99.100**, for example, we can see if 
 
 The `psama` service and the `psamaui` component of the `httpd` service works together to allow administration of users, applications and roles for the users to those applications. The `psama` service relies on its own mysql connection to a database, that has to be called `auth`.
 
+When starting up `psama` for the first time, the initial database has no users in it. The initial superuser has to be manually added to the `auth` database.
+
+Take a look at the script in the [first_time_run_the_system_and_insert_admin_user.sql](https://raw.githubusercontent.com/hms-dbmi/pic-sure-auth-microapp/master/pic-sure-auth-db/db/tools/first_time_run_the_system_and_insert_admin_user.sql) script. Change the e-mail address (has to be a gmail.com e-mail address) and run the script on the database. All other administration of the users/roles/privileges can be done via the `psamaui` webinterface.
+
 # Configure other back-end services
 
 **IRCT** and **PIC-SURE** services might require additional configuration. 
