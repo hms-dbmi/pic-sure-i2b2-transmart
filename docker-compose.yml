@@ -124,7 +124,6 @@ services:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     depends_on:
       - i2b2-wildfly
-      - picsure-db
     restart: always
     networks:
       - public
@@ -151,23 +150,10 @@ services:
       - ${CONFIG_DIR}/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-    depends_on:
-      - picsure-db
     restart: always
     expose:
       - 8080
     command: --server-config=standalone.xml
-    networks:
-      - public
-
-  picsure-db:
-    image: dbmi/psama-db:3dea3ede
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-    expose:
-      - 3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=${AUTH_MYSQL_ROOT_PASSWORD:-password}
     networks:
       - public
 
@@ -176,8 +162,6 @@ services:
     env_file: .env
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-    depends_on:
-      - picsure-db
     volumes:
       - ${CONFIG_DIR}/picsureauth/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     expose:
