@@ -95,10 +95,11 @@ docker-compose --file /var/tmp/pic-sure-i2b2-transmart/docker-compose.yml restar
 # Set the configuration variabales
 export STACK_NAME=<REPLACE_WITH_STACK_NAME>
 export CONFIG_DIR=<REPLACE_WITH_DIR_PATH>
-export DCOM_DIR=<REPLACE_WITH_DCOMPOSE_DIR>
+export DKRCOMPOSE_DIR=<REPLACE_WITH_DCOMPOSE_DIR>
 
 # Build the images locally for the whole stack
-cd ${DCOM_DIR}
+mkdir -p ${DKRCOMPOSE_DIR}
+cd ${DKRCOMPOSE_DIR}
 rm -fR pic-sure-i2b2-transmart
 git clone https://github.com/hms-dbmi/pic-sure-i2b2-transmart.git
 cd pic-sure-i2b2-transmart/
@@ -108,7 +109,7 @@ docker-compose pull
 docker-compose build
 
 # Copy the config templates to the configuration directory
-cd ${DCOM_DIR}/pic-sure-i2b2-transmart/
+cd ${DKRCOMPOSE_DIR}/pic-sure-i2b2-transmart/
 cp -r config ${CONFIG_DIR}
 
 # Update the placeholder values
@@ -117,6 +118,7 @@ cp -r config ${CONFIG_DIR}
 # This is a manual process!!!
 #
 # ***************************
+
 
 # Create a superuser account in `psama` for administration
 # ***************************
@@ -127,12 +129,9 @@ cp -r config ${CONFIG_DIR}
 #
 # ***************************
 
-
 # Start up `psama` service
-docker-compose --file ${DCOM_DIR}/docker-compose.yml up -d psama
-docker-compose --file ${DCOM_DIR}/docker-compose.yml logs -f psama
-
-
+docker-compose --file ${DKRCOMPOSE_DIR}/docker-compose.yml up -d psama
+docker-compose --file ${DKRCOMPOSE_DIR}/docker-compose.yml logs -f psama
 # Create application 
 # ***************************
 #
@@ -143,5 +142,5 @@ docker-compose --file ${DCOM_DIR}/docker-compose.yml logs -f psama
 
 
 # Start all other services
-docker-compose --file ${DCOM_DIR}/pic-sure-i2b2-transmart/docker-compose.yml up -d
-docker-compose --file ${DCOM_DIR}/pic-sure-i2b2-transmart/docker-compose.yml logs -f 
+docker-compose --file ${DKRCOMPOSE_DIR}/pic-sure-i2b2-transmart/docker-compose.yml up -d
+docker-compose --file ${DKRCOMPOSE_DIR}/pic-sure-i2b2-transmart/docker-compose.yml logs -f 
