@@ -11,8 +11,8 @@ services:
     env_file:
       - .env
     volumes:
-      - /usr/local/docker-conf/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
-      - /usr/local/docker-conf/httpd/htdocs/psamaui/settings/:/usr/local/apache2/htdocs/psamaui/settings/
+      - ${CONFIG_DIR}/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
+      - ${CONFIG_DIR}/httpd/htdocs/psamaui/settings/:/usr/local/apache2/htdocs/psamaui/settings/
     networks:
       - public
 
@@ -20,12 +20,11 @@ services:
     image: dbmi/i2b2transmart:18.1-Quickstart
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     depends_on:
       - rserve
     volumes:
-      - /usr/local/docker-conf/transmart/transmartConfig:/root/.grails/transmartConfig
+      - ${CONFIG_DIR}/transmart/transmartConfig:/root/.grails/transmartConfig
       - rserve-jobs:/tmp:rw
     networks:
       - public
@@ -36,7 +35,6 @@ services:
     image: dbmi/rserve:3.2.1-tm.release-18.1
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     expose:
       - 6311
@@ -49,7 +47,6 @@ services:
     image: dbmi/solr:4.5.0-tm.release-18.1
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     env_file: .env
     restart: always
     networks:
@@ -62,10 +59,9 @@ services:
   fractalis:
     image: sherzinger/fractalis:1.3.1
     volumes:
-      - /usr/local/docker-conf/fractalis/config.py:/config.py
+      - ${CONFIG_DIR}/fractalis/config.py:/config.py
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     environment:
       - FRACTALIS_CONFIG=/config.py
@@ -84,10 +80,9 @@ services:
   worker:
     image: sherzinger/fractalis:1.3.1
     volumes:
-      - /usr/local/docker-conf/fractalis/config.py:/config.py
+      - ${CONFIG_DIR}/fractalis/config.py:/config.py
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     environment:
       - FRACTALIS_CONFIG=/config.py
@@ -103,7 +98,6 @@ services:
     image: redis:alpine
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     command: >
       sh -c "redis-server
@@ -118,7 +112,6 @@ services:
     image: rabbitmq:alpine
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     networks:
       - public
@@ -126,10 +119,9 @@ services:
   irct:
     image: dbmi/irct:1.4.2_master_808c596
     volumes:
-      - /usr/local/docker-conf/irct/wildfly/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
+      - ${CONFIG_DIR}/irct/wildfly/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     depends_on:
       - i2b2-wildfly
       - picsure-db
@@ -142,10 +134,9 @@ services:
   i2b2-wildfly:
     image: dbmi/i2b2-wildfly:1.7.09c-18.1-beta-hotfix
     volumes:
-      - /usr/local/docker-conf/i2b2-wildfly/wildfly/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
+      - ${CONFIG_DIR}/i2b2-wildfly/wildfly/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     environment:
       - JAVA_OPTS=-Xms512m -Xmx1024m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
     restart: always
@@ -157,10 +148,9 @@ services:
   picsure:
     image: dbmi/picsure2:master_a08f42c
     volumes:
-      - /usr/local/docker-conf/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
+      - ${CONFIG_DIR}/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     depends_on:
       - picsure-db
     restart: always
@@ -174,7 +164,6 @@ services:
     image: dbmi/psama-db:3dea3ede
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     expose:
       - 3306
     environment:
@@ -187,11 +176,10 @@ services:
     env_file: .env
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     depends_on:
       - picsure-db
     volumes:
-      - /usr/local/docker-conf/picsureauth/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
+      - ${CONFIG_DIR}/picsureauth/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     expose:
       - 8080
     networks:
