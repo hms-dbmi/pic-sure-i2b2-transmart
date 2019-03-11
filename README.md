@@ -120,9 +120,9 @@ cp -r config ${CONFIG_DIR}
 # Create a superuser account in `psama` for administration
 # ***************************
 #
-# Use the create_superuser.sql script on the MySQL database
-# to add a personal account that can start managing 
-# the roles and privileges
+# Use the first_time_run_the_system_and_insert_admin_user.sql script
+# on the MySQL database to add a personal account that can start 
+# managing the roles and privileges.
 #
 # ***************************
 
