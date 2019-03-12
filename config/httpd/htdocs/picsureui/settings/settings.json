@@ -1,25 +1,25 @@
-{ 
-	"client_id":"__AUTH0_CLIENT_ID__",
-	"resources":[
-		{
-			"id" : "NHANES1",
-			"name" : "NHANES 1",
-			"queryPath" : "/picsure/queryService/runQuery",
-			"queryStatusBasePath" : "/picsure/resultService/resultStatus/",
-			"queryResultBasePath" : "/picsure/resultService/result/",
-			"pathPath" : "/picsure/resourceService/jsonPath",
-			"findPath" : "/picsure/resourceService/find",
-			"basePui" : "/i2b2-nhanes-count-only/Demo/laboratory/laboratory"
-		},{
-			"id" : "NHANES2",
-			"name" : "NHANES 2",
-			"queryPath" : "/picsure/queryService/runQuery",
-			"queryStatusBasePath" : "/picsure/resultService/resultStatus/",
-			"queryResultBasePath" : "/picsure/resultService/result/",
-			"pathPath" : "/picsure/resourceService/jsonPath",
-			"findPath" : "/picsure/resourceService/find",
-			"basePui" : "/i2b2-nhanes-count-only/Demo/laboratory/laboratory"
-		}
-	]
-
-}
+	{
+	  "resources":[
+	        {
+	            "id" : "BCH",
+	            "name" : "BCH",
+	            "basePath" : "/picsure/",
+	                        "uuid":"08e0f699-2227-4114-9e2f-2be99e4396ef",
+	            "basePui" : "/i2b2-grin-dev-countonly/Demo/GRIN/GRIN"
+	        },{
+	            "id" : "CCHMC",
+	            "name" : "CCHMC",
+	                        "uuid":"08e0f699-2227-4114-9e2f-2be99e4396ef",
+	            "basePath" : "/picsure/",
+	            "basePui" : "/i2b2-cchmc/grin/GRIN_DIAG/GRIN"
+	        },{
+	            "id" : "CHOP",
+	            "name" : "CHOP",
+	                        "uuid":"08e0f699-2227-4114-9e2f-2be99e4396ef",
+	            "basePath" : "/picsure/",
+	            "basePui" : "/chop-grin-i2b2-countonly/Demo/GRIN_DIAG/GRIN"
+	        }
+	  ],
+	  "helpLink": "mailto:sample@email.com",
+	  "advancedSearchLink":""
+	}

@@ -4,7 +4,7 @@ dataSource {
 	driverClassName = 'oracle.jdbc.OracleDriver'
 	jmxExport = true
 	pooled = true
-  url = "jdbc:oracle:thin:@__I2B2_DB_HOST__:__I2B2_DB_PORT__/__I2B2_DB_NAME__"
+  url = "jdbc:oracle:thin:@__I2B2_DB_HOST__ # Also used in i2b2-wildfly:__I2B2_DB_PORT__ # Also used in i2b2-wildfly/__I2B2_DB_NAME__ # Also used in i2b2-wildfly"
   username = "__I2B2_DB_USER__"
   password = "__I2B2_DB_PASSWORD__"
 	properties {

@@ -36,7 +36,7 @@
         <security-realms>
             <security-realm name="ManagementRealm">
                 <authentication>
-                    <local default-user="__local__" skip-group-loading="true"/>
+                    <local default-user="$local" skip-group-loading="true"/>
                     <properties path="mgmt-users.properties" relative-to="jboss.server.config.dir"/>
                 </authentication>
                 <authorization map-groups-to-roles="false">
@@ -50,7 +50,7 @@
                     </ssl>
                 </server-identities>
                 <authentication>
-                    <local default-user="__local__" allowed-users="*" skip-group-loading="true"/>
+                    <local default-user="$local" allowed-users="*" skip-group-loading="true"/>
                     <properties path="application-users.properties" relative-to="jboss.server.config.dir"/>
                 </authentication>
                 <authorization>
@@ -81,7 +81,7 @@
             <role-mapping>
                 <role name="SuperUser">
                     <include>
-                        <user name="__local__"/>
+                        <user name="$local"/>
                     </include>
                 </role>
             </role-mapping>
@@ -90,7 +90,7 @@
     <profile>
         <subsystem xmlns="urn:jboss:domain:logging:5.0">
             <console-handler name="CONSOLE">
-                <level name="INFO"/>
+                <level name="DEBUG"/>
                 <formatter>
                     <named-formatter name="COLOR-PATTERN"/>
                 </formatter>
@@ -113,7 +113,7 @@
                 <level name="WARN"/>
             </logger>
             <root-logger>
-                <level name="INFO"/>
+                <level name="DEBUG"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>
@@ -270,7 +270,7 @@
                 </security-domain>
             </security-domains>
             <security-realms>
-                <identity-realm name="local" identity="__local__"/>
+                <identity-realm name="local" identity="$local"/>
                 <properties-realm name="ApplicationRealm">
                     <users-properties path="application-users.properties" relative-to="jboss.server.config.dir" digest-realm-name="ApplicationRealm"/>
                     <groups-properties path="application-roles.properties" relative-to="jboss.server.config.dir"/>
@@ -344,7 +344,7 @@
                 </sasl-authentication-factory>
                 <configurable-sasl-server-factory name="configured" sasl-server-factory="elytron">
                     <properties>
-                        <property name="wildfly.sasl.local-user.default-user" value="__local__"/>
+                        <property name="wildfly.sasl.local-user.default-user" value="$local"/>
                     </properties>
                 </configurable-sasl-server-factory>
                 <mechanism-provider-filtering-sasl-server-factory name="elytron" sasl-server-factory="global">
@@ -428,7 +428,7 @@
                   outbound-socket-binding-ref="mail-smtp-gmail"
                   tls="true"
                   username="__PSA_EMAIL_USERNAME__"
-                  password="__PSA_EMAIL_PASSWORD__}"
+                  password="__PSA_EMAIL_PASSWORD__"
                 />
             </mail-session>
         </subsystem>
@@ -440,6 +440,10 @@
                 <simple name="java:global/auth0token" value="__PSA_AUTH0_TOKEN__"/>
                 <simple name="java:global/auth0host" value="__PSA_AUTH0_HOST__"/>
                 <simple name="java:global/systemName" value="__PSA_SYSTEM_NAME__"/>
+                <simple name="java:global/userActivationTemplatePath" value="__PSA_USER_ACTIVATION_TEMPLATE__"/>
+                <simple name="java:global/userActivationReplyTo" value="__PSA_USER_ACTIVATION_REPLYTO__"/>
+                <simple name="java:global/tosEnabled" value="__PSA_IS_TOSENABLED__"/>
+                <simple name="java:global/clientSecretIsBase64" value="__PSA_CLIENT_SECRET_ISBASE64__"/>
             </bindings>
             <remote-naming/>
         </subsystem>

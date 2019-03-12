@@ -9,7 +9,7 @@ grails {
 			auth0 {
 				active = false
 				clientId = '__AUTH0_CLIENT_ID__'
-				clientSecret = '__AUTH0_CLIENT_SECRET__'
+				clientSecret = '__AUTH0_SECRET__'
 				domain = '__AUTH0_DOMAIN__'
 				useRecaptcha = false
 				registrationEnabled = false
@@ -65,8 +65,8 @@ edu.harvard.transmart.email.notify = '__TM_EMAIL_NOTIFY__'
 edu.harvard.transmart.email.logo = '__TM_EMAIL_LOGO__'
 
 org.transmart.security.oauthEnabled = true
-org.transmart.security.oauth.service_url = '__TM_OAUTH_SERVICE_URL__'
-org.transmart.security.oauth.login_endpoint = '__TM_OAUTH_LOGIN_URL__'
+org.transmart.security.oauth.service_url = 'http:/'
+org.transmart.security.oauth.login_endpoint = '/psama/login'
 org.transmart.security.oauth.service_token = '__TM_OAUTH_SERVICE_TOKEN__'
 org.transmart.security.oauth.application_id = '__TM_OAUTH_SERVICE_APP_ID__'
 
