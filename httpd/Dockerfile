@@ -7,6 +7,7 @@ RUN apk add --update openssl sed
 
 # Replace virtual host config file with ours
 COPY httpd-vhosts.conf ${HTTPD_PREFIX}/conf/extra/httpd-vhosts.conf
+COPY index.html ${HTTPD_PREFIX}/htdocs/
 
 # Enable virtual hosting config file
 RUN sed -i '/^#Include conf.extra.httpd-vhosts.conf/s/^#//' ${HTTPD_PREFIX}/conf/httpd.conf
@@ -23,7 +24,8 @@ RUN sed -i '/^#LoadModule rewrite_module modules\/mod_rewrite.so/s/^#//' ${HTTPD
 RUN sed -i '/^#LoadModule socache_shmcb_module modules\/mod_socache_shmcb.so/s/^#//' ${HTTPD_PREFIX}/conf/httpd.conf
 RUN mkdir /usr/local/apache2/logs/ssl_mutex
 
+# Create about.html page
+RUN /tmp/make_about_page.sh > ${HTTPD_PREFIX}/htdocs/about.html
+
 COPY --from=psamaui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
 COPY --from=picsureui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs/picsureui
-
-#COPY psamaui_login_login.js ${HTTPD_PREFIX}/htdocs/psamaui/login/login.js
