@@ -3,7 +3,7 @@
 # If you choose to create a runtime generated /about.html page, inside the `httpd` container
 # then run this script after your `docker-compose up -d` command has completed.
 #
-SERVICE_LIST=`docker ps --all --format "<tr><td>{{.Names}}</td><td>{{.Image}}</td><td>{{.RunningFor}}</td></tr>" | sort `
+SERVICE_LIST=`docker ps --all --format "<tr><td>{{.Names}}</td><td>{{.Image}}</td><td>{{.Status}}</td></tr>" | sort `
 
 cat <<EOP > /tmp/about.html
 <!doctype html>
@@ -49,34 +49,16 @@ cat <<EOP > /tmp/about.html
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">AvlLab</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse"
-          data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
-              aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="picsureui">PIC-SURE UI</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="transmart">i2b2/tranSmart</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="psamaui">PSAMA UI</a>
-        </li>
-        </ul>
-      </div>
+      <a class="navbar-brand" href="#">PIC-SURE</a>
     </nav>
 
   <main role="main" class="container">
 
     <div class="starter-template">
-      <h2>PIC-SURE Reference Implementation</h2>
       <p class="lead">This site is demonstrating the capabilities of the
-      <a href="https://github.com/hms-dbmi/pic-sure-i2b2-transmart" target="_githubWin">pic-sure-i2b2-transmart docker stack</a>.</p>
+      <a href="https://github.com/hms-dbmi/pic-sure-i2b2-transmart"
+        target="_githubWin">pic-sure-i2b2-transmart docker stack</a>.
+      </p>
     </div>
 
     <div>
@@ -84,9 +66,9 @@ cat <<EOP > /tmp/about.html
       <table class="table">
       <thead>
         <tr>
-        <th>Service</th>
-        <th>Docker Tag</th>
-        <th>Uptime</th>
+        <th>Name (container)</th>
+        <th>Image (tag)</th>
+        <th>Status</th>
         </tr>
       </thead>
       <tbody>
@@ -104,4 +86,5 @@ cat <<EOP > /tmp/about.html
 </html>
 EOP
 
-docker cp /tmp/about pic-sure-i2b2-transmart_httpd_1:/usr/local/apache2/htdocs/about.html
+docker cp /tmp/about.html pic-sure-i2b2-transmart_httpd_1:/usr/local/apache2/htdocs/about.html
+rm -f /tmp/about.html
