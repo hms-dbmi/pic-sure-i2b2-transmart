@@ -8,16 +8,14 @@ All containers are based on public images. To configure the environment, follow 
 
 Ensure that you have `docker-compose` installed on the host machine.
 
+The UNIX account running the below commands need to have access to the `docker` command, usually, by including the account in the `docker` group.
+
 # Installation
 
-On a new server, or docker machine, run the following commands to install and start up the whole stack. 
-
-It requires privileges to the GitHub repo and to be able run `docker` commands on the machine itself.
+Run the following commands to install/build the whole stack. 
 
 ```
 
-cd /var/tmp
-rm -fR pic-sure-i2b2-transmart
 git clone https://github.com/hms-dbmi/pic-sure-i2b2-transmart.git
 cd pic-sure-i2b2-transmart/
 
@@ -27,23 +25,19 @@ docker-compose build
 
 ```
 
+Before starting up any components, the configuration files need to be in place.
+
 # Create `config` files
 
 The repo comes with sample configuration files, that are required for the correct operation. They are collected in the `./config` subdirectory of the repo. If you are configuring the stack without docker, you can place these files yourself in the appropriate location.
 
 For docker based installation, copy the entire directory out of the repo to, for example, the `/usr/local/docker-config` directory.
 
-```
-cd /var/tmp/pic-sure-i2b2-transmart/
-cp -r config /usr/local/docker-config
+`cp -r config /usr/local/docker-config`
 
-```
+After distributing the above files, please follow the instructions in the [config/README.md](config/README.md) file, to replace the values for each variable documented.
 
-After distributing the above template files, please follow the instructions in the [config/README.md](config/README.md) file, to replace the values for each variable documented.
-
-A good initial test is to bring up the `httpd` service, and see if we can access the provided URLs.
-
-If the IP address of the node is **192.168.99.100**, for example, we can see if the `httpd` service can be reached via [http://192.168.99.100/](http://192.168.99.100/)
+<small>Note: A good initial test is to bring up the `httpd` service, and see if we can access the service via a webbrowser. The server's ip address or dns name, followed by `/about.html`</small>
 
 # Configure `PSAMA`
 
