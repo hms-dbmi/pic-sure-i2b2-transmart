@@ -150,7 +150,7 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasources/AuthDS" pool-name="AuthDS" use-java-context="true">
-                    <connection-url>jdbc:mysql://__PSA_DB_HOST__:__PSA_DB_PORT__/auth?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
+                    <connection-url>jdbc:mysql://__PSA_DB_HOST__:3306/auth?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
                     <driver>mysql</driver>
                     <pool>
                         <min-pool-size>5</min-pool-size>
