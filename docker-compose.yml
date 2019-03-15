@@ -155,11 +155,11 @@ services:
       - public
 
   psama:
-    image: dbmi/pic-sure-auth-services:jason_udn_deployment_283e04b
+    image: dbmi/pic-sure-auth-services:master.2839b24
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     volumes:
-      - /usr/local/docker-config/picsureauth/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
+      - /usr/local/docker-config/psama/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     expose:
       - 8080
     networks:
