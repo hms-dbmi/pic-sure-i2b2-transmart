@@ -57,7 +57,7 @@ cat <<EOP > /tmp/about.html
     <div class="starter-template">
       <p class="lead">This site is demonstrating the capabilities of the
       <a href="https://github.com/hms-dbmi/pic-sure-i2b2-transmart"
-        target="_githubWin">pic-sure-i2b2-transmart docker stack</a>.
+        target="_githubWin">pic-sure-i2b2-transmart</a> docker stack.
       </p>
     </div>
 
@@ -86,5 +86,14 @@ cat <<EOP > /tmp/about.html
 </html>
 EOP
 
-docker cp /tmp/about.html pic-sure-i2b2-transmart_httpd_1:/usr/local/apache2/htdocs/about.html
+CONTAINER_NAME=$(docker ps --format {{.Names}} | grep httpd)
+if [ "${CONTAINER_NAME}" == "" ];
+then
+	printf "Error: Could not determine the httpd container's name.\nPlease start up the container with 'docker-compose up -d httpd' command first.\n"
+	exit 2
+else
+	docker cp /tmp/about.html pic-sure-i2b2-transmart_httpd_1:/usr/local/apache2/htdocs/about.html
+fi
 rm -f /tmp/about.html
+
+
