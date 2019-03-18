@@ -8,9 +8,12 @@ services:
     ports:
       - 80:80
       - 443:443
+    depends_on:
+      - psama
+      - picsure
     volumes:
       - /usr/local/docker-config/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
-      - /usr/local/docker-config/httpd/htdocs/psamaui/settings/:/usr/local/apache2/htdocs/psamaui/settings/
+      - /usr/local/docker-config/httpd/htdocs/psamaui/settings:/usr/local/apache2/htdocs/psamaui/settings
     networks:
       - public
 

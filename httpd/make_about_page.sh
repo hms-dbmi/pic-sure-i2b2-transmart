@@ -5,6 +5,44 @@
 #
 SERVICE_LIST=`docker ps --all --format "<tr><td>{{.Names}}</td><td>{{.Image}}</td><td>{{.Status}}</td></tr>" | sort `
 
+SUBIMAGES=`grep FROM httpd/Dockerfile | cut -d " " -f 2`
+
+getServiceList() {
+  for CONTAINER_NAME in `docker ps --all --format "{{.Names}}" | sort`
+  do
+    SERVICE_NAME=$(echo $CONTAINER_NAME | cut -d "_" -f 2)
+    SUBTAGS=''
+    if [ "${SERVICE_NAME}" == 'httpd' ];
+    then
+      SUBTAGS=$(echo '<br /><small style="margin-left: 10px">built from:</small><pre style="margin-left: 10px">';grep FROM httpd/Dockerfile | cut -d " " -f 2; echo '</pre>')
+    fi
+    IMAGE_TAG=$(docker ps --filter name=$CONTAINER_NAME --format {{.Image}})
+    CONTAINER_ID=$(docker ps --filter name=$CONTAINER_NAME --format {{.ID}})
+    CONTAINER_IMAGE=$(docker ps --filter name=$CONTAINER_NAME --format {{.Image}})
+    CONTAINER_COMMAND=$(docker ps --filter name=$CONTAINER_NAME --format {{.Command}})
+    CONTAINER_CREATEDAT=$(docker ps --filter name=$CONTAINER_NAME --format {{.CreatedAt}})
+    CONTAINER_RUNNINGFOR=$(docker ps --filter name=$CONTAINER_NAME --format {{.RunningFor}})
+    CONTAINER_PORTS=$(docker ps --filter name=$CONTAINER_NAME --format {{.Ports}})
+
+    CONTAINER_STATUS=$(docker ps --filter name=$CONTAINER_NAME --format {{.Status}})
+    CONTAINER_LABELS=$(docker ps --filter name=$CONTAINER_NAME --format {{.Labels}})
+    #.Label	Value of a specific label for this container. For example '{{.Label "com.docker.swarm.cpu"}}'
+    #.Mounts	Names of the volumes mounted in this container.
+    #.Networks	Names of the networks attached to this container.
+    CONTAINER_NETWORK=$(docker ps --filter name=$CONTAINER_NAME --format {{.Networks}})
+
+    STATE=$(docker inspect $CONTAINER_ID | jq .[0].State.Status | tr -d '"')
+    STARTEDAT=$(docker inspect $CONTAINER_ID | jq .[0].State.StartedAt | tr -d '"')
+
+    echo "<tr class='status${STATUS}'>"
+    echo "  <th>${CONTAINER_NAME}</th>"
+    echo "  <td>${IMAGE_TAG}${SUBTAGS}</td>"
+    echo "  <td>${STARTEDAT}<small>${STATE}</small></td>"
+    echo "  <td>${CONTAINER_NETWORK}</td>"
+    echo "</tr>"
+  done
+}
+
 cat <<EOP > /tmp/about.html
 <!doctype html>
 <html lang="en">
@@ -22,6 +60,9 @@ cat <<EOP > /tmp/about.html
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <style>
+    TR .statusrunning {
+      background-color: lightGreen
+    }
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -68,11 +109,11 @@ cat <<EOP > /tmp/about.html
         <tr>
         <th>Name (container)</th>
         <th>Image (tag)</th>
-        <th>Status</th>
+        <th>StartedAt</th>
         </tr>
       </thead>
       <tbody>
-        ${SERVICE_LIST}
+        $(getServiceList)
       </tbody>
       </table>
     </div>
@@ -81,7 +122,6 @@ cat <<EOP > /tmp/about.html
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
   </body>
 </html>
 EOP
@@ -94,6 +134,4 @@ then
 else
 	docker cp /tmp/about.html pic-sure-i2b2-transmart_httpd_1:/usr/local/apache2/htdocs/about.html
 fi
-rm -f /tmp/about.html
-
-
+#rm -f /tmp/about.html
