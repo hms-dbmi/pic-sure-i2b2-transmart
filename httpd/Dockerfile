@@ -25,4 +25,9 @@ RUN mkdir /usr/local/apache2/logs/ssl_mutex
 
 COPY --from=psamaui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
 COPY --from=picsureui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
+
+# Due to some issues building the picsure-ui image, we need to clean up
+# some directories
+RUN rm -fR ${HTTPD_PREFIX}/htdocs/settings
+
 COPY index.html ${HTTPD_PREFIX}/htdocs/
