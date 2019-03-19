@@ -1,0 +1,10 @@
+	{
+	  "resources": [{
+	    "id": "NHANES",
+	    "name": "NHANES",
+	    "basePath": "/picsure/",
+	    "basePui": "/i2b2-nhanes/Demo/Demo"
+	  }],
+	  "helpLink": "mailto:sample@email.com",
+	  "advancedSearchLink": "/transmart"
+	}
