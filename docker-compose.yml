@@ -22,27 +22,27 @@ services:
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
-    depends_on:
-      - rserve
+#    depends_on:
+#      - rserve
     volumes:
       - /usr/local/docker-config/transmart/transmartConfig:/root/.grails/transmartConfig
-      - rserve-jobs:/tmp:rw
+#      - rserve-jobs:/tmp:rw
     networks:
       - public
     expose:
       - 8080
 
-  rserve:
-    image: dbmi/rserve:3.2.1-tm.release-18.1
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-    restart: always
-    expose:
-      - 6311
-    volumes:
-      - rserve-jobs:/tmp:rw
-    networks:
-      - public
+#  rserve:
+#    image: dbmi/rserve:3.2.1-tm.release-18.1
+#    labels:
+#      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+#    restart: always
+#    expose:
+#      - 6311
+#    volumes:
+#      - rserve-jobs:/tmp:rw
+#    networks:
+#      - public
 
   solr:
     image: dbmi/solr:4.5.0-tm.release-18.1
@@ -117,7 +117,7 @@ services:
       - public
 
   irct:
-    image: dbmi/irct:1.4.2_master_808c596
+    image: dbmi/irct:master_72135ce
     volumes:
       - /usr/local/docker-config/irct/wildfly/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     labels:
@@ -145,9 +145,13 @@ services:
       - 9090
 
   picsure:
-    image: dbmi/picsure2:master_a08f42c
+    image: dbmi/picsure2:picsure246-jndi.7c32223
+    #image: dbmi/picsure2:master_a08f42c
     volumes:
       - /usr/local/docker-config/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
+    environment:
+      - RESULT_FORMAT=json
+      - IRCT_TARGET_URL=http://irct:8080/rest/v1
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
@@ -168,9 +172,9 @@ services:
     networks:
       - public
 
-volumes:
+#volumes:
   # shared volume for R jobs
-  rserve-jobs:
+  #rserve-jobs:
 
 networks:
   public:

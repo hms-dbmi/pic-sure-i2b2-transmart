@@ -14,7 +14,7 @@ getServiceList() {
     SUBTAGS=''
     if [ "${SERVICE_NAME}" == 'httpd' ];
     then
-      SUBTAGS=$(echo '<br /><small style="margin-left: 10px">built from:</small><pre style="margin-left: 10px">';grep FROM httpd/Dockerfile | cut -d " " -f 2; echo '</pre>')
+      SUBTAGS=$(echo '<br /><br /><small style="margin-left: 10px">built from:</small><pre style="margin-left: 10px">';grep FROM httpd/Dockerfile | cut -d " " -f 2; echo '</pre>')
     fi
     IMAGE_TAG=$(docker ps --filter name=$CONTAINER_NAME --format {{.Image}})
     CONTAINER_ID=$(docker ps --filter name=$CONTAINER_NAME --format {{.ID}})
@@ -29,15 +29,20 @@ getServiceList() {
     #.Label	Value of a specific label for this container. For example '{{.Label "com.docker.swarm.cpu"}}'
     #.Mounts	Names of the volumes mounted in this container.
     #.Networks	Names of the networks attached to this container.
-    CONTAINER_NETWORK=$(docker ps --filter name=$CONTAINER_NAME --format {{.Networks}})
+    CONTAINER_NETWORK=$(docker ps --filter name=$CONTAINER_NAME --format {{.Networks}} | cut -d "_" -f 2)
 
     STATE=$(docker inspect $CONTAINER_ID | jq .[0].State.Status | tr -d '"')
-    STARTEDAT=$(docker inspect $CONTAINER_ID | jq .[0].State.StartedAt | tr -d '"')
+
+
+    CRAT=$(docker inspect $CONTAINER_ID | jq .[0].State.StartedAt | tr -d '"')
+    STDATE=$(echo $CRAT | cut -d "T" -f 1)
+    STTIME=$(echo $CRAT | cut -d "T" -f 2 | cut -d ":" -f 1,2)
+    STARTEDAT="${STDATE} ${STTIME}"
 
     echo "<tr class='status${STATUS}'>"
     echo "  <th>${CONTAINER_NAME}</th>"
     echo "  <td>${IMAGE_TAG}${SUBTAGS}</td>"
-    echo "  <td>${STARTEDAT}<small>${STATE}</small></td>"
+    echo "  <td>${STARTEDAT}<br /><small>${STATE}</small></td>"
     echo "  <td>${CONTAINER_NETWORK}</td>"
     echo "</tr>"
   done
@@ -110,6 +115,7 @@ cat <<EOP > /tmp/about.html
         <th>Name (container)</th>
         <th>Image (tag)</th>
         <th>StartedAt</th>
+        <th>Network</th>
         </tr>
       </thead>
       <tbody>
