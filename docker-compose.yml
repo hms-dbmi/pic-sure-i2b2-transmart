@@ -151,13 +151,27 @@ services:
       - /usr/local/docker-config/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
     environment:
       - RESULT_FORMAT=json
-      - IRCT_TARGET_URL=http://irct:8080/rest/v1
+      - IRCT_TARGET_URL=http://yopapa
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
     expose:
       - 8080
-    command: --server-config=standalone.xml
+    networks:
+      - public
+
+  picsure-irct:
+    image: dbmi/pic-sure-irct-resource:picsure246-jndi.7c32223
+    volumes:
+      - /usr/local/docker-config/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
+    environment:
+      - RESULT_FORMAT=json
+      - IRCT_TARGET_URL=http://yomama
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+    restart: always
+    expose:
+      - 8080
     networks:
       - public
 
