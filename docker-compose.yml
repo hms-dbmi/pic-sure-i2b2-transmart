@@ -146,34 +146,26 @@ services:
 
   picsure:
     image: dbmi/picsure2:picsure246-jndi.7c32223
-    #image: dbmi/picsure2:master_a08f42c
     volumes:
       - /usr/local/docker-config/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
-    environment:
-      - RESULT_FORMAT=json
-      - IRCT_TARGET_URL=http://yopapa
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
+		depends_on:
+      - copy-irct-nhanes-resource
     expose:
       - 8080
     networks:
       - public
 
-  picsure-irct:
-    image: dbmi/pic-sure-irct-resource:picsure246-jndi.7c32223
+  copy-irct-nhanes-resource:
+    image: dbmi/pic-sure-irct-resource:picsure246-jndi.ea3c615_jason
+    user: root
     volumes:
-      - /usr/local/docker-config/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
-    environment:
-      - RESULT_FORMAT=json
-      - IRCT_TARGET_URL=http://yomama
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-    restart: always
-    expose:
-      - 8080
+      - /usr/local/docker-config/wildfly/:/opt/local/docker-config/wildfly/
     networks:
       - public
+    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /opt/local/docker-config/wildfly/deployments/pic-sure-irct-resource-bch.war
 
   psama:
     image: dbmi/pic-sure-auth-services:master.2839b24
@@ -185,10 +177,6 @@ services:
       - 8080
     networks:
       - public
-
-#volumes:
-  # shared volume for R jobs
-  #rserve-jobs:
 
 networks:
   public:
