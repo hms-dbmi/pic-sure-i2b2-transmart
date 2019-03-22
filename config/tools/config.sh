@@ -33,7 +33,7 @@ do
         echo "The variable '${KEY}' will be replaced by value '${VALUE}'" >> ${LOGFILE}
 
         VALUE=${VALUE//'/'/'\/'}
-        sed -i '' "s/__${KEY}__/${VALUE}/g" ${FILE_TO_ACT_ON} 2>> ${LOGFILE}
+        sed -i "s/__${KEY}__/${VALUE}/g" ${FILE_TO_ACT_ON} 2>> ${LOGFILE}
 
         if [ $? -ne 0 ];
         then
