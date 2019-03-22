@@ -22,27 +22,12 @@ services:
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
-#    depends_on:
-#      - rserve
     volumes:
       - /usr/local/docker-config/transmart/transmartConfig:/root/.grails/transmartConfig
-#      - rserve-jobs:/tmp:rw
     networks:
       - public
     expose:
       - 8080
-
-#  rserve:
-#    image: dbmi/rserve:3.2.1-tm.release-18.1
-#    labels:
-#      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-#    restart: always
-#    expose:
-#      - 6311
-#    volumes:
-#      - rserve-jobs:/tmp:rw
-#    networks:
-#      - public
 
   solr:
     image: dbmi/solr:4.5.0-tm.release-18.1
@@ -148,8 +133,12 @@ services:
     image: dbmi/picsure2:picsure246-jndi.7c32223
     volumes:
       - /usr/local/docker-config/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
+      - /usr/local/docker-config/picsure/standalone/deployments/pic-sure-irct-resource.war:/opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war:rw
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+    environment:
+      - RESULT_FORMAT=json
+      - IRCT_TARGET_URL=http://httpd/irct
     restart: always
     depends_on:
       - copy-irct-resource
@@ -162,11 +151,11 @@ services:
     image: dbmi/pic-sure-irct-resource:picsure246-jndi.ea3c615_jason
     user: root
     volumes:
-      - /usr/local/docker-config/wildfly/:/opt/local/docker-config/wildfly/
+      - /usr/local/docker-config/picsure/standalone/deployments:/tmp/deployments
     networks:
       - public
-    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /opt/local/docker-config/picsure/standalone/deployments/pic-sure-irct-resource.war
-
+    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /tmp/deployments/pic-sure-irct-resource.war
+    
   psama:
     image: dbmi/pic-sure-auth-services:master.2839b24
     labels:
