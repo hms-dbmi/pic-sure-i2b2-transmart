@@ -430,6 +430,8 @@
               <simple name="java:global/client_secret" value="__PICSURE_CLIENT_SECRET__"/>
               <simple name="java:global/user_id_claim" value="__PICSURE_USERID_CLAIM__"/>
               <simple name="java:global/roles_claim" value="privileges"/>
+              <!-- Used by the picsure-irct resource to find the IRCT service -->
+              <simple name="java:global/target_url_pic-sure-irct-resource" value="http://httpd/irct" />
           </bindings>
             <remote-naming/>
         </subsystem>
