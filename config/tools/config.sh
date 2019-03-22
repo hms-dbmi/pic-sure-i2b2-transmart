@@ -14,12 +14,12 @@ touch ${LOGFILE}
 
 echo "Running ...."
 echo "Replace template directory"
-rm -fR /usr/local/docker-config/*
-cp -r config/template/* /usr/local/docker-config
+rm -fR ${CONFIG_DIR}/*
+cp -r config/template/* ${CONFIG_DIR}
 echo "Done"
 
 echo "Start replacement"
-for FILE_TO_ACT_ON in `find /usr/local/docker-config -name "*.*"`
+for FILE_TO_ACT_ON in `find ${CONFIG_DIR} -name "*.*"`
 do
   echo "**************** Processing file ${FILE_TO_ACT_ON} ****************" >> ${LOGFILE}
   for KEY_VALUE_PAIR in $(cat ${SECRETS_FILE})
