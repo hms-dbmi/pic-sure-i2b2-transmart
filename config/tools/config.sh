@@ -11,12 +11,11 @@ fi
 
 LOGFILE=logfile_`date +%Y%m%d_%H%M%S`.log
 touch ${LOGFILE}
-echo "Running ...."
 
+echo "Running ...."
 echo "Replace template directory"
 rm -fR /usr/local/docker-config/*
 cp -r config/template/* /usr/local/docker-config
-#find /usr/local/docker-config -name "*.*"
 echo "Done"
 
 echo "Start replacement"
