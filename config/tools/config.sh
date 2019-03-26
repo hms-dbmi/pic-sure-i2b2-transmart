@@ -9,10 +9,27 @@ then
   exit 2
 fi
 
+if [ "${CONFIG_DIR}" == "" ];
+then
+	printf "\nERROR: CONFIG_DIR environment variable is not set, or empty. Cannot proceed.\n\n"
+	exit 2
+fi
+
+SED_VERSION=$(sed --version 2>/dev/null | head -1 | cut -d ")" -f 2 | tr -d " ")
+
+if [ "${SED_VERSION}" == "" ];
+then
+	SED_BACKUP="''"
+else
+	SED_BACKUP=""
+fi
+
+
 LOGFILE=logfile_`date +%Y%m%d_%H%M%S`.log
 touch ${LOGFILE}
 
 echo "Running ...."
+
 echo "Replace template directory"
 rm -fR ${CONFIG_DIR}/*
 cp -r config/template/* ${CONFIG_DIR}
@@ -32,7 +49,7 @@ do
         echo "The variable '${KEY}' will be replaced by value '${VALUE}'" >> ${LOGFILE}
 
         VALUE=${VALUE//'/'/'\/'}
-        sed -i "s/__${KEY}__/${VALUE}/g" ${FILE_TO_ACT_ON} 2>> ${LOGFILE}
+        sed -i ${SED_BACKUP} "s/__${KEY}__/${VALUE}/g" ${FILE_TO_ACT_ON} 2>> ${LOGFILE}
 
         if [ $? -ne 0 ];
         then
@@ -45,5 +62,6 @@ do
     fi
   done
 done
+
 echo "Finished. Log file generated ${LOGFILE}"
 echo ""
