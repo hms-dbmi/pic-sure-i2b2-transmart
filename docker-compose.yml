@@ -157,7 +157,7 @@ services:
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /tmp/deployments/pic-sure-irct-resource.war
 
   pic-sure-auth:
-    image: dbmi/pic-sure-auth-services:master.2839b24
+    image: dbmi/pic-sure-auth-services:master_4bbe3c0
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     volumes:
