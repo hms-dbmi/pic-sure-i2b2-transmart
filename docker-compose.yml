@@ -9,7 +9,7 @@ services:
       - 80:80
       - 443:443
     depends_on:
-      - psama
+      - pic-sure-auth
       - picsure
     volumes:
       - /usr/local/docker-config/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
