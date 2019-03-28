@@ -16,10 +16,9 @@ then
 fi
 
 SED_VERSION=$(sed --version 2>/dev/null | head -1 | cut -d ")" -f 2 | tr -d " ")
-
 if [ "${SED_VERSION}" == "" ];
 then
-	SED_BACKUP="''"
+	SED_BACKUP=".bak"
 else
 	SED_BACKUP=""
 fi

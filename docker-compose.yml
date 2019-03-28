@@ -23,7 +23,7 @@ services:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
     volumes:
-      - /usr/local/docker-config/transmart/transmartConfig:/root/.grails/transmartConfig
+      - /usr/local/docker-config/transmart/transmartConfig:/root/.grails/transmartConfig:rw
     networks:
       - public
     expose:
@@ -155,8 +155,8 @@ services:
     networks:
       - public
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /tmp/deployments/pic-sure-irct-resource.war
-    
-  psama:
+
+  pic-sure-auth:
     image: dbmi/pic-sure-auth-services:master.2839b24
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
