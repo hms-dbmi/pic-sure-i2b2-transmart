@@ -118,7 +118,9 @@ Name | Description | Sample Value
 -----|-------------|------------------
 `AUTH0_CLIENT_ID` | Client ID for authentication purposes. |
 
-The certificates for the webserver are also stored in the */cert/server.\** files. Please create the self-signed certificates and place them in this directory
+The certificates for the webserver are also stored in the */cert/server.\** files. 
+
+The certificates included in this repo are for localhost only, and you will need to replace these with your own real certificates.
 
 # psama
 
