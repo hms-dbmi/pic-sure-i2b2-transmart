@@ -22,6 +22,11 @@ you can still use the mapped path in the docker-compose.yml file on the server d
 ├── fractalis
 │   └── config.py
 ├── httpd
+│   ├── cert
+│   │   ├── server.chain
+│   │   ├── server.key
+│   │   └── server.crt
+│   │
 │   └── htdocs
 │       ├── picsureui
 │       │   └── settings
@@ -112,6 +117,8 @@ Name | Description | Sample Value
 Name | Description | Sample Value
 -----|-------------|------------------
 `AUTH0_CLIENT_ID` | Client ID for authentication purposes. |
+
+The certificates for the webserver are also stored in the */cert/server.\** files. Please create the self-signed certificates and place them in this directory
 
 # psama
 
