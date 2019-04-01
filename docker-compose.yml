@@ -9,8 +9,7 @@ services:
       - 80:80
       - 443:443
     depends_on:
-      - pic-sure-auth
-      - picsure
+      - wildfly
     volumes:
       - /usr/local/docker-config/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
       - /usr/local/docker-config/httpd/htdocs/psamaui/settings:/usr/local/apache2/htdocs/psamaui/settings
@@ -130,43 +129,49 @@ services:
     expose:
       - 9090
 
-  picsure:
-    image: dbmi/picsure2:picsure246-jndi.7c32223
-    volumes:
-      - /usr/local/docker-config/picsure/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
-      - /usr/local/docker-config/picsure/standalone/deployments/pic-sure-irct-resource.war:/opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war:rw
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+  wildfly:
+    image: jboss/wildfly:15.0.1.Final
+    environment:
+      - JAVA_OPTS=-Xms1024m -Xmx2g -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
+    restart: always
     environment:
       - RESULT_FORMAT=json
       - IRCT_TARGET_URL=http://httpd/irct
-    restart: always
-    depends_on:
-      - copy-irct-resource
     expose:
       - 8080
+    ports:
+      - 8787:8787
     networks:
       - public
-
-  copy-irct-resource:
-    image: dbmi/pic-sure-irct-resource:picsure246-jndi.ea3c615_jason
+    entrypoint: /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0 --debug 0.0.0.0:8787
     user: root
     volumes:
-      - /usr/local/docker-config/picsure/standalone/deployments:/tmp/deployments
-    networks:
-      - public
+      - /usr/local/docker-config/wildfly/modules/system/layers/base/com/sql/:/opt/jboss/wildfly/modules/system/layers/base/com/sql/
+      - /usr/local/docker-config/wildfly/deployments/:/opt/jboss/wildfly/standalone/deployments/
+      - /usr/local/docker-config/wildfly/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml
+    depends_on:
+      - copy-pic-sure-war
+      - copy-pic-sure-auth-war
+      - copy-pic-sure-irct-resource
+
+  copy-pic-sure-war:
+    image: dbmi/picsure2:picsure246-jndi.7c32223
+    volumes:
+      - /usr/local/docker-config/wildfly/deployments:/tmp/deployments
+    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-api-2.war /tmp/deployments/pic-sure-api-2.war
+
+  copy-pic-sure-irct-resource:
+    image: dbmi/pic-sure-irct-resource:picsure246-jndi.ea3c615_jason
+    volumes:
+      - /usr/local/docker-config/wildfly/deployments:/tmp/deployments
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /tmp/deployments/pic-sure-irct-resource.war
 
-  pic-sure-auth:
+  copy-pic-sure-auth-war:
     image: dbmi/pic-sure-auth-services:master_4bbe3c0
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     volumes:
-      - /usr/local/docker-config/psama/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
-    expose:
-      - 8080
-    networks:
-      - public
+      - /usr/local/docker-config/wildfly/deployments:/tmp/deployments
+    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-auth-services.war /tmp/deployments/pic-sure-auth-services.war
+
 
 networks:
   public:

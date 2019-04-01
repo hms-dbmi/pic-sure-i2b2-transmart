@@ -65,8 +65,8 @@ edu.harvard.transmart.email.notify = '__TM_EMAIL_NOTIFY__'
 edu.harvard.transmart.email.logo = '__TM_EMAIL_LOGO__'
 
 org.transmart.security.oauthEnabled = true
-org.transmart.security.oauth.service_url = 'http:/'
-org.transmart.security.oauth.login_endpoint = '/psama/login'
+org.transmart.security.oauth.login_endpoint = '/psamaui/login'
+org.transmart.security.oauth.tokeninspect_endpoint = 'http://wildfly:8080/pic-sure-auth-service/auth/token/inspect'
 org.transmart.security.oauth.service_token = '__TM_OAUTH_SERVICE_TOKEN__'
 org.transmart.security.oauth.application_id = '__TM_OAUTH_SERVICE_APP_ID__'
 
@@ -113,8 +113,8 @@ com.recomdata.plugins.tempFolderDirectory = RModules.tempFolderDirectory
 
 log4j = {
 	appenders {
-		rollingFile name: 'file', maxFileSize: 1024 * 1024, file: 'logs/app.log'
-		rollingFile name: 'sql',  maxFileSize: 1024 * 1024, file: 'logs/sql.log'
+		rollingFile name: 'file', maxFileSize: 1024 * 1024, file: 'app.log'
+		rollingFile name: 'sql',  maxFileSize: 1024 * 1024, file: 'sql.log'
 	}
 
 	error 'org.codehaus.groovy.grails',

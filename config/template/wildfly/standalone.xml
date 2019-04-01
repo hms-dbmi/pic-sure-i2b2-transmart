@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding='UTF-8'?>
 
 <server xmlns="urn:jboss:domain:7.0">
     <extensions>
@@ -150,8 +150,8 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <datasource jndi-name="java:jboss/datasources/PicsureDS" pool-name="PicsureDS" use-java-context="true">
-                    <connection-url>jdbc:mysql://__PICSURE_DB_HOST__:__PICSURE_DB_PORT__/picsure?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
+                <datasource jndi-name="java:jboss/datasources/AuthDS" pool-name="AuthDS" use-java-context="true">
+                    <connection-url>jdbc:mysql://__PSAMA_DB_HOST__:__PSAMA_DB_PORT__/__PSAMA_DB_NAME__?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
                     <driver>mysql</driver>
                     <pool>
                         <min-pool-size>5</min-pool-size>
@@ -159,8 +159,48 @@
                         <prefill>true</prefill>
                     </pool>
                     <security>
-                        <user-name>__PICSURE_DB_USER__</user-name>
+                        <user-name>__PSAMA_DB_USERNAME__</user-name>
+                        <password>__PSAMA_DB_PASSWORD__</password>
+                    </security>
+                    <validation>
+                        <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker"/>
+                        <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+                        <validate-on-match>true</validate-on-match>
+                        <background-validation>false</background-validation>
+                        <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter"/>
+                    </validation>
+                </datasource>
+                <datasource jndi-name="java:jboss/datasources/PicsureDS" pool-name="PicsureDS" use-java-context="true">
+                    <connection-url>jdbc:mysql://__PICSURE_DB_HOST__:__PICSURE_DB_PORT__/__PICSURE_DB_NAME__?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
+                    <driver>mysql</driver>
+                    <pool>
+                        <min-pool-size>5</min-pool-size>
+                        <max-pool-size>50</max-pool-size>
+                        <prefill>true</prefill>
+                    </pool>
+                    <security>
+                        <user-name>__PICSURE_DB_USERNAME__</user-name>
                         <password>__PICSURE_DB_PASSWORD__</password>
+                    </security>
+                    <validation>
+                        <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker"/>
+                        <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+                        <validate-on-match>true</validate-on-match>
+                        <background-validation>false</background-validation>
+                        <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter"/>
+                    </validation>
+                </datasource>
+                <datasource jndi-name="java:jboss/datasources/irct-cl-DS" pool-name="ComunicationLayerDS" use-java-context="true">
+                    <connection-url>jdbc:mysql://__IRCT_DB_HOST__:__IRCT_DB_PORT__/__IRCT_DB_NAME__?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
+                    <driver>mysql</driver>
+                    <pool>
+                        <min-pool-size>5</min-pool-size>
+                        <max-pool-size>50</max-pool-size>
+                        <prefill>true</prefill>
+                    </pool>
+                    <security>
+                        <user-name>__IRCT_DB_USERNAME__</user-name>
+                        <password>__IRCT_DB_PASSWORD__</password>
                     </security>
                     <validation>
                         <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker"/>
@@ -181,24 +221,20 @@
             </datasources>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:deployment-scanner:2.0">
-            <deployment-scanner path="deployments" relative-to="jboss.server.base.dir" scan-interval="5000"
-              runtime-failure-causes-rollback="${jboss.deployment.scanner.rollback.on.failure:false}"/>
+            <deployment-scanner path="deployments" relative-to="jboss.server.base.dir" scan-interval="5000" runtime-failure-causes-rollback="${jboss.deployment.scanner.rollback.on.failure:false}"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:discovery:1.0"/>
         <subsystem xmlns="urn:jboss:domain:ee:4.0">
             <spec-descriptor-property-replacement>false</spec-descriptor-property-replacement>
             <concurrent>
                 <context-services>
-                    <context-service name="default" jndi-name="java:jboss/ee/concurrency/context/default"
-                      use-transaction-setup-provider="true"/>
+                    <context-service name="default" jndi-name="java:jboss/ee/concurrency/context/default" use-transaction-setup-provider="true"/>
                 </context-services>
                 <managed-thread-factories>
-                    <managed-thread-factory name="default" jndi-name="java:jboss/ee/concurrency/factory/default"
-                      context-service="default"/>
+                    <managed-thread-factory name="default" jndi-name="java:jboss/ee/concurrency/factory/default" context-service="default"/>
                 </managed-thread-factories>
                 <managed-executor-services>
-                    <managed-executor-service name="default" jndi-name="java:jboss/ee/concurrency/executor/default"
-                      context-service="default" hung-task-threshold="60000" keepalive-time="5000"/>
+                    <managed-executor-service name="default" jndi-name="java:jboss/ee/concurrency/executor/default" context-service="default" hung-task-threshold="60000" keepalive-time="5000"/>
                 </managed-executor-services>
                 <managed-scheduled-executor-services>
                     <managed-scheduled-executor-service name="default" jndi-name="java:jboss/ee/concurrency/scheduler/default" context-service="default" hung-task-threshold="60000" keepalive-time="3000"/>
@@ -236,7 +272,7 @@
             </timer-service>
             <remote connector-ref="http-remoting-connector" thread-pool-name="default">
                 <channel-creation-options>
-                    <option name="READ_TIMEOUT" value="20" type="xnio"/>
+                    <option name="READ_TIMEOUT" value="${prop.remoting-connector.read.timeout:20}" type="xnio"/>
                     <option name="MAX_OUTBOUND_MESSAGES" value="1234" type="remoting"/>
                 </channel-creation-options>
             </remote>
@@ -425,14 +461,41 @@
             <jpa default-datasource="" default-extended-persistence-inheritance="DEEP"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:jsf:1.1"/>
+        <subsystem xmlns="urn:jboss:domain:mail:3.0">
+            <mail-session name="java:jboss/mail/gmail" from="__PSAMA_GMAIL_FROM_EMAIL__" jndi-name="java:jboss/mail/gmail" debug="false">
+                <smtp-server outbound-socket-binding-ref="mail-smtp-gmail" tls="true" username="__PSAMA_GMAIL_USERNAME__" password="__PSAMA_GMAIL_PASSWORD__"/>
+            </mail-session>
+        </subsystem>
         <subsystem xmlns="urn:jboss:domain:naming:2.0">
-          <bindings>
-              <simple name="java:global/client_secret" value="__PICSURE_CLIENT_SECRET__"/>
-              <simple name="java:global/user_id_claim" value="__PICSURE_USERID_CLAIM__"/>
-              <simple name="java:global/roles_claim" value="privileges"/>
-              <!-- Used by the picsure-irct resource to find the IRCT service -->
-              <simple name="java:global/target_url_pic-sure-irct-resource" value="http://httpd/irct" />
-          </bindings>
+            <bindings>
+                <!-- pic-sure configuration -->
+                <simple name="java:global/IRCT_TARGET_URL" value="__PICSURE_IRCT_TARGET_URL__"/>
+                <simple name="java:global/user_id_claim" value="sub"/>
+                <simple name="java:global/roles_claim" value="privileges"/>
+                <simple name="java:global/verify_user_method" value="tokenIntrospection"/>
+                <simple name="java:global/token_introspection_url" value="__PICSURE_TOKEN_INTROSPECTION_URL__"/>
+                <simple name="java:global/token_introspection_token" value="__PICSURE_TOKEN_INTROSPECTION_TOKEN_PS2__"/>
+                <!-- psama configuration-->
+                <simple name="java:global/client_secret" value="__PSAMA_CLIENT_SECRET__"/>
+                <simple name="java:global/client_id" value="__PSAMA_CLIENT_ID__"/>
+                <!-- <simple name="java:global/user_id_claim" value="sub"/> -->
+
+                <simple name="java:global/auth0token" value="__AUTH0_TOKEN__"/>
+                <simple name="java:global/auth0host" value="__AUTH0_HOST__"/>
+
+                <simple name="java:global/systemName" value="__PSAMA_SYSTEM_NAME__"/>
+                <simple name="java:global/clientSecretIsBase64" value="__PSAMA_CLIENT_SECRET_IS_BASE_64__"/>
+                <simple name="java:global/userActivationTemplatePath" value="__PSAMA_USER_ACTIVATION_TEMPLATE_PATH__"/>
+                <simple name="java:global/userActivationReplyTo" value="__PSAMA_USER_ACTIVATION_REPLY_TO__"/>
+                <simple name="java:global/tosEnabled" value="__PSAMA_TOS_ENABLED__"/>
+                <!-- -->
+                <simple name="java:global/resultDataFolder" value="__IRCT_RESULTS_DATA_FOLDER__"/>
+                <simple name="java:global/KeyTimeOutInMinutes" value="720"/>
+                <simple name="java:global/redirect_on_success" value="/IRCT-UI/token.html"/>
+                <simple name="java:global/domain" value="avillachlab.auth0.com"/>
+                <simple name="java:global/userField" value="sub"/>
+
+            </bindings>
             <remote-naming/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:pojo:1.0"/>
@@ -536,5 +599,8 @@
         <socket-binding name="https" port="${jboss.https.port:8443}"/>
         <socket-binding name="txn-recovery-environment" port="4712"/>
         <socket-binding name="txn-status-manager" port="4713"/>
+        <outbound-socket-binding name="mail-smtp-gmail" source-port="0" fixed-source-port="false">
+            <remote-destination host="smtp.gmail.com" port="587"/>
+        </outbound-socket-binding>
     </socket-binding-group>
 </server>
