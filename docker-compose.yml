@@ -156,21 +156,24 @@ services:
 
   copy-pic-sure-war:
     image: dbmi/picsure2:picsure246-jndi.7c32223
+    user: root
     volumes:
-      - /usr/local/docker-config/wildfly/deployments:/tmp/deployments
-    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-api-2.war /tmp/deployments/pic-sure-api-2.war
+      - /usr/local/docker-config/wildfly/deployments:/var/tmp
+    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-api-2.war /var/tmp/pic-sure-api-2.war
 
   copy-pic-sure-irct-resource:
     image: dbmi/pic-sure-irct-resource:picsure246-jndi.ea3c615_jason
+    user: root
     volumes:
-      - /usr/local/docker-config/wildfly/deployments:/tmp/deployments
-    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /tmp/deployments/pic-sure-irct-resource.war
+      - /usr/local/docker-config/wildfly/deployments:/var/tmp
+    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /var/tmp/pic-sure-irct-resource.war
 
   copy-pic-sure-auth-war:
     image: dbmi/pic-sure-auth-services:master_4bbe3c0
+    user: root
     volumes:
-      - /usr/local/docker-config/wildfly/deployments:/tmp/deployments
-    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-auth-services.war /tmp/deployments/pic-sure-auth-services.war
+      - /usr/local/docker-config/wildfly/deployments:/var/tmp
+    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-auth-services.war /var/tmp/pic-sure-auth-services.war
 
 
 networks:

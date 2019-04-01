@@ -66,7 +66,7 @@ edu.harvard.transmart.email.logo = '__TM_EMAIL_LOGO__'
 
 org.transmart.security.oauthEnabled = true
 org.transmart.security.oauth.login_endpoint = '/psamaui/login'
-org.transmart.security.oauth.tokeninspect_endpoint = 'http://wildfly:8080/pic-sure-auth-service/auth/token/inspect'
+org.transmart.security.oauth.tokeninspect_endpoint = '__TM_OAUTH_TOKENINTROSPECTION_ENDPOINT__'
 org.transmart.security.oauth.service_token = '__TM_OAUTH_SERVICE_TOKEN__'
 org.transmart.security.oauth.application_id = '__TM_OAUTH_SERVICE_APP_ID__'
 
