@@ -16,13 +16,6 @@ then
 fi
 
 SED_VERSION=$(sed --version 2>/dev/null | head -1 | cut -d ")" -f 2 | tr -d " ")
-if [ "${SED_VERSION}" == "" ];
-then
-	SED_BACKUP=".bak"
-else
-	SED_BACKUP=""
-fi
-
 
 LOGFILE=logfile_`date +%Y%m%d_%H%M%S`.log
 touch ${LOGFILE}
@@ -45,16 +38,18 @@ do
         echo "Replacing kv pair '${KEY_VALUE_PAIR}'" >> ${LOGFILE}
         KEY=$(echo "${KEY_VALUE_PAIR}" | cut -d "=" -f 1)
         VALUE=$(echo "${KEY_VALUE_PAIR}" | cut -d "=" -f 2)
-        echo "The variable '${KEY}' will be replaced by value '${VALUE}'" >> ${LOGFILE}
 
         VALUE=${VALUE//'/'/'\/'}
-        sed -i ${SED_BACKUP} "s/__${KEY}__/${VALUE}/g" ${FILE_TO_ACT_ON} 2>> ${LOGFILE}
-
+        if [ "${SED_VERSION}" == "" ];
+        then
+          # Stupid macOSX 'feature'
+        	sed -i '' "s/__${KEY}__/${VALUE}/g" ${FILE_TO_ACT_ON} 2>> ${LOGFILE}
+        else
+        	sed -i "s/__${KEY}__/${VALUE}/g" ${FILE_TO_ACT_ON} 2>> ${LOGFILE}
+        fi
         if [ $? -ne 0 ];
         then
             echo "Failed :(" >> ${LOGFILE}
-        else
-            echo "Done :)" >> ${LOGFILE}
         fi
     else
         echo "Skipping empty or comment line '${KEY_VALUE_PAIR}' in secrets.txt" >> ${LOGFILE}

@@ -44,14 +44,10 @@ you can still use the mapped path in the docker-compose.yml file on the server d
 │       └── standalone
 │           └── configuration
 │               └── standalone.xml
-├── psama
-│   └── standalone
-│       └── configuration
-│           └── standalone.xml
-├── picsure
-│   └── standalone
-│       └── configuration
-│           └── standalone.xml
+├── wildfly
+│   └── standalone.xml
+│   └── deployments/
+│
 └── transmart
     └── transmartConfig
         ├── Config.groovy
@@ -122,28 +118,52 @@ The certificates for the webserver are also stored in the */cert/server.\** file
 
 The certificates included in this repo are for localhost only, and you will need to replace these with your own real certificates.
 
-# psama
+# wildfly
 
-This service is the back-end portion of the **PIC-SURE Auth Microapp** component. The front-end component, referred to as `psamaui`, is part of the `httpd` service (see above).
+The wildfly container supports several back-end services. The `psama` service for authentication (the **PIC-SURE Auth Microapp** component). It is also the back-end service for the `psamaui` front-end service, which is part of the `httpd` container. 
 
-The service is a Java based application, running on a WildFly application server. The configuration is stored in the standalone.xml file, which is placed at the standard path of *wildfly/standalone/configuration/standalone.xml*
+The `picsure` service for accessing various data sources via queries. It is also the back-end service for the `picsureui` front-end service, which is also part of the `httpd` container. 
 
-### variables
+In this stack, it also has the `picsure-irct-resource` service, to provide access to an i2b2 instance (if it has been configured to allow access to).
+
+The configuration is stored in the standalone.xml file, which is placed at the standard path of */usr/local/wildfly/standalone/configuration/standalone.xml* on the container. 
+
+The file requires the below variables to be set before starting up the container.
+
+### `psama` variables
+
 Name | Description | Sample Value
 -----|-------------|------------------
-`DB_HOST` | The DNS name or IP address of the MySQL database, where the configuration data is stored. The database name is `auth` and stores information, such as resource definitions, query parameters for each user and some user information |
-`DB_PORT` | The port where the MySQL database is listenting on. | 3306
-`DB_USER` | The username for the MySQL database. |
-`DB_PASSWORD`| The password, corresponding to the `DB_USER` username for the MySQL database |
+`PSAMA_AUTH_CLIENT_ID`|__PSAMA_AUTH_CLIENT_ID__
+`PSAMA_AUTH_CLIENT_SECRET`|__PSAMA_AUTH_CLIENT_SECRET__
+`PSAMA_CLIENT_ID`| | 
+`PSAMA_CLIENT_SECRET`| | 
+`PSAMA_CLIENT_SECRET_IS_BASE_64`| boolean value to state if the secret is base64 encoded or not | `false`
+`PSAMA_DB_HOST`| the IP address of the MySQL database | `127.0.0.1` 
+`PSAMA_DB_PORT`| the port where MySQL service is listening on | `3306` 
+`PSAMA_DB_NAME`| the name of the database on the MySQL server | `auth` 
+`PSAMA_DB_USERNAME`| username to access the database | `root` 
+`PSAMA_DB_PASSWORD`| password for accessing the database | `password` 
+`PSAMA_GMAIL_FROM_EMAIL`| email that will appear on messages received from the authorization service | `user@gmail.com` 
+`PSAMA_GMAIL_USERNAME`| the username to access the gMail service | 
+`PSAMA_GMAIL_PASSWORD`| the password for sending e-mails via gMail | 
+`PSAMA_TOS_ENABLED`| is TermsOfService enabled, boolean | `false` 
+`PSAMA_USER_ACTIVATION_REPLY_TO`| URL endpoint to reply with activation messages | `/psama/activation` 
+`PSAMA_USER_ACTIVATION_TEMPLATE_PATH`| | 
+`PSAMA_SYSTEM_NAME`| the name to identify this PIC-SURE API | `pic-sure` 
 
-# picsure
 
-This service is the back-end portion of **PIC-SURE UI** component. It provides query capabilities to several configured data sources, with authentication, auditing and authorization capabilities.
+### `picsure` variables
 
-### variables
 Name | Description | Sample Value
 -----|-------------|------------------
-`DB_HOST` | The DNS name or IP address of the MySQL database, where the configuration data is stored. The database name is `picsure` and stores information, such as resource definitions, query parameters for each user and some user information |
-`DB_PORT` | The port where the MySQL database is listenting on. | 3306
-`DB_USER` | The username for the MySQL database. |
-`DB_PASSWORD`| The password, corresponding to the `DB_USER` username for the MySQL database |
+`PICSURE_CLIENT_SECRET`| |
+`PICSURE_DB_HOST`| the MySQL database IP address | `127.0.0.1`
+`PICSURE_DB_PORT`| the port where MySQL database is listening on | `3306`
+`PICSURE_DB_NAME`| the name of the MySQL database | `picsure`
+`PICSURE_DB_USERNAME`| username for accessing the MySQL database | `root`
+`PICSURE_DB_PASSWORD`| password for accessing the MySQL databae | `password`
+`PICSURE_IRCT_TARGET_URL`| the URL endpoint where the IRCT service is receiving requests | `http://httpd/irct`
+`PICSURE_TOKEN_INTROSPECTION_TOKEN_PS2`| |
+`PICSURE_TOKEN_INTROSPECTION_URL`| |
+`PICSURE_USERID_CLAIM`| the JWT claim to take user identification from | `sub`
