@@ -320,8 +320,8 @@
                 <simple name="java:global/client_secret" value="__IRCT_CLIENT_SECRET__"/>
                 <simple name="java:global/client_id" value="__IRCT_CLIENT_ID__"/>
                 <simple name="java:global/KeyTimeOutInMinutes" value="720"/>
-                <simple name="java:global/verify_user_method" value="__IRCT_VERIFY_USER_METHOD__"/>
-                <simple name="java:global/token_introspection_url" value="__IRCT_TOKEN_INTROSPECTION_URL__"/>
+                <simple name="java:global/verify_user_method" value="tokenIntrospection"/>
+                <simple name="java:global/token_introspection_url" value="http://wildfly:8080/pic-sure-auth-services/auth/token/inspect"/>
                 <simple name="java:global/token_introspection_token" value="__IRCT_TOKEN_INTROSPECTION_TOKEN__"/>
                 <simple name="java:global/whitelist_enabled" value="__IRCT_WHITELIST_ENABLED__" type="boolean"/>
                 <simple name="java:global/whitelist_config_file" value="__IRCT_WHITELIST_CONFIG_FILE__"/>

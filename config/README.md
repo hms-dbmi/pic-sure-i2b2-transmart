@@ -167,3 +167,14 @@ Name | Description | Sample Value
 `PICSURE_TOKEN_INTROSPECTION_TOKEN_PS2`| |
 `PICSURE_TOKEN_INTROSPECTION_URL`| |
 `PICSURE_USERID_CLAIM`| the JWT claim to take user identification from | `sub`
+
+## IRCT
+
+If the `IRCT` service is required, the configuration of its _standalone.xml_ file can be found in the _templates/irct/wildfly/standalone/configure/standalone.xml_ path of this repo.
+
+The following variables will need to be changed.
+
+Name | Description | Sample Value
+-----|-------------|------------------
+
+
