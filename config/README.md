@@ -112,7 +112,7 @@ Name | Description | Sample Value
 ### `picsureui` variables
 Name | Description | Sample Value
 -----|-------------|------------------
-`AUTH0_CLIENT_ID` | Client ID for authentication purposes. |
+`PICSURE_APP_UUID` | The `psama` application UUID, once configured | 00000000-0000-0000-0000-000000000000
 
 The certificates for the webserver are also stored in the */cert/server.\** files. 
 

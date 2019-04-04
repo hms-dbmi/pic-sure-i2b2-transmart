@@ -1,18 +1,13 @@
 {
-        "resources": [
-                {
-                        "id": "NHANESwithIRCT",
-                        "name": "NHANESviaIRCT",
-                        "basePath": "/irct",
-                        "basePui": "/i2b2-nhanes/Demo/Demo"
-                },
-                {
-                        "id": "b71b38c7-4a56-11e9-88ca-0242ac110002",
-                        "name": "NHANESviaPICSURE",
-                        "basePath": "/picsure",
-                        "basePui": "/i2b2-nhanes/Demo/Demo"
-                }
-        ],
-        "helpLink": "mailto:sample@email.com",
-        "advancedSearchLink": "/transmart/"
+  "resources": [
+          {
+                  "id": "NHANESviaPICSURE",
+                  "name": "NHANES",
+                  "basePath": "/picsure/",
+                  "uuid":"__PICSURE_APP_UUID__",
+                  "basePui": "/i2b2-nhanes/Demo/Demo"
+          }
+  ],
+  "helpLink": "mailto:sample@email.com",
+  "advancedSearchLink": "/transmart/login/callback_processor"
 }
