@@ -1,11 +1,11 @@
 {
   "resources": [
           {
-                  "id": "NHANESviaPICSURE",
+                  "id": "NHANESviaIRCT",
                   "name": "NHANES",
-                  "basePath": "/picsure/",
+                  "basePath": "/irct",
                   "uuid":"__PICSURE_APP_UUID__",
-                  "basePui": "/i2b2-nhanes/Demo/Demo"
+                  "basePui": "/i2b2-wildfly-default/Demo"
           }
   ],
   "helpLink": "mailto:sample@email.com",
