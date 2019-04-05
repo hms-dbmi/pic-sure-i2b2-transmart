@@ -43,11 +43,11 @@ After distributing the above files, please follow the instructions in the [confi
 
 The stack requires that three separate schemas be present in a MySQL database. The connection parameters can be configured, but the schema definitions has to follow a predetermined layout.
 
-To create the `irct` schema in the database, use the scripts in the [https://github.com/hms-dbmi/IRCT/IRCT-API/src/main/resources/sql_templates](https://github.com/hms-dbmi/IRCT/IRCT-API/src/main/resources/sql_templates) repository.
+To create the `irct` schema in the database, use the scripts in the [https://github.com/hms-dbmi/IRCT/tree/master/IRCT-API/src/main/resources/sql_templates](https://github.com/hms-dbmi/IRCT/tree/master/IRCT-API/src/main/resources/sql_templates) repository.
 
 To create the `psama` schema in the database, use the scripts in the [https://github.com/hms-dbmi/pic-sure-auth-microapp/tree/master/pic-sure-auth-db/db](https://github.com/hms-dbmi/pic-sure-auth-microapp/tree/master/pic-sure-auth-db/db) repository.
 
-To create the `picsure` schema in the database, use the scripts in the [https://github.com/hms-dbmi/pic-sure/pic-sure/pic-sure-api-data/src/main/resources/db](https://github.com/hms-dbmi/pic-sure/pic-sure/pic-sure-api-data/src/main/resources/db) repository.
+To create the `picsure` schema in the database, use the scripts in the [https://github.com/hms-dbmi/pic-sure/tree/master/pic-sure-api-data/src/main/resources/db](https://github.com/hms-dbmi/pic-sure/tree/master/pic-sure-api-data/src/main/resources/db) repository.
 
 # Configure `PSAMA`
 
