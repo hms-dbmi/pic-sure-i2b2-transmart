@@ -39,6 +39,16 @@ After distributing the above files, please follow the instructions in the [confi
 
 <small>Note: A good initial test is to bring up the `httpd` service, and see if we can access the service via a webbrowser. The server's ip address or dns name, followed by `/about.html`</small>
 
+# Create required database schemas
+
+The stack requires that three separate schemas be present in a MySQL database. The connection parameters can be configured, but the schema definitions has to follow a predetermined layout.
+
+To create the `irct` schema in the database, use the scripts in the [https://github.com/hms-dbmi/IRCT/IRCT-API/src/main/resources/sql_templates](https://github.com/hms-dbmi/IRCT/IRCT-API/src/main/resources/sql_templates) repository.
+
+To create the `psama` schema in the database, use the scripts in the [https://github.com/hms-dbmi/pic-sure-auth-microapp/tree/master/pic-sure-auth-db/db](https://github.com/hms-dbmi/pic-sure-auth-microapp/tree/master/pic-sure-auth-db/db) repository.
+
+To create the `picsure` schema in the database, use the scripts in the [https://github.com/hms-dbmi/pic-sure/pic-sure/pic-sure-api-data/src/main/resources/db](https://github.com/hms-dbmi/pic-sure/pic-sure/pic-sure-api-data/src/main/resources/db) repository.
+
 # Configure `PSAMA`
 
 The `psama` service and the `psamaui` component of the `httpd` service works together to allow administration of users, applications and roles for the users to those applications. The `psama` service relies on its own mysql connection to a database, that has to be called `auth`.
