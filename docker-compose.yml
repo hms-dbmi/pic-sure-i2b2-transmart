@@ -57,7 +57,6 @@ services:
       - 5000
     restart: always
     depends_on:
-      - irct
       - redis
       - rabbitmq
       - worker
@@ -101,20 +100,6 @@ services:
     networks:
       - public
 
-  irct:
-    image: dbmi/irct:master_72135ce
-    volumes:
-      - /usr/local/docker-config/irct/wildfly/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
-    depends_on:
-      - i2b2-wildfly
-    restart: always
-    networks:
-      - public
-    expose:
-      - 8080
-
   i2b2-wildfly:
     image: dbmi/i2b2-wildfly:1.7.09c-18.1-beta-hotfix
     environment:
@@ -153,6 +138,7 @@ services:
       - copy-pic-sure-war
       - copy-pic-sure-auth-war
       - copy-pic-sure-irct-resource
+      - copy-irct
 
   copy-pic-sure-war:
     image: dbmi/picsure2:picsure246-jndi.7c32223
@@ -160,6 +146,13 @@ services:
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-api-2.war /var/tmp/pic-sure-api-2.war
+
+  copy-irct:
+    image: dbmi/irct:master_72135ce
+    user: root
+    volumes:
+      - /usr/local/docker-config/wildfly/deployments:/var/tmp
+    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/IRCT-CL.war /var/tmp/IRCT-CL.war
 
   copy-pic-sure-irct-resource:
     image: dbmi/pic-sure-irct-resource:picsure246-jndi.ea3c615_jason

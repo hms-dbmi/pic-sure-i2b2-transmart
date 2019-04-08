@@ -8,9 +8,9 @@ grails {
 
 			auth0 {
 				active = false
-				clientId = '__AUTH0_CLIENT_ID__'
-				clientSecret = '__AUTH0_CLIENT_SECRET__'
-				domain = '__AUTH0_DOMAIN__'
+				clientId = '<UNUSED_WITH_PSAMA>'
+				clientSecret = '<UNUSED_WITH_PSAMA>'
+				domain = '<UNUSED_WITH_PSAMA>'
 				useRecaptcha = false
 				registrationEnabled = false
 				webtaskBaseUrl = 'https://avillachlab.us.webtask.io'
