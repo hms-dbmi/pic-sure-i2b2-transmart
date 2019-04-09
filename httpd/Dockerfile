@@ -31,3 +31,4 @@ COPY --from=picsureui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
 RUN rm -fR ${HTTPD_PREFIX}/htdocs/settings
 
 COPY index.html ${HTTPD_PREFIX}/htdocs/
+COPY NHANESLogo.jpg ${HTTPD_PREFIX}/htdocs/images/PrecisionLinkPortal.png 
