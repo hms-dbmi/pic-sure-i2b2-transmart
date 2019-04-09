@@ -134,6 +134,7 @@ services:
       - /usr/local/docker-config/wildfly/modules/system/layers/base/com/sql/:/opt/jboss/wildfly/modules/system/layers/base/com/sql/
       - /usr/local/docker-config/wildfly/deployments/:/opt/jboss/wildfly/standalone/deployments/
       - /usr/local/docker-config/wildfly/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml
+      - /usr/local/docker-config/wildfly/resources/activation.mustache:/opt/jboss/wildfly/standalone/configuration/activation.mustache
     depends_on:
       - copy-pic-sure-war
       - copy-pic-sure-auth-war
@@ -167,7 +168,6 @@ services:
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-auth-services.war /var/tmp/pic-sure-auth-services.war
-
 
 networks:
   public:
