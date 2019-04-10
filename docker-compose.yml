@@ -18,7 +18,7 @@ services:
       - public
 
   transmart:
-    image: dbmi/i2b2transmart:18.1-Quickstart
+    image: dbmi/i2b2transmart:i2b2tm-130_pic-sure-auth.b64ac2da74
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
