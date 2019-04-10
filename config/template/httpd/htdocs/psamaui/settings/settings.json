@@ -1,7 +1,7 @@
 {
-  "client_id":"__PSAMA_CLIENT_ID__",
-  "auth0domain":"__PSAMA_AUTH_DOMAIN__",
+	"client_id":"__PSAMA_CLIENT_ID__",
+	"auth0domain":"__PSAMA_AUTH_DOMAIN__",
 	"psamaServiceUrl":"/psama",
 	"customizeAuth0Login": true,
-	"basePath":"/psamaui"
+	"basePath":"/psama"
 }
