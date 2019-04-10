@@ -1,10 +1,10 @@
-# i2b2/tranSMART 19.1 M1 Architectural Overview
+# i2b2/tranSMART 19.1 M1 Platform Architectural Overview
 
 ## Introduction
 
-The i2b2/tranSMART 19.1 M1 release serves as a production deployment reference
-for an integrated research environment comprised of the following user-facing 
-tools:
+The i2b2/tranSMART 19.1 M1 Platform release serves as a production deployment 
+reference for an integrated research environment comprised of the following 
+user-facing tools:
 
 i2b2 - https://i2b2.org
 tranSMART - https://transmartfoundation.org
@@ -55,9 +55,9 @@ configurations can be mapped to any other architecture.
 
 ### Network topology as described by the docker-compose file
 
-The docker-compose file specifies two network segments. Within a docker environment, the
-network segments are implemented as host-level iptables routing configurations. In a
-non-docker environment these network segments would be configured using separate subnets
+The docker-compose file specifies two *networks* entries. Within a docker environment, the
+network segments are implemented by the docker engine as host-level iptables routing configurations. 
+In a non-docker environment these network segments would be configured using separate subnets
 segmented by firewall rules. 
 
 Network segments in the reference docker-compose file:
@@ -71,7 +71,7 @@ paths configured through its proxy configuration.
 
 ### Directory mapping as described by the docker-compose file
 
-The docker-compose file specifies a variety of host-mapped volumes. These volumes
+The docker-compose file specifies a variety of host-mapped *volumes*. These volumes
 express files and folders that are overlayed on top of the file system view that
 the service containers run within. This allows us to configure environment specific
 settings and files external to the docker-compose service stack without using
@@ -112,10 +112,66 @@ docker-compose documentation, if you wish to modify the configuration for your
 environment, please refer to the docker-compose documentation which is publically
 available.
 
+### Distributed system deployment as described by the docker-compose file
 
+The i2b2/tranSMART 19.1 Platform is a distributed system. It is composed of several
+independently managed processes working together to provide a set of functionality
+to users. The docker-compose stack results in the majority of the system being deployed
+on a single compute node, however the network topology and container isolation abstractions
+provided by docker result in the system behaving as if it were distributed across many
+different machines.
 
+This perspective on the system that it is distributed is essential to properly troubleshoot,
+performance tune, and scale the i2b2/tranSMART 19.1 Platform.
 
+Each docker-compose service should be viewed as a separate node in the distributed system. The
+dependencies of each service are expressed in the docker-compose *depends_on* entries.
 
+Nodes in the i2b2/tranSMART 19.1 Platform as a distributed system and their dependency relationships
+as managed within the docker-compose stack:
+
+*note: only services which have dependencies within the docker-compose service stack have entries in this table*
+
+|Service Node|Dependency Services|
+|:-----------|:-----------------:|
+|httpd|wildfly,transmart,fractalis|
+|transmart|wildfly,fractalis,solr,|
+|fractalis|redis,rabbitmq,worker|
+|worker|redis,rabbitmq,wildfly|
+|wildfly|i2b2-wildfly,copy-pic-sure-war,copy-pic-sure-auth-war,copy-pic-sure-irct-resource,copy-irct|
+
+Additionally, external dependencies such as Auth0, the DBMS housing the i2b2 data warehouse and tranSMART
+specific schemas and the DBMS hosting the application specific databases for PIC-SURE services should be
+considered nodes in the distributed system as well. These components and their management are external
+to the i2b2/tranSMART 19.1 release. Configuration and provisioning of these services should be done
+in accordance with the guidelines of your institution's IT department.
+
+Nodes in teh i2b2/tranSMART 19.1 Plaftorm as a distributed system and their dependency relationships
+which must be managed externally to the docker-compose stack and production deployment reference:
+
+|External Service|Dependent docker-compose Services|
+|:---------------|:-------------------------------:|
+|Auth0|wildfly, httpd|
+|Oracle DB|i2b2-wildfly,transmart|
+|MySQL DB|wildfly|
+
+### Wildfly service deployment notes
+
+The copy-pic-sure-war, copy-pic-sure-irct-resource, copy-pic-sure-auth-war and copy-irct docker-compose
+service definitions are configured to copy the necessary deployment artifacts from each Java 11 compatible
+J2EE web application from the published standalone images into a single Wildfly instance's deployment directory. 
+
+These web applications work as a pipeline of sorts to provide data to users in expected formats, audit data
+access and authorize requests. As data flows across these web applications the memory used to store a dataset
+at each step is required to be available for each application. Because a JVM must have enough heapspace to
+store the largest working set it will ever expect to have in memory, without this consolidation onto a
+single container this memory requirement would have to be met separately for each of these applications.
+
+By deploying these applications to a single wildfly instance, the heap memory freed as one application finishes
+its job with a dataset can be used by the next application in the pipeline. This effectively cuts the memory
+requirement in half for this set of web applications. Additionally, since each wildfly instance and each JVM
+process uses some memory by itself without any web applications being deployed, we actually save more
+memory by doing this than just the elastic working set of our data pipeline. 
 
 
 
