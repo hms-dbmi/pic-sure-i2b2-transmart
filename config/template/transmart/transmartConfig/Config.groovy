@@ -77,6 +77,30 @@ com.rwg.solr.scheme = 'http'
 com.rwg.solr.host   = '__TM_SOLR_HOST__'
 com.rwg.solr.browse.path   = '/solr/rwg/select/'
 
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+        '/**':                          'IS_AUTHENTICATED_REMEMBERED',
+        '/accessLog/**':                'ROLE_ADMIN',
+        '/analysis/getGenePatternFile': 'permitAll',
+        '/analysis/getTestFile':        'permitAll',
+        '/assets/**':                   'permitAll',
+        '/authUser/**':                 'ROLE_ADMIN',
+        '/authUserSecureAccess/**':     'ROLE_ADMIN',
+        '/css/**':                      'permitAll',
+        '/images/**':                   'permitAll',
+        '/js/**':                       'permitAll',
+        '/login/**':                    'permitAll',
+        '/requestmap/**':               'ROLE_ADMIN',
+        '/role/**':                     'ROLE_ADMIN',
+        '/search/loadAJAX**':           'permitAll',
+        '/secureObject/**':             'ROLE_ADMIN',
+        '/secureObjectAccess/**':       'ROLE_ADMIN',
+        '/secureObjectPath/**':         'ROLE_ADMIN',
+        '/userGroup/**':                'ROLE_ADMIN',
+        '/auth0/admin*':                'ROLE_ADMIN',
+        '/auth0/**':                    'permitAll',
+        '/registration/**':             'permitAll',
+        '/cms/**':                      'permitAll'
+]       
 
 //Configurations for solr.
 com.recomdata.solr.baseURL = '__TM_SOLR_BASE_URL__'
