@@ -1,4 +1,4 @@
-FROM dbmi/pic-sure-ui:master_ce15e2d AS picsureui
+FROM dbmi/pic-sure-ui:picsure278_37dc4bd AS picsureui
 FROM dbmi/pic-sure-auth-ui:master_4bbe3c0 AS psamaui
 
 FROM httpd:2.4.27-alpine
@@ -31,4 +31,4 @@ COPY --from=picsureui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
 RUN rm -fR ${HTTPD_PREFIX}/htdocs/settings
 
 COPY index.html ${HTTPD_PREFIX}/htdocs/
-COPY NHANESLogo.jpg ${HTTPD_PREFIX}/htdocs/images/PrecisionLinkPortal.png 
+COPY NHANESLogo.jpg ${HTTPD_PREFIX}/htdocs/images/PrecisionLinkPortal.png
