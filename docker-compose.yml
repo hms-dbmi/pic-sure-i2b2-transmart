@@ -132,6 +132,7 @@ services:
     user: root
     volumes:
       - /usr/local/docker-config/wildfly/modules/system/layers/base/com/sql/:/opt/jboss/wildfly/modules/system/layers/base/com/sql/
+      - /usr/local/docker-config/wildfly/modules/system/layers/base/com/oracle/:/opt/jboss/wildfly/modules/system/layers/base/com/oracle/
       - /usr/local/docker-config/wildfly/deployments/:/opt/jboss/wildfly/standalone/deployments/
       - /usr/local/docker-config/wildfly/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml
       - /usr/local/docker-config/wildfly/emailTemplates/:/opt/jboss/wildfly/standalone/configuration/emailTemplates/
@@ -156,7 +157,7 @@ services:
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/IRCT-CL.war /var/tmp/IRCT-CL.war
 
   copy-pic-sure-irct-resource:
-    image: dbmi/pic-sure-irct-resource:picsure246-jndi.ea3c615_jason
+    image: dbmi/pic-sure-irct-resource:picsure246-jndi.7c32223
     user: root
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
