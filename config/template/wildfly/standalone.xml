@@ -482,10 +482,12 @@
                 <simple name="java:global/client_id" value="__PSAMA_CLIENT_ID__"/>
                 <simple name="java:global/systemName" value="__PSAMA_SYSTEM_NAME__"/>
                 <simple name="java:global/clientSecretIsBase64" value="__PSAMA_CLIENT_SECRET_IS_BASE_64__"/>
-                <simple name="java:global/userActivationTemplatePath" value="__PSAMA_USER_ACTIVATION_TEMPLATE_PATH__"/>
                 <simple name="java:global/userActivationReplyTo" value="__PSAMA_USER_ACTIVATION_REPLY_TO__"/>
                 <simple name="java:global/tosEnabled" value="__PSAMA_TOS_ENABLED__" />
                 <simple name="java:global/auth0host" value="__PSAMA_AUTH0_HOST__" />
+                <simple name="java:global/emailTemplatePath" value="__PSAMA_EMAIL_TEMPLATE_PATH__"/>
+                <simple name="java:global/deniedEmailEnabled" value="__PSAMA_DENIED_EMAIL_ENABLED__"/>
+                <simple name="java:global/adminUsers" value="__PSAMA_ADMIN_USERS__"/>
 
                 <!-- irct service -->
                 <simple name="java:global/domain" value="unused_but_required"/>

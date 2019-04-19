@@ -3,5 +3,6 @@
 	"auth0domain":"__PSAMA_AUTH_DOMAIN__",
 	"psamaServiceUrl":"/psama",
 	"customizeAuth0Login": true,
-	"basePath":"/psama"
+	"basePath":"/psama",
+	"helpLink":"__PSAMA_HELP_LINK__"
 }

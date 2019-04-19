@@ -32,7 +32,10 @@ you can still use the mapped path in the docker-compose.yml file on the server d
 │       │   └── settings
 │       │       └── settings.json
 │       └── psamaui
-│           └── settings
+│           └── overrides
+│           │   ├── login.js
+│           │   └── not_authorized.hbs
+└           └── settings
 │               └── settings.json
 ├── irct
 │   └── wildfly
@@ -102,7 +105,12 @@ Name | Description | Sample Value
 
 This service provides the web server to house the front-end components for the entire stack. All services that include a front-end UI component are built as a subdirectory under the main document root. The service is based on Apache2 webserver. The files stored in this directory are used to configure each component.
 
-Each subsystem/subdirectory contains a *settings/settings.json* file, which define the behavior of the webapplication. 
+Each subsystem/subdirectory contains a *settings/settings.json* file, which define the behavior of the webapplication.
+
+In addition, each UI application may have *overrides* folder where all UI customization stored for particular setup. 
+You will need to use docker volume and map all directories (*overrides*, *settings*) to directory in httpd container, for example
+ - */usr/local/docker-config/httpd/htdocs/psamaui/settings:/usr/local/apache2/htdocs/psamaui/settings*
+ - */usr/local/docker-config/httpd/htdocs/psamaui/overrides:/usr/local/apache2/htdocs/psamaui/overrides*
 
 ### `psamaui` variables
 Name | Description | Sample Value
@@ -149,8 +157,11 @@ Name | Description | Sample Value
 `PSAMA_GMAIL_PASSWORD`| the password for sending e-mails via gMail | 
 `PSAMA_TOS_ENABLED`| is TermsOfService enabled, boolean | `false` 
 `PSAMA_USER_ACTIVATION_REPLY_TO`| URL endpoint to reply with activation messages | `/psama/activation` 
-`PSAMA_USER_ACTIVATION_TEMPLATE_PATH`| | 
-`PSAMA_SYSTEM_NAME`| the name to identify this PIC-SURE API | `pic-sure` 
+`PSAMA_SYSTEM_NAME`| the name to identify this PIC-SURE API | `pic-sure`
+`PSAMA_EMAIL_TEMPLATE_PATH`| the path where email templates are stored. PSAMA will be looking there | `/opt/jboss/wildfly/standalone/configuration/emailTemplates/`
+`PSAMA_DENIED_EMAIL_ENABLED`| boolean flag to send email to ADMIN if user fails to login due to not being added prior to that | `true/false` 
+`PSAMA_ADMIN_USERS`| comma separated email of ADMIN users | `admin@dbmi.hms.harvard.edu, useradmin@dbmi.hms.harvard.edu` 
+`PSAMA_HELP_LINK`| stored in settings.json. A link for user support, could be support team email, or dedicated page | `mailto:support@your-domain.com`
 
 
 ### `picsure` variables

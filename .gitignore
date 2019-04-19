@@ -1,1 +1,4 @@
 logfile_*_*.log
+target/
+.idea/
+*.iml
