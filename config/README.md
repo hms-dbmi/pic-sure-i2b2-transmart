@@ -32,10 +32,7 @@ you can still use the mapped path in the docker-compose.yml file on the server d
 │       │   └── settings
 │       │       └── settings.json
 │       └── psamaui
-│           └── overrides
-│           │   ├── login.js
-│           │   └── not_authorized.hbs
-└           └── settings
+│           └── settings
 │               └── settings.json
 ├── irct
 │   └── wildfly
@@ -60,7 +57,7 @@ you can still use the mapped path in the docker-compose.yml file on the server d
 
 # Conventions used throughout these files
 
-Each file containes one or more configuration variables that require 
+Each file contains one or more configuration variables that require 
 values to be filled in for the corresponding service to operate.
 
 This document lists all variables that need to have an actual value.
