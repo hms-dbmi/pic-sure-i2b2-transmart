@@ -13,7 +13,6 @@ services:
     volumes:
       - /usr/local/docker-config/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
       - /usr/local/docker-config/httpd/htdocs/psamaui/settings:/usr/local/apache2/htdocs/psamaui/settings
-      - /usr/local/docker-config/httpd/htdocs/psamaui/overrides:/usr/local/apache2/htdocs/psamaui/overrides
       - /usr/local/docker-config/httpd/cert:/usr/local/apache2/cert
     networks:
       - public
@@ -135,7 +134,8 @@ services:
       - /usr/local/docker-config/wildfly/modules/system/layers/base/com/oracle/:/opt/jboss/wildfly/modules/system/layers/base/com/oracle/
       - /usr/local/docker-config/wildfly/deployments/:/opt/jboss/wildfly/standalone/deployments/
       - /usr/local/docker-config/wildfly/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml
-      - /usr/local/docker-config/wildfly/emailTemplates/:/opt/jboss/wildfly/standalone/configuration/emailTemplates/
+      - /usr/local/docker-config/wildfly/emailTemplates/accessEmail.mustache:/opt/jboss/wildfly/standalone/configuration/emailTemplates/accessEmail.mustache
+      - /usr/local/docker-config/wildfly/emailTemplates/deniedAccessEmail.mustache:/opt/jboss/wildfly/standalone/configuration/emailTemplates/deniedAccessEmail.mustache
     depends_on:
       - copy-pic-sure-war
       - copy-pic-sure-auth-war
