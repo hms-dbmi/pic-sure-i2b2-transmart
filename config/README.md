@@ -64,6 +64,10 @@ This document lists all variables that need to have an actual value.
 
 All values that need to be replaced are noted as "__VARIABLE_VALUE__". Depending on the variable, it either requires a string value, within quotes, a numeric value, or a boolean value (true or false). The descriptions below for each variable will indicate the type and if possible, suggestions for a value.
 
+## Database Configuration
+
+https://github.com/hms-dbmi/PIC-SURE-resources/tree/master/resource/i2b2
+
 ## i2b2/tranSmart
 
 i2b2/tranSmart is a Java application, running on a Tomcat application server. Files configured are *Config.groovy* and *DataSource.groovy*.
