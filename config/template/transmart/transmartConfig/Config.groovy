@@ -100,7 +100,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/auth0/**':                    'permitAll',
         '/registration/**':             'permitAll',
         '/cms/**':                      'permitAll'
-]       
+]
 
 //Configurations for solr.
 com.recomdata.solr.baseURL = '__TM_SOLR_BASE_URL__'
@@ -150,6 +150,24 @@ log4j = {
 		debug 'file'
 	}
 }
+
+// Remove menu options that are no longer used.
+ui.tabs.browse.hide = true
+ui.tabs.datasetExplorer.analysisJobs.show = false
+ui.tabs.datasetExplorer.dataExport.hide = true
+ui.tabs.datasetExplorer.dataExportJobs.hide = true
+ui.tabs.datasetExplorer.gridView.hide = true
+ui.tabs.datasetExplorer.workspace.hide = true
+ui.tabs.geneSignature.hide = true
+ui.tabs.gwas.hide = true
+ui.tabs.sampleExplorer.hide = true
+ui.tabs.search.show = false
+ui.tabs.uploadData.hide = true
+
+fractalis.active=true
+fractalis.dataSource='http://wildfly:8080/IRCT-CL/rest'
+fractalis.resourceName='i2b2-wildfly-default/Demo'
+fractalis.node='/fractalis'
 
 org.transmart.configFine = true
 
