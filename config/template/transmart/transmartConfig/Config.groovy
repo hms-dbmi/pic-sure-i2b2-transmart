@@ -60,6 +60,8 @@ grails {
 
 com.recomdata.appTitle = 'i2b2/tranSMART'
 com.recomdata.largeLogo = 'transmartlogoHMS.jpg'
+// Browser timeout in seconds
+com.recomdata.sessionTimeout = 300
 
 edu.harvard.transmart.email.notify = '__TM_EMAIL_NOTIFY__'
 edu.harvard.transmart.email.logo = '__TM_EMAIL_LOGO__'
