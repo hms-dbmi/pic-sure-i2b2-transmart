@@ -65,10 +65,10 @@ edu.harvard.transmart.email.notify = '__TM_EMAIL_NOTIFY__'
 edu.harvard.transmart.email.logo = '__TM_EMAIL_LOGO__'
 
 org.transmart.security.oauthEnabled = true
+org.transmart.security.oauth.url.logout = '/transmart/logout'
 org.transmart.security.oauth.login_endpoint = '/psamaui/login'
 org.transmart.security.oauth.tokeninspect_endpoint = '__TM_OAUTH_TOKENINTROSPECTION_ENDPOINT__'
 org.transmart.security.oauth.service_token = '__TM_OAUTH_SERVICE_TOKEN__'
-org.transmart.security.oauth.application_id = '__TM_OAUTH_SERVICE_APP_ID__'
 
 com.recomdata.adminEmail = '__TM_ADMIN_EMAIL__'
 com.recomdata.contactUs = '__TM_CONTACT_US__'
