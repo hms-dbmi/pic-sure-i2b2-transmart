@@ -60,14 +60,14 @@ grails {
 
 com.recomdata.appTitle = 'i2b2/tranSMART'
 com.recomdata.largeLogo = 'transmartlogoHMS.jpg'
-// Browser timeout in seconds
+// Browser timeout in seconds, 300 = 5 minutes of inactivity
 com.recomdata.sessionTimeout = 300
 
 edu.harvard.transmart.email.notify = '__TM_EMAIL_NOTIFY__'
 edu.harvard.transmart.email.logo = '__TM_EMAIL_LOGO__'
 
 org.transmart.security.oauthEnabled = true
-org.transmart.security.oauth.url.logout = '/transmart/logout'
+org.transmart.security.oauth.url.logout = '/transmart/logout/psama'
 org.transmart.security.oauth.login_endpoint = '/psamaui/login'
 org.transmart.security.oauth.tokeninspect_endpoint = '__TM_OAUTH_TOKENINTROSPECTION_ENDPOINT__'
 org.transmart.security.oauth.service_token = '__TM_OAUTH_SERVICE_TOKEN__'
