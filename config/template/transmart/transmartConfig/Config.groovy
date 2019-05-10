@@ -68,7 +68,10 @@ edu.harvard.transmart.email.logo = '__TM_EMAIL_LOGO__'
 
 org.transmart.security.oauthEnabled = true
 org.transmart.security.oauth.url.logout = '/transmart/logout/psama'
-org.transmart.security.oauth.login_endpoint = '/psamaui/login'
+
+org.transmart.security.oauth.login_endpoint = 'https://ec2-3-80-214-184.compute-1.amazonaws.com/psamaui/login?redirection_url=/transmart/login/callback_processor'
+org.transmart.security.oauth.logout_endpoint = 'https://ec2-3-80-214-184.compute-1.amazonaws.com/psamaui/logout?redirection_url=/transmart/login/callback_processor'
+
 org.transmart.security.oauth.tokeninspect_endpoint = '__TM_OAUTH_TOKENINTROSPECTION_ENDPOINT__'
 org.transmart.security.oauth.service_token = '__TM_OAUTH_SERVICE_TOKEN__'
 

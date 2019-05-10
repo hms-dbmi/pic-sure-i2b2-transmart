@@ -1,5 +1,5 @@
 FROM dbmi/pic-sure-ui:picsure278_37dc4bd AS picsureui
-FROM dbmi/pic-sure-auth-ui:master_4bbe3c0 AS psamaui
+FROM dbmi/pic-sure-auth-ui:picsure301.638d040 AS psamaui
 
 FROM httpd:2.4.27-alpine
 
