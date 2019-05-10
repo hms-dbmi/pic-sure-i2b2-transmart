@@ -18,7 +18,7 @@ services:
       - public
 
   transmart:
-    image: dbmi/i2b2transmart:pre_19.1-M1_release.a820a5b829
+    image: dbmi/i2b2transmart:pre_19.1-M1_release.c543bdbc95
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
