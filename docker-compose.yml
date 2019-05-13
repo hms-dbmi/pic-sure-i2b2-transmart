@@ -157,7 +157,7 @@ services:
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/IRCT-CL.war /var/tmp/IRCT-CL.war
 
   copy-pic-sure-irct-resource:
-    image: dbmi/pic-sure-irct-resource:picsure246-jndi.7c32223
+    image: dbmi/pic-sure-irct-resource:picsure246-jndi.ea3c615_jason
     user: root
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
