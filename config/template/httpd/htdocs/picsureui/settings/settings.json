@@ -3,8 +3,8 @@
           {
                   "id": "NHANESviaIRCT",
                   "name": "NHANES",
-                  "basePath": "/irct",
-                  "uuid":"__PICSURE_APP_UUID__",
+                  "basePath": "/picsure/",
+                  "uuid":"__PICSURE_IRCT_RESOURCE_UUID__",
                   "basePui": "/i2b2-wildfly-default/Demo"
           }
   ],
