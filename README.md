@@ -10,6 +10,10 @@ Ensure that you have `docker-compose` installed on the host machine.
 
 The UNIX account running the below commands need to have access to the `docker` command, usually, by including the account in the `docker` group.
 
+Also, to provide data, a valid i2b2 database is required to be running somewhere on the network. To create and configure a new database, please follow the instructions on the [etl-client-docker](https://github.com/hms-dbmi/etl-client-docker) repo's README page.
+
+Several database connection information will be required during the config phase, while setting up this stack.
+
 # Installation
 
 Run the following commands to install/build the whole stack. 
@@ -35,7 +39,7 @@ For docker based installation, copy the entire directory out of the repo to, for
 
 `cp -r config /usr/local/docker-config`
 
-After distributing the above files, please follow the instructions in the [config/README.md](config/README.md) file, to replace the values for each variable documented.
+After distributing the above files, please follow the instructions in the [config/README.md](config/README.md) file, to replace the values for each variable documented. As a convenience method, you can create a secrets file and run the [config/tools/config.sh](config/tools/config.sh) script to populate the variables.
 
 <small>Note: A good initial test is to bring up the `httpd` service, and see if we can access the service via a webbrowser. The server's ip address or dns name, followed by `/about.html`</small>
 
