@@ -59,7 +59,8 @@ grails {
 }
 
 com.recomdata.appTitle = 'i2b2/tranSMART'
-com.recomdata.largeLogo = 'transmartlogoHMS.jpg'
+// Logo image URL. It can be a relative or an absolute URL
+//com.recomdata.largeLogo = 'images/transmartlogoHMS.jpg'
 // Browser timeout in seconds, 300 = 5 minutes of inactivity
 com.recomdata.sessionTimeout = 300
 
