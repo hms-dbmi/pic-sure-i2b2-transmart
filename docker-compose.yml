@@ -13,12 +13,13 @@ services:
     volumes:
       - /usr/local/docker-config/httpd/htdocs/picsureui/settings:/usr/local/apache2/htdocs/picsureui/settings
       - /usr/local/docker-config/httpd/htdocs/psamaui/settings:/usr/local/apache2/htdocs/psamaui/settings
+      - /usr/local/docker-config/httpd/htdocs/static:/usr/local/apache2/htdocs/static
       - /usr/local/docker-config/httpd/cert:/usr/local/apache2/cert
     networks:
       - public
 
   transmart:
-    image: dbmi/i2b2transmart:pre_19.1-M1_release.653ba327f9
+    image: dbmi/i2b2transmart:pre_19.1-M1_release.01dd9976e7
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
