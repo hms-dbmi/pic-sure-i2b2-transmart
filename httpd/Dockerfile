@@ -30,5 +30,6 @@ COPY --from=picsureui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
 # some directories
 RUN rm -fR ${HTTPD_PREFIX}/htdocs/settings
 
+RUN mkdir /usr/local/apache2/htdocs/static
+COPY *.jpg /usr/local/apache2/htdocs/static/
 COPY index.html ${HTTPD_PREFIX}/htdocs/
-COPY NHANESLogo.jpg ${HTTPD_PREFIX}/htdocs/images/PrecisionLinkPortal.png
