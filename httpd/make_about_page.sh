@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh +x
 #
 # If you choose to create a runtime generated /about.html page, inside the `httpd` container
 # then run this script after your `docker-compose up -d` command has completed.
@@ -138,6 +138,6 @@ then
 	printf "Error: Could not determine the httpd container's name.\nPlease start up the container with 'docker-compose up -d httpd' command first.\n"
 	exit 2
 else
-	docker cp /tmp/about.html pic-sure-i2b2-transmart_httpd_1:/usr/local/apache2/htdocs/about.html
+	docker cp /tmp/about.html ${CONTAINER_NAME}:/usr/local/apache2/htdocs/about.html
 fi
-#rm -f /tmp/about.html
+rm -f /tmp/about.html
