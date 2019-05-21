@@ -95,7 +95,8 @@ cat <<EOP > /tmp/about.html
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">PIC-SURE</a>
+      <a class="navbar-brand" href="/picsureui">PIC-SURE UI</a>
+			<h2>About Page</h2>
     </nav>
 
   <main role="main" class="container">
