@@ -20,7 +20,7 @@ getServiceList() {
     CONTAINER_ID=$(docker ps --filter name=$CONTAINER_NAME --format {{.ID}})
     CONTAINER_IMAGE=$(docker ps --filter name=$CONTAINER_NAME --format {{.Image}})
     CONTAINER_COMMAND=$(docker ps --filter name=$CONTAINER_NAME --format {{.Command}})
-    CONTAINER_CREATEDAT=$(docker ps --filter name=$CONTAINER_NAME --format {{.CreatedAt}})
+    CONTAINER_CREATEDAT=$(docker inspect $CONTAINER_NAME | jq .[0].Created)
     CONTAINER_RUNNINGFOR=$(docker ps --filter name=$CONTAINER_NAME --format {{.RunningFor}})
     CONTAINER_PORTS=$(docker ps --filter name=$CONTAINER_NAME --format {{.Ports}})
 
@@ -31,10 +31,8 @@ getServiceList() {
     #.Networks	Names of the networks attached to this container.
     CONTAINER_NETWORK=$(docker ps --filter name=$CONTAINER_NAME --format {{.Networks}} | cut -d "_" -f 2)
 
-    STATE=$(docker inspect $CONTAINER_ID | jq .[0].State.Status | tr -d '"')
-
-
-    CRAT=$(docker inspect $CONTAINER_ID | jq .[0].State.StartedAt | tr -d '"')
+    STATE=$(docker inspect $IMAGE_TAG | jq .[0].State.Status | tr -d '"')
+    CRAT=$(docker inspect $IMAGE_TAG | jq .[0].State.StartedAt | tr -d '"')
     STDATE=$(echo $CRAT | cut -d "T" -f 1)
     STTIME=$(echo $CRAT | cut -d "T" -f 2 | cut -d ":" -f 1,2)
     STARTEDAT="${STDATE} ${STTIME}"
