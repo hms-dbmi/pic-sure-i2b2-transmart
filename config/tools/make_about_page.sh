@@ -31,8 +31,8 @@ getServiceList() {
     #.Networks	Names of the networks attached to this container.
     CONTAINER_NETWORK=$(docker ps --filter name=$CONTAINER_NAME --format {{.Networks}} | cut -d "_" -f 2)
 
-    STATE=$(docker inspect $IMAGE_TAG | jq .[0].State.Status | tr -d '"')
-    CRAT=$(docker inspect $IMAGE_TAG | jq .[0].State.StartedAt | tr -d '"')
+    STATE=$(docker inspect $CONTAINER_NAME | jq .[0].State.Status | tr -d '"')
+    CRAT=$(docker inspect $CONTAINER_NAME | jq .[0].State.StartedAt | tr -d '"')
     STDATE=$(echo $CRAT | cut -d "T" -f 1)
     STTIME=$(echo $CRAT | cut -d "T" -f 2 | cut -d ":" -f 1,2)
     STARTEDAT="${STDATE} ${STTIME}"
