@@ -1,6 +1,5 @@
-FROM dbmi/pic-sure-ui:picsure278.91a5cbc AS picsureui
+FROM dbmi/pic-sure-ui:picsure-278-latest-ui.1a6a17ab66 AS picsureui
 FROM dbmi/pic-sure-auth-ui:picsure301_1fe4e7a AS psamaui
-
 FROM httpd:2.4.27-alpine
 
 RUN apk add --update openssl sed
