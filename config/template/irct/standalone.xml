@@ -150,11 +150,11 @@
 					</security>
 				</datasource>
 				<datasource jndi-name="java:jboss/datasources/irct-cl-DS" pool-name="ComunicationLayerDS" use-java-context="true">
-                    <connection-url>jdbc:mysql://${env.IRCT_DB_HOST}:${env.IRCT_DB_PORT:3306}/irct?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true&amp;useSSL=false</connection-url>
+                    <connection-url>jdbc:mysql://__IRCT_DB_HOST__:__IRCT_DB_PORT__/irct?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true&amp;useSSL=false</connection-url>
                     <driver>mysql</driver>
                     <security>
-                        <user-name>${env.IRCT_DB_CONNECTION_USER}</user-name>
-                        <password>${env.IRCT_DB_PASSWORD}</password>
+                        <user-name>__IRCT_DB_USERNAME__</user-name>
+                        <password>__IRCT_DB_PASSWORD__</password>
                     </security>
 					<pool>
 						<min-pool-size>5</min-pool-size>
