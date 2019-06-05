@@ -39,7 +39,7 @@ services:
       - 8983:8983
 
   fractalis:
-    image: sherzinger/fractalis:1.3.1
+    image: dbmi/fractalis:1.3.1-quickstart-hotfix
     environment:
       - FRACTALIS_CONFIG=/config.py
     volumes:
@@ -57,7 +57,7 @@ services:
       - worker
 
   worker:
-    image: sherzinger/fractalis:1.3.1
+    image: dbmi/fractalis:1.3.1-quickstart-hotfix
     environment:
       - FRACTALIS_CONFIG=/config.py
     volumes:
