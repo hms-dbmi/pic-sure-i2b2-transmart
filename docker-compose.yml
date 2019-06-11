@@ -123,7 +123,7 @@ services:
       - JAVA_OPTS=-Xms1024m -Xmx2g -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
     restart: always
     environment:
-      - RESULT_FORMAT=json
+      - RESULT_FORMAT=JSON
       - IRCT_TARGET_URL=http://httpd/irct
     expose:
       - 8080
