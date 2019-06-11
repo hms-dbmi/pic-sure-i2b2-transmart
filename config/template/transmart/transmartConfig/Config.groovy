@@ -143,8 +143,8 @@ com.recomdata.plugins.tempFolderDirectory = RModules.tempFolderDirectory
 
 log4j = {
 	appenders {
-		rollingFile name: 'file', maxFileSize: 1024 * 1024, file: 'app.log'
-		rollingFile name: 'sql',  maxFileSize: 1024 * 1024, file: 'sql.log'
+		rollingFile name: 'file', maxFileSize: 1024 * 1024, file: 'logs/app.log'
+		rollingFile name: 'sql',  maxFileSize: 1024 * 1024, file: 'logs/sql.log'
 	}
 
 	error 'org.codehaus.groovy.grails',

@@ -24,6 +24,7 @@ services:
     restart: always
     volumes:
       - /usr/local/docker-config/transmart/transmartConfig:/root/.grails/transmartConfig:rw
+      - /usr/local/docker-config/transmart/logs:/usr/local/tomcat/logs:rw
     networks:
       - public
     expose:
