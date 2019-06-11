@@ -474,7 +474,7 @@
                 <!-- Used in IRCT as well -->
                 <simple name="java:global/verify_user_method" value="tokenIntrospection"/>
                 <simple name="java:global/token_introspection_url" value="http://wildfly:8080/pic-sure-auth-services/auth/token/inspect"/>
-                <simple name="java:global/token_introspection_token" value="__PICSURE_TOKENINTROSPECTION_TOKEN__"/>
+                <simple name="java:global/token_introspection_token" value="__PICSURE_TOKEN_INTROSPECTION_TOKEN__"/>
                 <simple name="java:global/target_url_pic-sure-irct-resource" value="http://wildfly:8080/IRCT-CL/rest/" />
 
                 <!-- psama configuration-->
