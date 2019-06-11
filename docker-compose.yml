@@ -20,8 +20,6 @@ services:
 
   transmart:
     image: dbmi/i2b2transmart:pre_19.1-M1_release.01dd9976e7
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
     volumes:
       - /usr/local/docker-config/transmart/transmartConfig:/root/.grails/transmartConfig:rw
@@ -32,8 +30,6 @@ services:
 
   solr:
     image: dbmi/solr:4.5.0-tm.release-18.1
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
     networks:
       - public
@@ -43,13 +39,11 @@ services:
       - 8983:8983
 
   fractalis:
-    image: sherzinger/fractalis:1.3.1
+    image: dbmi/fractalis:1.3.1-quickstart-hotfix
     environment:
       - FRACTALIS_CONFIG=/config.py
     volumes:
       - /usr/local/docker-config/fractalis/config.py:/config.py
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
     command: gunicorn -w 3 -b :5000 --timeout 90 --log-file - fractalis:app
     networks:
@@ -63,13 +57,11 @@ services:
       - worker
 
   worker:
-    image: sherzinger/fractalis:1.3.1
+    image: dbmi/fractalis:1.3.1-quickstart-hotfix
     environment:
       - FRACTALIS_CONFIG=/config.py
     volumes:
       - /usr/local/docker-config/fractalis/config.py:/config.py
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
     command: celery worker -A fractalis:celery -l info --autoscale 16,4
     networks:
@@ -81,8 +73,6 @@ services:
 
   redis:
     image: redis:alpine
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
     command: >
       sh -c "redis-server
@@ -95,8 +85,6 @@ services:
 
   rabbitmq:
     image: rabbitmq:alpine
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
     networks:
       - public
@@ -104,16 +92,29 @@ services:
   i2b2-wildfly:
     image: dbmi/i2b2-wildfly:1.7.09c-18.1-beta-hotfix
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx1024m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
+      - JAVA_OPTS=-XX:SurvivorRatio=255 -Xms512m -Xmx1024m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
     volumes:
       - /usr/local/docker-config/i2b2-wildfly/wildfly/standalone/configuration/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
-    labels:
-      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
     restart: always
     networks:
       - public
     expose:
       - 9090
+
+  irct:
+    image: dbmi/irct:master_72135ce
+    networks:
+      - public
+    user: root
+    expose:
+      - 8080
+      - 8787
+    ports:
+      - 8081:8080
+    entrypoint: /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+    volumes:
+      - /usr/local/docker-config/irct/scratch:/scratch/irct:rw
+      - /usr/local/docker-config/irct/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
 
   wildfly:
     image: jboss/wildfly:15.0.1.Final
@@ -141,31 +142,26 @@ services:
       - copy-pic-sure-war
       - copy-pic-sure-auth-war
       - copy-pic-sure-irct-resource
-      - copy-irct
 
   copy-pic-sure-war:
-    image: dbmi/picsure2:picsure246-jndi.7c32223
+    image: dbmi/picsure2:picsure283.ee6ce0a
+    # picsure246-jndi.7c32223
     user: root
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-api-2.war /var/tmp/pic-sure-api-2.war
 
-  copy-irct:
-    image: dbmi/irct:master_72135ce
-    user: root
-    volumes:
-      - /usr/local/docker-config/wildfly/deployments:/var/tmp
-    entrypoint: cp /opt/jboss/wildfly/standalone/deployments/IRCT-CL.war /var/tmp/IRCT-CL.war
-
   copy-pic-sure-irct-resource:
-    image: dbmi/pic-sure-irct-resource:picsure246-jndi.ea3c615_jason
+    image: dbmi/pic-sure-irct-resource:forTesting.yu
+    # picsure246-jndi.ea3c615_jason
     user: root
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /var/tmp/pic-sure-irct-resource.war
 
   copy-pic-sure-auth-war:
-    image: dbmi/pic-sure-auth-services:master_4bbe3c0
+    image: dbmi/pic-sure-auth-services:picsure321.674de47
+    # master_4bbe3c0
     user: root
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
