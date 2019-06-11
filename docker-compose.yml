@@ -19,8 +19,7 @@ services:
       - public
 
   transmart:
-    image: dbmi/i2b2transmart:master.81a3aefa23
-    # pre_19.1-M1_release.1fed3dc91f
+    image: dbmi/i2b2transmart:pre_19.1-M1_release.1fed3dc91f
     restart: always
     volumes:
       - /usr/local/docker-config/transmart/transmartConfig:/root/.grails/transmartConfig:rw
