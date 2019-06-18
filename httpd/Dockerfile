@@ -1,6 +1,5 @@
-FROM dbmi/pic-sure-ui:picsure278_37dc4bd AS picsureui
+FROM dbmi/pic-sure-ui:picsure-278-latest-ui.1a6a17ab66 AS picsureui
 FROM dbmi/pic-sure-auth-ui:picsure301_1fe4e7a AS psamaui
-
 FROM httpd:2.4.27-alpine
 
 RUN apk add --update openssl sed
@@ -25,6 +24,9 @@ RUN mkdir /usr/local/apache2/logs/ssl_mutex
 
 COPY --from=psamaui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
 COPY --from=picsureui /usr/local/apache2/htdocs ${HTTPD_PREFIX}/htdocs
+
+# Use the included NHANES logo, in the override
+RUN sed -i 's/logoPath : undefined/logoPath : "\/static\/NHANESLogo.jpg"/' ${HTTPD_PREFIX}/htdocs/picsureui/overrides/header.js
 
 # Due to some issues building the picsure-ui image, we need to clean up
 # some directories

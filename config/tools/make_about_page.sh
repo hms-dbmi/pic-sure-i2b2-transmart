@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh +x
 #
 # If you choose to create a runtime generated /about.html page, inside the `httpd` container
 # then run this script after your `docker-compose up -d` command has completed.
@@ -20,7 +20,7 @@ getServiceList() {
     CONTAINER_ID=$(docker ps --filter name=$CONTAINER_NAME --format {{.ID}})
     CONTAINER_IMAGE=$(docker ps --filter name=$CONTAINER_NAME --format {{.Image}})
     CONTAINER_COMMAND=$(docker ps --filter name=$CONTAINER_NAME --format {{.Command}})
-    CONTAINER_CREATEDAT=$(docker ps --filter name=$CONTAINER_NAME --format {{.CreatedAt}})
+    CONTAINER_CREATEDAT=$(docker inspect $CONTAINER_NAME | jq .[0].Created)
     CONTAINER_RUNNINGFOR=$(docker ps --filter name=$CONTAINER_NAME --format {{.RunningFor}})
     CONTAINER_PORTS=$(docker ps --filter name=$CONTAINER_NAME --format {{.Ports}})
 
@@ -31,10 +31,8 @@ getServiceList() {
     #.Networks	Names of the networks attached to this container.
     CONTAINER_NETWORK=$(docker ps --filter name=$CONTAINER_NAME --format {{.Networks}} | cut -d "_" -f 2)
 
-    STATE=$(docker inspect $CONTAINER_ID | jq .[0].State.Status | tr -d '"')
-
-
-    CRAT=$(docker inspect $CONTAINER_ID | jq .[0].State.StartedAt | tr -d '"')
+    STATE=$(docker inspect $CONTAINER_NAME | jq .[0].State.Status | tr -d '"')
+    CRAT=$(docker inspect $CONTAINER_NAME | jq .[0].State.StartedAt | tr -d '"')
     STDATE=$(echo $CRAT | cut -d "T" -f 1)
     STTIME=$(echo $CRAT | cut -d "T" -f 2 | cut -d ":" -f 1,2)
     STARTEDAT="${STDATE} ${STTIME}"
@@ -95,7 +93,8 @@ cat <<EOP > /tmp/about.html
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">PIC-SURE</a>
+      <a class="navbar-brand" href="/picsureui">PIC-SURE UI</a>
+			<h2>About Page</h2>
     </nav>
 
   <main role="main" class="container">
@@ -138,6 +137,6 @@ then
 	printf "Error: Could not determine the httpd container's name.\nPlease start up the container with 'docker-compose up -d httpd' command first.\n"
 	exit 2
 else
-	docker cp /tmp/about.html pic-sure-i2b2-transmart_httpd_1:/usr/local/apache2/htdocs/about.html
+	docker cp /tmp/about.html ${CONTAINER_NAME}:/usr/local/apache2/htdocs/about.html
 fi
-#rm -f /tmp/about.html
+rm -f /tmp/about.html

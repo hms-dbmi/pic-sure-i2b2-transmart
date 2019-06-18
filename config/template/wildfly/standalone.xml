@@ -91,7 +91,7 @@
     <profile>
         <subsystem xmlns="urn:jboss:domain:logging:5.0">
             <console-handler name="CONSOLE">
-                <level name="INFO"/>
+                <level name="DEBUG"/>
                 <formatter>
                     <named-formatter name="COLOR-PATTERN"/>
                 </formatter>
@@ -114,7 +114,7 @@
                 <level name="WARN"/>
             </logger>
             <root-logger>
-                <level name="INFO"/>
+                <level name="DEBUG"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>
@@ -475,7 +475,7 @@
                 <simple name="java:global/verify_user_method" value="tokenIntrospection"/>
                 <simple name="java:global/token_introspection_url" value="http://wildfly:8080/pic-sure-auth-services/auth/token/inspect"/>
                 <simple name="java:global/token_introspection_token" value="__PICSURE_TOKEN_INTROSPECTION_TOKEN__"/>
-                <simple name="java:global/target_url_pic-sure-irct-resource" value="http://wildfly:8080/IRCT-CL/rest/" />
+                <simple name="java:global/target_url_pic-sure-irct-resource" value="http://irct:8080/IRCT-CL/rest/" />
 
                 <!-- psama configuration-->
                 <simple name="java:global/client_secret" value="__PSAMA_CLIENT_SECRET__"/>

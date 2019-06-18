@@ -19,10 +19,11 @@ services:
       - public
 
   transmart:
-    image: dbmi/i2b2transmart:pre_19.1-M1_release.01dd9976e7
+    image: dbmi/i2b2transmart:pre_19.1-M1_release.1fed3dc91f
     restart: always
     volumes:
       - /usr/local/docker-config/transmart/transmartConfig:/root/.grails/transmartConfig:rw
+      - /usr/local/docker-config/transmart/logs:/usr/local/tomcat/logs:rw
     networks:
       - public
     expose:
@@ -117,12 +118,12 @@ services:
       - /usr/local/docker-config/irct/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml:rw
 
   wildfly:
-    image: jboss/wildfly:15.0.1.Final
+    image: jboss/wildfly:17.0.0.Final
     environment:
       - JAVA_OPTS=-Xms1024m -Xmx2g -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
     restart: always
     environment:
-      - RESULT_FORMAT=json
+      - RESULT_FORMAT=JSON
       - IRCT_TARGET_URL=http://httpd/irct
     expose:
       - 8080
@@ -153,7 +154,6 @@ services:
 
   copy-pic-sure-irct-resource:
     image: dbmi/pic-sure-irct-resource:picsure310.ef69613
-    # picsure246-jndi.ea3c615_jason
     user: root
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
