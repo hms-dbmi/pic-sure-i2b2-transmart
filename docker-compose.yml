@@ -152,7 +152,7 @@ services:
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-api-2.war /var/tmp/pic-sure-api-2.war
 
   copy-pic-sure-irct-resource:
-    image: dbmi/pic-sure-irct-resource:forTesting.yu
+    image: dbmi/pic-sure-irct-resource:picsure310.ef69613
     # picsure246-jndi.ea3c615_jason
     user: root
     volumes:
