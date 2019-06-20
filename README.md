@@ -100,7 +100,7 @@ docker-compose --file /var/tmp/pic-sure-i2b2-transmart/docker-compose.yml restar
 ```
 #!/bin/bash
 
-# Set the configuration variabales
+# Set the configuration variables
 export STACK_NAME=<REPLACE_WITH_STACK_NAME>
 export CONFIG_DIR=<REPLACE_WITH_DIR_PATH>
 export DKRCOMPOSE_DIR=<REPLACE_WITH_DCOMPOSE_DIR>
