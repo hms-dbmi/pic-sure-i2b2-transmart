@@ -486,6 +486,10 @@
                 <simple name="java:global/userActivationReplyTo" value="__PSAMA_USER_ACTIVATION_REPLY_TO__"/>
                 <simple name="java:global/tosEnabled" value="__PSAMA_TOS_ENABLED__" />
                 <simple name="java:global/auth0host" value="__PSAMA_AUTH0_HOST__" />
+                <simple name="java:global/emailTemplatePath" value=" " />
+                <simple name="java:global/accessGrantEmailSubject" value=" " />
+                <simple name="java:global/deniedEmailEnabled" value=" " />
+                <simple name="java:global/adminUsers" value=" " />
 
                 <!-- irct service -->
                 <simple name="java:global/domain" value="unused_but_required"/>
