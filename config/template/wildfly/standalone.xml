@@ -481,7 +481,7 @@
                 resource interface. For now we just reuse the same PIC-SURE
                 token.
                 -->
-                <simple name="java:global/SEARCH_TOKEN" value="__PICSURE_TOKEN_INTROSPECTION_TOKEN__" />
+                <simple name="java:global/SEARCH_TOKEN" value="__PICSURE_GUAVA_CACHE_TOKEN__" />
 
                 <!-- psama configuration-->
                 <simple name="java:global/client_secret" value="__PSAMA_CLIENT_SECRET__"/>
