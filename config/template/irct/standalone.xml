@@ -353,8 +353,6 @@
 				<simple name="java:global/domain" value="__IRCT_AUTH_DOMAIN__"/>
 				<simple name="java:global/userField" value="__IRCT_USER_FIELD__"/>
 				<simple name="java:global/resultDataFolder" value="__IRCT_RESULT_DATA_FOLDER__" />
-				<simple name="java:global/client_secret" value="__IRCT_CLIENT_SECRET__"/>
-        <simple name="java:global/client_id" value="__IRCT_CLIENT_ID__"/>
         <simple name="java:global/KeyTimeOutInMinutes" value="__IRCT_KEY_TIMEOUT_IN_MINUTES__"/>
 
 				<!-- If any of these three are missing, the system will default to sessionFilter.
