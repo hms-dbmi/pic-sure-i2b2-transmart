@@ -355,6 +355,10 @@
 				<simple name="java:global/resultDataFolder" value="__IRCT_RESULT_DATA_FOLDER__" />
         <simple name="java:global/KeyTimeOutInMinutes" value="__IRCT_KEY_TIMEOUT_IN_MINUTES__"/>
 
+				<simple name="java:global/client_secret" value="NOT USED, BUT STILL REQUIRED"/>
+				<simple name="java:global/client_id" value="NOT USED, BUT STILL REQUIRED"/>
+
+
 				<!-- If any of these three are missing, the system will default to sessionFilter.
 				      token_introspection_url and token_introspection_token are only needed if verify_user_method is set to 'tokenIntrospection' -->
 				<simple name="java:global/verify_user_method" value="__IRCT_VERIFY_USER_METHOD__"/>
