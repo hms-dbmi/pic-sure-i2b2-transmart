@@ -146,7 +146,6 @@ services:
 
   copy-pic-sure-war:
     image: dbmi/picsure2:picsure283.ee6ce0a
-    # picsure246-jndi.7c32223
     user: root
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
@@ -160,8 +159,7 @@ services:
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /var/tmp/pic-sure-irct-resource.war
 
   copy-pic-sure-auth-war:
-    image: dbmi/pic-sure-auth-services:picsure339.863176c
-    # master_4bbe3c0
+    image: dbmi/pic-sure-auth-services:master.bcf79f9
     user: root
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
