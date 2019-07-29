@@ -1,0 +1,17 @@
+from mysql:latest
+
+ARG RDS_MYSQL_HOST=unset_mysql_host
+ARG RDS_MYSQL_PASSWORD=unset_mysql_password
+
+RUN apt-get update && \
+  apt-get -y install wget
+
+RUN wget https://raw.githubusercontent.com/hms-dbmi/IRCT/master/IRCT-API/src/main/resources/sql_templates/create_irct_db.sql && \
+  wget https://raw.githubusercontent.com/hms-dbmi/pic-sure/master/pic-sure-api-data/src/main/resources/db/create_db_picsure.sql && \
+  wget https://raw.githubusercontent.com/hms-dbmi/pic-sure-auth-microapp/master/pic-sure-auth-db/db/create_db_auth.sql
+
+RUN echo "Connecting to ${RDS_MYSQL_HOST} server, with mysql database on it"
+RUN mysql -u root --password='${RDS_MYSQL_PASSWORD}' -h ${RDS_MYSQL_HOST} create_irct_db.sql
+RUN mysql -u root --password='${RDS_MYSQL_PASSWORD}' -h ${RDS_MYSQL_HOST} create_db_picsure.sql
+RUN mysql -u root --password='${RDS_MYSQL_PASSWORD}' -h ${RDS_MYSQL_HOST} create_db_auth.sql
+
