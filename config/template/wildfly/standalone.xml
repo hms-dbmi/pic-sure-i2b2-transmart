@@ -154,8 +154,8 @@
                     <connection-url>jdbc:mysql://__PSAMA_DB_HOST__:__PSAMA_DB_PORT__/__PSAMA_DB_NAME__?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
                     <driver>mysql</driver>
                     <pool>
-                        <min-pool-size>5</min-pool-size>
-                        <max-pool-size>50</max-pool-size>
+                        <min-pool-size>2</min-pool-size>
+                        <max-pool-size>10</max-pool-size>
                         <prefill>true</prefill>
                     </pool>
                     <security>
@@ -174,8 +174,8 @@
                     <connection-url>jdbc:mysql://__PICSURE_DB_HOST__:__PICSURE_DB_PORT__/__PICSURE_DB_NAME__?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
                     <driver>mysql</driver>
                     <pool>
-                        <min-pool-size>5</min-pool-size>
-                        <max-pool-size>50</max-pool-size>
+                        <min-pool-size>3</min-pool-size>
+                        <max-pool-size>10</max-pool-size>
                         <prefill>true</prefill>
                     </pool>
                     <security>
@@ -194,8 +194,8 @@
                     <connection-url>jdbc:mysql://__IRCT_DB_HOST__:__IRCT_DB_PORT__/__IRCT_DB_NAME__?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
                     <driver>mysql</driver>
                     <pool>
-                        <min-pool-size>5</min-pool-size>
-                        <max-pool-size>50</max-pool-size>
+                        <min-pool-size>3</min-pool-size>
+                        <max-pool-size>10</max-pool-size>
                         <prefill>true</prefill>
                     </pool>
                     <security>
