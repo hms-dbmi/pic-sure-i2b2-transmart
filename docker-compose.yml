@@ -1,14 +1,15 @@
 version: '3.3'
 services:
-	
-	initdb:
-		build:
-			context: ./config/tools
-			dockerfile: Dockerfile.initdb
-			environment:
-				- MYSQL_ROOT_PASSWORD=password
-				- RDS_MYSQL_PASSWORD=from_command_line_mysql_root_password
-				- RDS_MYSQL_HOST=from_command_line_mysql_host
+
+# This should not be part of the main docker-compose file	
+#	initdb:
+#		build:
+#			context: ./config/tools
+#			dockerfile: Dockerfile.initdb
+#			environment:
+#				- MYSQL_ROOT_PASSWORD=password
+#				- RDS_MYSQL_PASSWORD=from_command_line_mysql_root_password
+#				- RDS_MYSQL_HOST=from_command_line_mysql_host
 
   httpd:
     build:
