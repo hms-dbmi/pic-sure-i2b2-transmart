@@ -73,4 +73,12 @@ grep '<simple name="java:global/token_introspection_url" value="http://wildfly:8
 RC=$?
 checkExitStatus $RC 'Failed to' 'Successfully found' 'the correct settings for *token_introspection_url* variable in *wildfly* standalone.xml file'
 
+SYSTEM_NAME=`egrep -e '<simple name="java:global/systemName" value=".*"/>' /usr/local/docker-config/wildfly/standalone.xml | cut -d '"' -f 4`
+if [ "${SYSTEM_NAME}" == "" ];
+then
+	checkExitStatus 1 'Could not find' 'Found' 'systemName setting in wildfly stack configuration file.'
+fi
+
+./verify_psama.sh
+
 loggerInfo "Finished verification"
