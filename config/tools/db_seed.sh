@@ -1,27 +1,16 @@
 #!/bin/sh -x
 
 HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
-
-source /tmp/secrets.txt
+CONNECTION_TIMEOUT_SECONDS=10
 
 createPSAMADB() {
-	cat <<EOT > $HOME/.my.cnf
-[client]
-user=${PSAMA_DB_USERNAME}
-password=${PSAMA_DB_PASSWORD}
-host=${PSAMA_DB_HOST}
-port=${PSAMA_DB_PORT}
-EOT
-
-	ls -al $HOME/.my.cnf
-	cat $HOME/.my.cnf
 
 	# Create PSAMA database schema. This script will delete all data and all table
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
 	curl --silent --output createdb_psama.sql \
 		$HMSDBMI_GITHUB_URL/pic-sure-auth-microapp/master/pic-sure-auth-db/db/create_db_auth.sql
-	mysql < createdb_psama.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS < createdb_psama.sql
 	rm -f createdb_psama.sql
 }
 
@@ -45,7 +34,7 @@ INSERT INTO userMetadataMapping (uuid, auth0MetadataJsonPath, connectionId, gene
 		VALUES
 			(unhex(@uuidMetaDataForConnection), '$.email', unhex(@uuidConnection), '$.email');
 EOT
-	mysql ${PSAMA_DB_NAME} < populate_auth_db.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${PSAMA_DB_NAME} < populate_auth_db.sql
 	rm -f populate_auth_db.sql
 }
 
@@ -94,7 +83,7 @@ addSuperUser() {
 
 	COMMIT;
 EOT
-	mysql ${PSAMA_DB_NAME} < db_psama_createSuperUser.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${PSAMA_DB_NAME} < db_psama_createSuperUser.sql
 	rm -f db_psama_createSuperUser.sql
 }
 
@@ -122,7 +111,7 @@ addNormalUser() {
 	);
 	COMMIT;
 EOT
-	mysql ${PSAMA_DB_NAME} < db_psama_createNormalUser.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${PSAMA_DB_NAME} < db_psama_createNormalUser.sql
 	rm -f db_psama_createNormalUser.sql
 }
 
@@ -145,26 +134,18 @@ addApplication() {
 	);
 EOT
 
-	mysql ${PSAMA_DB_NAME} < addApplication.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${PSAMA_DB_NAME} < addApplication.sql
 	rm -f addApplication.sql
 
 }
 
 createPICSUREDB() {
-	cat <<EOT > $HOME/.my.cnf
-[client]
-user=${PICSURE_DB_USERNAME}
-password=${PICSURE_DB_PASSWORD}
-host=${PICSURE_DB_HOST}
-port=${PICSURE_DB_PORT}
-EOT
-
 	# Create PICSURE database schema. This script will delete all data and all table
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
 	curl --silent --output create_picsure_db.sql \
 		${HMSDBMI_GITHUB_URL}/pic-sure/master/pic-sure-api-data/src/main/resources/db/create_db_picsure.sql
-	mysql < create_picsure_db.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS < create_picsure_db.sql
 	rm -f create_picsure_db.sql
 }
 
@@ -186,26 +167,17 @@ VALUES
 	NULL
 );
 EOT
-	mysql ${PICSURE_DB_NAME} < addPICSUREResource.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${PICSURE_DB_NAME} < addPICSUREResource.sql
 	rm -f addPICSUREResource.sql
 }
 
 createIRCTDB() {
-	# Initialize login information for IRCT database
-	cat <<EOT > $HOME/.my.cnf
-[client]
-user=${IRCT_DB_USERNAME}
-password=${IRCT_DB_PASSWORD}
-host=${IRCT_DB_HOST}
-port=${IRCT_DB_PORT}
-EOT
-
 	# Create IRCT database schema. This script will delete all data and all table
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
 	curl --silent --output create_irct_db.sql \
 		$HMSDBMI_GITHUB_URL/IRCT/master/IRCT-API/src/main/resources/sql_templates/create_irct_db.sql
-	mysql < create_irct_db.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS < create_irct_db.sql
 	#rm -f create_irct_db.sql
 }
 
@@ -271,7 +243,7 @@ initDefaultIRCTResource() {
 		(@idResource, 'edu.harvard.hms.dbmi.bd2k.irct.ri.i2b2.I2B2OntologyRelationship:TERM');
 
 EOT
-	mysql ${IRCT_DB_NAME} < addIRCTResource.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${IRCT_DB_NAME} < addIRCTResource.sql
 	#rm -f addIRCTResource.sql
 }
 
@@ -289,7 +261,7 @@ addPrivilege() {
 		NULL
 		);
 EOT
-  mysql ${PSAMA_DB_NAME} < db_psama_createPrivilege.sql
+  mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${PSAMA_DB_NAME} < db_psama_createPrivilege.sql
   rm -f db_psama_createPrivilege.sql
 }
 
@@ -307,7 +279,7 @@ addRole() {
 		'${ROLE_DESCRIPTION}'
 		);
 EOT
-	mysql ${PSAMA_DB_NAME} < db_psama_createRole.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${PSAMA_DB_NAME} < db_psama_createRole.sql
 	rm -f db_psama_createRole.sql
 }
 
@@ -323,7 +295,7 @@ assignPrivilegeToRole() {
 		(SELECT uuid FROM privilege WHERE name = '${PRIVILEGE_NAME}')
 	);
 EOT
-	mysql ${PSAMA_DB_NAME} < db_psama_assignPrivilege.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${PSAMA_DB_NAME} < db_psama_assignPrivilege.sql
 	rm -f db_psama_assignPrivilege.sql
 
 }
@@ -340,7 +312,7 @@ VALUES
 		(SELECT uuid FROM role WHERE name = '${ROLE_NAME}')
 	);
 EOT
-	mysql ${PSAMA_DB_NAME} < db_psama_assignRoleToUser.sql
+	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${PSAMA_DB_NAME} < db_psama_assignRoleToUser.sql
 	rm -f db_psama_assignRoleToUser.sql
 }
 
