@@ -2,6 +2,8 @@
 
 HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
 
+source /tmp/secrets.txt
+
 createPSAMADB() {
 	cat <<EOT > $HOME/.my.cnf
 [client]
@@ -13,7 +15,7 @@ EOT
 
 	ls -al $HOME/.my.cnf
 	cat $HOME/.my.cnf
-	
+
 	# Create PSAMA database schema. This script will delete all data and all table
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
