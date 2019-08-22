@@ -1,11 +1,14 @@
 #!/bin/sh -x
 
+yum install -y mysql
+yum install -y curl
+
 HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
 CONNECTION_TIMEOUT_SECONDS=10
 
 createPSAMADB() {
 	cp ${CONFIG_DIR}/db/login_config.psama $HOME/.my.cnf
-	
+
 	# Create PSAMA database schema. This script will delete all data and all table
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
@@ -143,7 +146,7 @@ EOT
 createPICSUREDB() {
 	# Create PICSURE database schema. This script will delete all data and all table
 	cp ${CONFIG_DIR}/db/login_config.picsure $HOME/.my.cnf
-	
+
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
 	curl --silent --output create_picsure_db.sql \
@@ -176,7 +179,7 @@ EOT
 
 createIRCTDB() {
 	cp ${CONFIG_DIR}/db/login_config.irct $HOME/.my.cnf
-	
+
 	# Create IRCT database schema. This script will delete all data and all table
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
