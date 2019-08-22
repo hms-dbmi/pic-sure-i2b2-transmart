@@ -11,6 +11,9 @@ host=${PSAMA_DB_HOST}
 port=${PSAMA_DB_PORT}
 EOT
 
+	ls -al $HOME/.my.cnf
+	cat $HOME/.my.cnf
+	
 	# Create PSAMA database schema. This script will delete all data and all table
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
