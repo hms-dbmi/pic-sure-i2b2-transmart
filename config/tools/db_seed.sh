@@ -2,20 +2,6 @@
 
 HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
 
-which mysql >/dev/null
-RC=$?
-if [ $RC -ne 0 ];
-then
-	echo 'Could not find "mysql" command on this system.'
-	exit 1
-fi
-
-apt-get upgrade
-apt-get -y update
-apt-get -y install curl
-clear
-
-
 createPSAMADB() {
 	cat <<EOT > $HOME/.my.cnf
 [client]
