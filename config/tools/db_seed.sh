@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 
 HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
 
