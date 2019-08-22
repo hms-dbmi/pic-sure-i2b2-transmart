@@ -9,7 +9,7 @@ import jwt
 
 auth0_secret = os.environ['PSAMA_CLIENT_SECRET']
 
-expire_time = 2 // in hours
+expire_time = 2
 
 signature = base64.b64decode(auth0_secret.replace("_","/").replace("-","+"))
 token = jwt.encode({
