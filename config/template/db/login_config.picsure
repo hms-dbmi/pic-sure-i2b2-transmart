@@ -1,0 +1,5 @@
+[client]
+user=__PICSURE_DB_USERNAME__
+password=__PICSURE_DB_PASSWORD__
+host=__PICSURE_DB_HOST__
+port=__PICSURE_DB_PORT__
