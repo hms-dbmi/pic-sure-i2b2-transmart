@@ -59,7 +59,7 @@ EOT
 }
 
 addSuperUser() {
-	set -x
+
 	USER_EMAIL=$1
 	USER_CONN=$2
 
