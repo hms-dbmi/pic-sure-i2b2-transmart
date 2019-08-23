@@ -1,13 +1,15 @@
 #!/bin/sh -x
 
-HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
 apt-get update -y
 apt-get install -y curl
 clear
 
-PICSURE_DB_NAME="picsure"
-PSAMA_DB_NAME="auth"
-IRCT_DB_NAME="irct"
+export HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
+export CONNECTION_TIMEOUT_SECONDS=10
+
+export PICSURE_DB_NAME="picsure"
+export PSAMA_DB_NAME="auth"
+export IRCT_DB_NAME="irct"
 
 createPSAMADB() {
 	cp $HOME/dbconfig/login_config.psama $HOME/.my.cnf
