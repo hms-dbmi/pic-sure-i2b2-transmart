@@ -112,10 +112,12 @@ addNormalUser() {
 		uuid,
 		general_metadata,
 		email,
+		subkect,
 		matched
 	) VALUES (
 		unhex(@uuidUser),
 		"{\"email\":\"${USER_EMAIL}\"}",
+		'${USER_EMAIL}',
 		'${USER_EMAIL}',
 		false
 	);
