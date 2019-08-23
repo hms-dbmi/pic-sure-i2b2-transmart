@@ -112,7 +112,7 @@ addNormalUser() {
 		uuid,
 		general_metadata,
 		email,
-		subkect,
+		subject,
 		matched
 	) VALUES (
 		unhex(@uuidUser),
