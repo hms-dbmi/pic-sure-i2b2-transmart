@@ -8,7 +8,7 @@ import base64
 import time
 import jwt
 expire_time=2
-signature = base64.b64decode('${PSAMA_CLIENT_SECRET}.replace("_","/").replace("-","+"))
+signature = base64.b64decode('${PSAMA_CLIENT_SECRET}'.replace("_","/").replace("-","+"))
 token = jwt.encode({
     'email': "configurator@avillach.lab",
     'sub': "configurator@avillach.lab",
