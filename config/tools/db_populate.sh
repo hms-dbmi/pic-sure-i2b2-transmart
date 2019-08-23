@@ -1,5 +1,9 @@
 #!/bin/sh
 
+apt-get update -y >/dev/null
+apt-get install -y apt-utils >/dev/null
+apt-get install -y jq >/dev/null
+
 pip3 install PyJWT >/dev/null 2>&1
 
 export PSAMA_CLIENT_SECRET=`grep "java:global/client_secret" /var/tmp/config/wildfly/standalone.xml | cut -d '"' -f 4`
@@ -35,7 +39,7 @@ addApplication() {
 	
 	echo '[{"uuid":"","name":"'$APP_NAME'","description":"'$APP_DESCRIPTION'","url":"'$APP_URL'"}]' > /tmp/req_application.json
 	
-	curl -k -X POST \
+	curl --silent -k -X POST \
 		-H "Authorization: Bearer ${AUTOMATA_USER_TOKEN}" \
 		-H "Content-type: application/json" \
 		--data @/tmp/req_application.json \
@@ -48,4 +52,5 @@ addApplication() {
 
 addApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart'
 addApplication 'PICSURE' 'PIC-SURE multiple data access API' '/picsureui'
+
 addApplication 'IRCT' 'IRCT data access API'

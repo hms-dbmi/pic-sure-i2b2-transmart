@@ -3,7 +3,7 @@
 export SUPERUSER_EMAIL_PARAM=$1
 
 apt-get update -y >/dev/null
-apt-get install -y curl >/dev/null
+apt-get install -y apt-utils curl >/dev/null
 clear
 
 export HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
@@ -259,7 +259,7 @@ initDefaultIRCTResource() {
 
 EOT
 	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${IRCT_DB_NAME} < addIRCTResource.sql
-	#rm -f addIRCTResource.sql
+	rm -f addIRCTResource.sql
 }
 
 addPrivilege() {
