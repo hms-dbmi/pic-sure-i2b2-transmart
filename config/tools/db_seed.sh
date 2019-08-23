@@ -343,16 +343,21 @@ addRole 'PIC-SURE Top Admin' 'PIC-SURE Auth Micro App Top admin including Admin 
 assignPrivilegeToRole 'SUPER_ADMIN' 'PIC-SURE Top Admin'
 assignPrivilegeToRole 'ADMIN' 'PIC-SURE Top Admin'
 
+# TODO: Fix the way arguments are passed in 
+# (maybe --env on the docker run line?!)
 # Loop through the email addresses, passed into this script
-echo "Processing email address list: ${SUPERUSER_EMAIL_PARAM}"
-count=`echo $SUPERUSER_EMAIL_PARAM | awk -F, {'print NF'}`
-i=1
-while [ $i -le $count ]
-do
- superuser_email=`echo $strn | cut -d, -f${i}`
- addSuperUser $superuser_email 'Google'
- i=`expr $i + 1`
-done
+#echo "Processing email address list: ${SUPERUSER_EMAIL_PARAM}"
+#count=`echo $SUPERUSER_EMAIL_PARAM | awk -F, {'print NF'}`
+#i=1
+#while [ $i -le $count ]
+#do
+# superuser_email=`echo $strn | cut -d, -f${i}`
+# addSuperUser $superuser_email 'Google'
+# i=`expr $i + 1`
+#done
+
+addSuperUser 'andrew.guidetti@gmail.com' 'Google'
+addSuperUser 'gkorodi@gmail.com' 'Google'
 
 # Adding a normal user, with no roles, and assigning the TopAdmin role
 # to it, is the same as calling addSuperUser, but the connection will
