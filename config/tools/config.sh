@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Run it like:
+# `CONFIG_DIR=/usr/local/docker-config config/tools/config.sh /tmp/secrets.txt`
 # First arg is the full path of the secrets.txt file
 SECRETS_FILE=$1
 
@@ -27,15 +29,28 @@ rm -fR ${CONFIG_DIR}/*
 cp -r config/template/* ${CONFIG_DIR}
 echo "Done"
 
+FILE_LIST="/i2b2-wildfly/wildfly/standalone/configuration/standalone.xml
+/irct/standalone.xml
+/wildfly/standalone.xml
+/httpd/htdocs/picsureui/settings/settings.json
+/httpd/htdocs/psamaui/settings/settings.json
+/transmart/transmartConfig/Config.groovy
+/transmart/transmartConfig/DataSource.groovy
+/db/login_config.irct
+/db/login_config.psama
+/db/login_config.picsure"
+
 echo "Start replacement"
-for FILE_TO_ACT_ON in `find ${CONFIG_DIR} -name "*.*"`
+for FN in $FILE_LIST #`find ${CONFIG_DIR} -name "*.*"`
 do
+  FILE_TO_ACT_ON="${CONFIG_DIR}${FN}"
   echo "**************** Processing file ${FILE_TO_ACT_ON} ****************" >> ${LOGFILE}
   for KEY_VALUE_PAIR in $(cat ${SECRETS_FILE})
   do
     if [ "${KEY_VALUE_PAIR}" != "" ] && [ $(echo "${KEY_VALUE_PAIR}" | cut -c 1) != "#" ];
     then
         echo "Replacing kv pair '${KEY_VALUE_PAIR}'" >> ${LOGFILE}
+
         KEY=$(echo "${KEY_VALUE_PAIR}" | cut -d "=" -f 1)
         VALUE=$(echo "${KEY_VALUE_PAIR}" | cut -d "=" -f 2)
 
@@ -59,3 +74,5 @@ done
 
 echo "Finished. Log file generated ${LOGFILE}"
 echo ""
+
+find ${CONFIG_DIR} -exec grep -H "__" {} \; 2>/dev/null

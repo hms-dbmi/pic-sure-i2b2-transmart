@@ -1,20 +1,23 @@
 #!/bin/sh -x
 
-yum install -y mysql
-yum install -y curl
-
 HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
-CONNECTION_TIMEOUT_SECONDS=10
+apt-get update -y
+apt-get install -y curl
+clear
+
+PICSURE_DB_NAME="picsure"
+PSAMA_DB_NAME="auth"
+IRCT_DB_NAME="irct"
 
 createPSAMADB() {
-	cp ${CONFIG_DIR}/db/login_config.psama $HOME/.my.cnf
-
+	cp $HOME/dbconfig/login_config.psama $HOME/.my.cnf
 	# Create PSAMA database schema. This script will delete all data and all table
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
 	curl --silent --output createdb_psama.sql \
 		$HMSDBMI_GITHUB_URL/pic-sure-auth-microapp/master/pic-sure-auth-db/db/create_db_auth.sql
 	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS < createdb_psama.sql
+	RC=$?
 	rm -f createdb_psama.sql
 }
 
@@ -144,8 +147,7 @@ EOT
 }
 
 createPICSUREDB() {
-	# Create PICSURE database schema. This script will delete all data and all table
-	cp ${CONFIG_DIR}/db/login_config.picsure $HOME/.my.cnf
+	cp $HOME/dbconfig/login_config.picsure $HOME/.my.cnf
 
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
@@ -178,15 +180,14 @@ EOT
 }
 
 createIRCTDB() {
-	cp ${CONFIG_DIR}/db/login_config.irct $HOME/.my.cnf
-
+	cp $HOME/dbconfig/login_config.irct $HOME/.my.cnf
 	# Create IRCT database schema. This script will delete all data and all table
 	# definitions, and will re-create the empty tables with the latest and greates
 	# from the GitHub repo
 	curl --silent --output create_irct_db.sql \
 		$HMSDBMI_GITHUB_URL/IRCT/master/IRCT-API/src/main/resources/sql_templates/create_irct_db.sql
 	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS < create_irct_db.sql
-	#rm -f create_irct_db.sql
+	rm -f create_irct_db.sql
 }
 
 initDefaultIRCTResource() {
