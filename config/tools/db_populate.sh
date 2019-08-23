@@ -1,7 +1,9 @@
 #!/bin/sh
 
-pip install pymysql >/dev/null 2>&1
-pip install PyJWT >/dev/null 2>&1
-pip install requests >/dev/null 2>&1
+pip3 install pymysql >/dev/null 2>&1
+pip3 install PyJWT >/dev/null 2>&1
+pip3 install requests >/dev/null 2>&1
 
-python /tmp/db_populate.py
+export PSAMA_CLIENT_SECRET=`grep "java:global/client_secret" /var/tmp/config/wildfly/standalone.xml | cut -d '"' -f 4`
+
+python3 /var/tmp/tools/db_populate.py

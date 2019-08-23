@@ -8,7 +8,7 @@
 # Also, assuming, that the repo is cloned into
 # `/home/centos/pic-sure-i2b2-transmart directory`
 
-docker run -it --rm --user=root \
-  --volume /home/centos/pic-sure-i2b2-transmart/config/tools:/var/tmp/tools \
-  --volume /usr/local/docker-config/db:/root/dbconfig \
-  mysql sh -c /var/tmp/tools/db_populate.sh
+docker run --rm --user=root \
+  --volume ${PWD}/config/tools:/var/tmp/tools \
+  --volume /usr/local/docker-config:/var/tmp/config \
+  python sh -c /var/tmp/tools/db_populate.sh

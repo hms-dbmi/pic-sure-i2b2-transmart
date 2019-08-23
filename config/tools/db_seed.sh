@@ -343,8 +343,8 @@ addSuperUser 'andre.guidetti@gmail.com' 'Google'
 # Adding a normal user, with no roles, and assigning the TopAdmin role
 # to it, is the same as calling addSuperUser, but the connection will
 # not be set for this user.
-addNormalUser 'automata@avillach.lab'
-assignRoleToUser 'automata@avillach.lab' 'PIC-SURE Top Admin'
+addNormalUser 'configurator@avillach.lab'
+assignRoleToUser 'configurator@avillach.lab' 'PIC-SURE Top Admin'
 
 # Initialize the IRCT database, with a single default user. It is already
 # there in the create script, but this will overwrite it. Allows for more
