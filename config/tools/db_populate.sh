@@ -22,11 +22,12 @@ print(token.decode('utf-8'))
 EOT
 export AUTOMATA_USER_TOKEN=$(python /tmp/get_token.py)
 
+# TODO: This could be done nicer!
 HOSTIP=`ip -o address show eth0 | tr "  " " " | cut -d " " -f 7 | cut -d "/" -f 1 | cut -d "." -f 1,2,3`
-export HOSTNAME="https://${HOSTIP}/psama"
+export HOSTNAME="https://${HOSTIP}.1/psama"
 
 addApplication() {
-	URL="${HOSTNAME}/psama/application"
+	URL="${HOSTNAME}/application"
 	
 	APP_NAME=$1
 	APP_DESCRIPTION=$2
