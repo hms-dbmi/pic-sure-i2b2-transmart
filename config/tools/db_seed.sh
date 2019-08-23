@@ -1,10 +1,11 @@
-#!/bin/sh -x
-
-apt-get update -y
-apt-get install -y curl
-clear
+#!/bin/sh
 
 export SUPERUSER_EMAIL_PARAM=$1
+
+apt-get update -y >/dev/null
+apt-get install -y curl >/dev/null
+clear
+
 export HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
 export CONNECTION_TIMEOUT_SECONDS=10
 
@@ -343,6 +344,7 @@ assignPrivilegeToRole 'SUPER_ADMIN' 'PIC-SURE Top Admin'
 assignPrivilegeToRole 'ADMIN' 'PIC-SURE Top Admin'
 
 # Loop through the email addresses, passed into this script
+echo "Processing email address list: ${SUPERUSER_EMAIL_PARAM}"
 count=`echo $SUPERUSER_EMAIL_PARAM | awk -F, {'print NF'}`
 i=1
 while [ $i -le $count ]
