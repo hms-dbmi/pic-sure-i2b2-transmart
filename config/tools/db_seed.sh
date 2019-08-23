@@ -4,6 +4,7 @@ apt-get update -y
 apt-get install -y curl
 clear
 
+export SUPERUSER_EMAIL_PARAM=$1
 export HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
 export CONNECTION_TIMEOUT_SECONDS=10
 
@@ -339,8 +340,15 @@ addRole 'PIC-SURE Top Admin' 'PIC-SURE Auth Micro App Top admin including Admin 
 assignPrivilegeToRole 'SUPER_ADMIN' 'PIC-SURE Top Admin'
 assignPrivilegeToRole 'ADMIN' 'PIC-SURE Top Admin'
 
-addSuperUser 'gkorodi@gmail.com' 'Google'
-addSuperUser 'andre.guidetti@gmail.com' 'Google'
+# Loop through the email addresses, passed into this script
+count=`echo $SUPERUSER_EMAIL_PARAM | awk -F, {'print NF'}`
+i=1
+while [ $i -le $count ]
+do
+ superuser_email=`echo $strn | cut -d, -f${i}`
+ addSuperUser $superuser_email 'Google'
+ i=`expr $i + 1`
+done
 
 # Adding a normal user, with no roles, and assigning the TopAdmin role
 # to it, is the same as calling addSuperUser, but the connection will

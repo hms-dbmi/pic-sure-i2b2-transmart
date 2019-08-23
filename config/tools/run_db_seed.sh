@@ -7,4 +7,4 @@
 docker run --rm --user=root \
   --volume ${PWD}/config/tools:/var/tmp/tools \
   --volume /usr/local/docker-config/db:/root/dbconfig \
-  mysql sh -c /var/tmp/tools/db_seed.sh
+  mysql sh -c /var/tmp/tools/db_seed.sh '$*'

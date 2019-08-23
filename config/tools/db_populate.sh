@@ -40,7 +40,9 @@ addApplication() {
 		--data @/tmp/req_application.json \
 		--output /tmp/resp_application.json \
 		$URL
-
+	RC=$?
+	echo 'Response status: ${RC}'
+	cat /tmp/resp_application.json
 }
 
 addApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart'
