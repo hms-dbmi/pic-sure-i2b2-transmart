@@ -7,8 +7,8 @@ cat <<EOT >/tmp/get_token.py
 import base64
 import time
 import jwt
-
-signature = base64.b64decode(auth0_secret.replace("_","/").replace("-","+"))
+expire_time=2
+signature = base64.b64decode('${PSAMA_CLIENT_SECRET}.replace("_","/").replace("-","+"))
 token = jwt.encode({
     'email': "configurator@avillach.lab",
     'sub': "configurator@avillach.lab",
@@ -22,7 +22,8 @@ print(token.decode('utf-8'))
 EOT
 export AUTOMATA_USER_TOKEN=$(python /tmp/get_token.py)
 
-export HOSTNAME="https://host.docker.internal/psama"
+HOSTIP=`ip -o address show eth0 | tr "  " " " | cut -d " " -f 7 | cut -d "/" -f 1 | cut -d "." -f 1,2,3`
+export HOSTNAME="https://${HOSTIP}/psama"
 
 addApplication() {
 	URL="${HOSTNAME}/psama/application"
