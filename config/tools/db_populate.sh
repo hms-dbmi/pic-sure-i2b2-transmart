@@ -50,7 +50,62 @@ addApplication() {
 	cat /tmp/resp_application.json
 }
 
+getApplicationUUIDByName() {
+	APP_NAME=$1
+	curl --silent -k "${HOSTNAME}/application" | jq '.[] | select(.name="'$APP_NAME'") | .uuid' -
+}
+
+addTransmartPrivileges() {
+	TM_APP_UUID=$(getApplicationUUID 'TRANSMART')
+	cat <<EOT > /tmp/req_add_privileges.json
+	[
+		{
+			"uuid": "",
+			"name": "TM_ADMIN",
+			"description": "Admin privilege for i2b2/tranSmart web app",
+			"application": {
+				"uuid": "${TM_APP_UUID}"
+			}
+		},
+		{
+			"uuid": "",
+			"name": "TM_USER",
+			"description": "Basic user privilege for i2b2/tranSmart web app",
+			"application": {
+				"uuid": "${TM_APP_UUID}"
+			}
+		},
+		{
+			"uuid": "",
+			"name": "TM_STUDY_OWNER",
+			"description": "Counts only privilege for i2b2/tranSmart web app",
+			"application": {
+				"uuid": "${TM_APP_UUID}"
+			}
+		},
+		{
+			"uuid": "",
+			"name": "TM_DATASET_EXPLORER_ADMIN",
+			"description": "Download privilege for i2b2/tranSmart web app",
+			"application": {
+				"uuid": "${TM_APP_UUID}"
+			}
+		}
+	]
+EOT
+	curl --silent -k -X POST \
+		-H "Authorization: Bearer ${AUTOMATA_USER_TOKEN}" \
+		-H "Content-type: application/json" \
+		--data @/tmp/req_add_privileges.json \
+		--output /tmp/resp_add_privileges.json \
+		$URL
+	RC=$?
+	echo 'Response status: ${RC}'
+	cat /tmp/resp_application.json
+}
+
 addApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart'
 addApplication 'PICSURE' 'PIC-SURE multiple data access API' '/picsureui'
-
 addApplication 'IRCT' 'IRCT data access API'
+
+addTransmartPrivileges
