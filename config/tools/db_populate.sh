@@ -52,7 +52,12 @@ addApplication() {
 
 getApplicationUUIDByName() {
 	APP_NAME=$1
-	curl --silent -k "${HOSTNAME}/application" | jq '.[] | select(.name="'$APP_NAME'") | .uuid' -
+	curl --silent -k \
+		-H "Authorization: Bearer ${AUTOMATA_USER_TOKEN}" \
+		-H "Content-type: application/json" \
+		--output /tmp/applications.json \
+		"${HOSTNAME}/application"
+	jq '.[] | select(.name="'$APP_NAME'") | .uuid' /tmp/applications.json
 }
 
 addTransmartPrivileges() {
@@ -104,7 +109,7 @@ EOT
 	cat /tmp/resp_application.json
 }
 
-addApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart'
+addApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart/login/callback_processor'
 addApplication 'PICSURE' 'PIC-SURE multiple data access API' '/picsureui'
 addApplication 'IRCT' 'IRCT data access API'
 
