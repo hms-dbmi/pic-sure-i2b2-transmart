@@ -1,9 +1,5 @@
 #!/bin/sh
 
-apk update
-apk add jq curl python3 >/dev/null 2>&1
-pip3 install PyJWT >/dev/null 2>&1
-
 export PSAMA_CLIENT_SECRET=`grep "java:global/client_secret" /var/tmp/config/wildfly/standalone.xml | cut -d '"' -f 4`
 cat <<EOT >/tmp/get_token.py
 import base64
@@ -22,7 +18,7 @@ token = jwt.encode({
 )
 print(token.decode('utf-8'))
 EOT
-export AUTOMATA_USER_TOKEN=$(python /tmp/get_token.py)
+export AUTOMATA_USER_TOKEN=$(python3 /tmp/get_token.py)
 
 # TODO: This could be done nicer!
 HOSTIP=`ip -o address show eth0 | tr "  " " " | cut -d " " -f 7 | cut -d "/" -f 1 | cut -d "." -f 1,2,3`
