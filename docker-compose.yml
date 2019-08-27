@@ -15,7 +15,7 @@ services:
       - /usr/local/docker-config/httpd/htdocs/psamaui/settings:/usr/local/apache2/htdocs/psamaui/settings
       - /usr/local/docker-config/httpd/htdocs/static:/usr/local/apache2/htdocs/static
       - /usr/local/docker-config/httpd/cert:/usr/local/apache2/cert
-      - ${PWD}/config/tools:/var/tmp/tools
+      - ./config/tools:/var/tmp/tools
       - /usr/local/docker-config:/var/tmp/config
     networks:
       - public
@@ -161,7 +161,7 @@ services:
     entrypoint: cp /opt/jboss/wildfly/standalone/deployments/pic-sure-irct-resource.war /var/tmp/pic-sure-irct-resource.war
 
   copy-pic-sure-auth-war:
-    image: dbmi/pic-sure-auth-services:master.bcf79f9
+    image: dbmi/pic-sure-auth-services:master.505c8ed
     user: root
     volumes:
       - /usr/local/docker-config/wildfly/deployments:/var/tmp
