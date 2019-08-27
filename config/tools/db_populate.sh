@@ -38,8 +38,13 @@ addApplication() {
 		--output /tmp/resp_application.json \
 		$URL
 	RC=$?
-	echo 'Response status: ${RC}'
-	cat /tmp/resp_application.json
+	if [ $RC -eq 0 ];
+	then
+		echo "Application ${APP_NAME} has been added."
+	else
+		echo "Application ${APP_NAME} could not be added. Status ${RC}"
+		cat /tmp/resp_application.json
+	fi
 }
 
 updateApplication() {
@@ -50,10 +55,10 @@ updateApplication() {
   APP_UUID=$(getApplicationUUIDByName $APP_NAME)
   if [ "${APP_UUID}" == "" ];
   then
-    # Application name does not exist. Let's create it then
+    echo "Application ${APP_NAME} does not exist. Let's create it then"
     addApplication $APP_NAME "${APP_DESCRIPTION}" "${APP_URL}"
   else
-    # Application already exists. This should just be a put
+    echo "Application ${APP_NAME} already exists. This should just be a put"
     echo '[{"uuid":"'$APP_UUID'","name":"'$APP_NAME'","description":"'$APP_DESCRIPTION'","url":"'$APP_URL'"}]' > /tmp/req_application.json
 
     curl --silent -k -X PUT \
@@ -63,8 +68,13 @@ updateApplication() {
       --output /tmp/resp_application.json \
       $URL
     RC=$?
-    echo 'Response status: ${RC}'
-    cat /tmp/resp_application.json
+    if [ $RC -eq 0 ];
+		then
+			echo "Updated application ${APP_NAME}."
+		else
+			echo "Failed to update application ${APP_NAME}. Status ${RC}"
+    	cat /tmp/resp_application.json
+		fi
   fi
 }
 
@@ -140,6 +150,8 @@ EOT
 updateApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart/login/callback_processor'
 updateApplication 'PICSURE' 'PIC-SURE multiple data access API' '/picsureui'
 updateApplication 'IRCT' 'IRCT data access API'
+
+set -x
 
 export PICSURE_UUID=$(getApplicationUUIDByName 'PICSURE')
 export PICSURE_TOKEN=$(getApplicationTokenByName 'PICSURE')

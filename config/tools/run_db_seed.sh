@@ -4,7 +4,7 @@
 # script via Docker. Will need a simple secrets file, with the mysql
 # connection parameters filled in.
 
-docker run --rm --it --user=root \
+docker run --rm --user=root \
 	--env SUPERUSER_EMAIL_PARAM="$*" \
   --volume ${PWD}/config/tools:/var/tmp/tools \
   --volume /usr/local/docker-config/db:/root/dbconfig \
