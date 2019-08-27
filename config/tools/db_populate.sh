@@ -30,13 +30,13 @@ export HOSTNAME="https://${HOSTIP}.1/psama"
 
 addApplication() {
 	URL="${HOSTNAME}/application"
-	
+
 	APP_NAME=$1
 	APP_DESCRIPTION=$2
 	APP_URL=$3
-	
+
 	echo '[{"uuid":"","name":"'$APP_NAME'","description":"'$APP_DESCRIPTION'","url":"'$APP_URL'"}]' > /tmp/req_application.json
-	
+
 	curl --silent -k -X POST \
 		-H "Authorization: Bearer ${AUTOMATA_USER_TOKEN}" \
 		-H "Content-type: application/json" \
@@ -48,6 +48,32 @@ addApplication() {
 	cat /tmp/resp_application.json
 }
 
+updateApplication() {
+  URL="${HOSTNAME}/application"
+  APP_NAME=$1
+  APP_DESCRIPTION=$2
+	APP_URL=$3
+  APP_UUID=$(getApplicationUUIDByName $APP_NAME)
+  if [ "${APP_UUID}" == "" ];
+  then
+    # Application name does not exist. Let's create it then
+    addApplication $APP_NAME "${APP_DESCRIPTION}" "${APP_URL}"
+  else
+    # Application already exists. This should just be a put
+    echo '[{"uuid":"'$APP_UUID'","name":"'$APP_NAME'","description":"'$APP_DESCRIPTION'","url":"'$APP_URL'"}]' > /tmp/req_application.json
+
+    curl --silent -k -X PUT \
+      -H "Authorization: Bearer ${AUTOMATA_USER_TOKEN}" \
+      -H "Content-type: application/json" \
+      --data @/tmp/req_application.json \
+      --output /tmp/resp_application.json \
+      $URL
+    RC=$?
+    echo 'Response status: ${RC}'
+    cat /tmp/resp_application.json
+  fi
+}
+
 getApplicationUUIDByName() {
 	APP_NAME=$1
 	curl --silent -k \
@@ -56,6 +82,16 @@ getApplicationUUIDByName() {
 		--output /tmp/applications.json \
 		"${HOSTNAME}/application"
 	jq '.[] | select(.name="'$APP_NAME'") | .uuid' /tmp/applications.json
+}
+
+getApplicationTokenByName() {
+	APP_NAME=$1
+	curl --silent -k \
+		-H "Authorization: Bearer ${AUTOMATA_USER_TOKEN}" \
+		-H "Content-type: application/json" \
+		--output /tmp/applications.json \
+		"${HOSTNAME}/application"
+	jq '.[] | select(.name="'$APP_NAME'") | .token' /tmp/applications.json
 }
 
 addTransmartPrivileges() {
@@ -103,12 +139,25 @@ EOT
 		--output /tmp/resp_add_privileges.json \
 		$URL
 	RC=$?
-	echo 'Response status: ${RC}'
+	echo "Response status: ${RC}"
 	cat /tmp/resp_application.json
 }
 
-addApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart/login/callback_processor'
-addApplication 'PICSURE' 'PIC-SURE multiple data access API' '/picsureui'
-addApplication 'IRCT' 'IRCT data access API'
+updateApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart/login/callback_processor'
+updateApplication 'PICSURE' 'PIC-SURE multiple data access API' '/picsureui'
+updateApplication 'IRCT' 'IRCT data access API'
+
+export PICSURE_UUID=$(getApplicationUUIDByName 'PICSURE')
+export PICSURE_TOKEN=$(getApplicationTokenByName 'PICSURE')
+
+echo "Replacing PICSURE token in standalone.xml"
+sed -i 's/<simple name="java:global/token_introspection_token" value=".*/<simple name="java:global/token_introspection_token" value="'$PICSURE_TOKEN'"/>/g' /var/tmp/config/wildfly/standalone.xml
+RC=$?
+echo "Response status: ${RC}"
+
+echo "Replacing SEARCH_TOKEN in standalone.xml"
+sed -i 's/<simple name="java:global/SEARCH_TOKEN" value=".*/<simple name="java:global/SEARCH_TOKEN" value="'$PICSURE_TOKEN'"/>/g' /var/tmp/config/wildfly/standalone.xml
+RC=$?
+echo "Response status: ${RC}"
 
 addTransmartPrivileges
