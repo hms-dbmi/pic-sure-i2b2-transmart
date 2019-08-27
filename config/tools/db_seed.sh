@@ -1,10 +1,10 @@
 #!/bin/sh
 
-export SUPERUSER_EMAIL_PARAM=$1
-
-apt-get update -y >/dev/null
-apt-get install -y apt-utils curl >/dev/null
+apt-get update -y
+apt-get install -y apt-utils curl
 clear
+
+echo "Start setting up database schemas"
 
 export HMSDBMI_GITHUB_URL='https://raw.githubusercontent.com/hms-dbmi'
 export CONNECTION_TIMEOUT_SECONDS=10
@@ -331,6 +331,10 @@ EOT
 	rm -f db_psama_assignRoleToUser.sql
 }
 
+#
+# ***** Main Processing *****
+#
+
 # Initialize the basic PSAMA database.
 createPSAMADB
 
@@ -343,21 +347,16 @@ addRole 'PIC-SURE Top Admin' 'PIC-SURE Auth Micro App Top admin including Admin 
 assignPrivilegeToRole 'SUPER_ADMIN' 'PIC-SURE Top Admin'
 assignPrivilegeToRole 'ADMIN' 'PIC-SURE Top Admin'
 
-# TODO: Fix the way arguments are passed in 
-# (maybe --env on the docker run line?!)
 # Loop through the email addresses, passed into this script
-#echo "Processing email address list: ${SUPERUSER_EMAIL_PARAM}"
-#count=`echo $SUPERUSER_EMAIL_PARAM | awk -F, {'print NF'}`
-#i=1
-#while [ $i -le $count ]
-#do
-# superuser_email=`echo $strn | cut -d, -f${i}`
-# addSuperUser $superuser_email 'Google'
-# i=`expr $i + 1`
-#done
-
-addSuperUser 'andrew.guidetti@gmail.com' 'Google'
-addSuperUser 'gkorodi@gmail.com' 'Google'
+echo "Processing email address list: ${SUPERUSER_EMAIL_PARAM}"
+count=`echo $SUPERUSER_EMAIL_PARAM | awk -F, {'print NF'}`
+i=1
+while [ $i -le $count ]
+do
+ superuser_email=`echo $SUPERUSER_EMAIL_PARAM | cut -d, -f${i}`
+ addSuperUser $superuser_email 'Google'
+ i=`expr $i + 1`
+done
 
 # Adding a normal user, with no roles, and assigning the TopAdmin role
 # to it, is the same as calling addSuperUser, but the connection will
@@ -377,3 +376,11 @@ initDefaultIRCTResource 'i2b2-wildfly-default' 'demo' 'demouser' \
 # Initialize the PICSURE database, with a single simple IRCT resource.
 createPICSUREDB
 addPICSUREResource 'IRCT' 'IRCT Resource' 'http://wildfly:8080/pic-sure-irct-resource/pic-sure/v1.4'
+
+# Dump the tables from the 'auth' database (PSAMA)
+echo "PSAMA user list"
+mysql auth -e "SELECT email, connectionId,subject FROM user \G;"
+echo "PSAMA application list"
+mysql auth -e "SELECT name,description,url FROM application \G;"
+
+echo "Finished setting up database schemas."
