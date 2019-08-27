@@ -347,6 +347,9 @@ addRole 'PIC-SURE Top Admin' 'PIC-SURE Auth Micro App Top admin including Admin 
 assignPrivilegeToRole 'SUPER_ADMIN' 'PIC-SURE Top Admin'
 assignPrivilegeToRole 'ADMIN' 'PIC-SURE Top Admin'
 
+addRole 'Regular Admin' 'An administrator role for managing users'
+assignPrivilegeToRole 'ADMIN' 'Regular Admin'
+
 # Loop through the email addresses, passed into this script
 echo "Processing email address list: ${SUPERUSER_EMAIL_PARAM}"
 count=`echo $SUPERUSER_EMAIL_PARAM | awk -F, {'print NF'}`

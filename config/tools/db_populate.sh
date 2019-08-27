@@ -57,24 +57,6 @@ updateApplication() {
   then
     echo "Application ${APP_NAME} does not exist. Let's create it then"
     addApplication $APP_NAME "${APP_DESCRIPTION}" "${APP_URL}"
-  else
-    echo "Application ${APP_NAME} already exists. This should just be a put"
-    echo '[{"uuid":"'$APP_UUID'","name":"'$APP_NAME'","description":"'$APP_DESCRIPTION'","url":"'$APP_URL'"}]' > /tmp/req_application.json
-
-    curl --silent -k -X PUT \
-      -H "Authorization: Bearer ${AUTOMATA_USER_TOKEN}" \
-      -H "Content-type: application/json" \
-      --data @/tmp/req_application.json \
-      --output /tmp/resp_application.json \
-      $URL
-    RC=$?
-    if [ $RC -eq 0 ];
-		then
-			echo "Updated application ${APP_NAME}."
-		else
-			echo "Failed to update application ${APP_NAME}. Status ${RC}"
-    	cat /tmp/resp_application.json
-		fi
   fi
 }
 
