@@ -1,9 +1,7 @@
 #!/bin/sh
 
-apt-get update -y >/dev/null
-apt-get install -y apt-utils >/dev/null
-apt-get install -y jq >/dev/null
-
+apk update
+apk add jq curl python3 >/dev/null 2>&1
 pip3 install PyJWT >/dev/null 2>&1
 
 export PSAMA_CLIENT_SECRET=`grep "java:global/client_secret" /var/tmp/config/wildfly/standalone.xml | cut -d '"' -f 4`

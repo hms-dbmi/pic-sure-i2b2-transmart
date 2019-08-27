@@ -1,16 +1,6 @@
 version: '3.3'
 services:
 
-# This should not be part of the main docker-compose file	
-#	initdb:
-#		build:
-#			context: ./config/tools
-#			dockerfile: Dockerfile.initdb
-#			environment:
-#				- MYSQL_ROOT_PASSWORD=password
-#				- RDS_MYSQL_PASSWORD=from_command_line_mysql_root_password
-#				- RDS_MYSQL_HOST=from_command_line_mysql_host
-
   httpd:
     build:
       context: ./httpd
@@ -25,6 +15,8 @@ services:
       - /usr/local/docker-config/httpd/htdocs/psamaui/settings:/usr/local/apache2/htdocs/psamaui/settings
       - /usr/local/docker-config/httpd/htdocs/static:/usr/local/apache2/htdocs/static
       - /usr/local/docker-config/httpd/cert:/usr/local/apache2/cert
+      - ${PWD}/config/tools:/var/tmp/tools
+      - /usr/local/docker-config:/var/tmp/config
     networks:
       - public
 

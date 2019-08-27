@@ -2,7 +2,7 @@ FROM dbmi/pic-sure-ui:master.d19fb67 AS picsureui
 FROM dbmi/pic-sure-auth-ui:master.bcf79f9 AS psamaui
 FROM httpd:2.4.27-alpine
 
-RUN apk add --update openssl sed
+RUN apk add --update openssl sed curl jq python3
 
 # Replace virtual host config file with ours
 COPY httpd-vhosts.conf ${HTTPD_PREFIX}/conf/extra/httpd-vhosts.conf
