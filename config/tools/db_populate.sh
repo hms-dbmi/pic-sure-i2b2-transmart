@@ -67,7 +67,14 @@ getApplicationUUIDByName() {
 		-H "Content-type: application/json" \
 		--output /tmp/applications.json \
 		"${HOSTNAME}/application"
+	# Add error handling, in case something goes wrong
 	jq -r '.[] | select(.name="'$APP_NAME'") | .uuid' /tmp/applications.json
+	if [ $? -ne 0 ];
+	then
+		echo "Could not parse the response from PSAMA!" >&2
+		cat /tmp/applications.json >&2
+		exit
+	fi
 }
 
 getApplicationTokenByName() {
@@ -78,6 +85,12 @@ getApplicationTokenByName() {
 		--output /tmp/applications.json \
 		"${HOSTNAME}/application"
 	jq -r '.[] | select(.name="'$APP_NAME'") | .token' /tmp/applications.json
+	if [ $? -ne 0 ];
+	then
+		echo "Could not parse the response from PSAMA!" >&2
+		cat /tmp/applications.json >&2
+		exit
+	fi
 }
 
 addTransmartPrivileges() {
