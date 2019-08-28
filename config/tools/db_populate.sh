@@ -133,19 +133,35 @@ updateApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart/login
 updateApplication 'PICSURE' 'PIC-SURE multiple data access API' '/picsureui'
 updateApplication 'IRCT' 'IRCT data access API'
 
-set -x
+#addTransmartPrivileges
 
-export PICSURE_UUID=$(getApplicationUUIDByName 'PICSURE')
-export PICSURE_TOKEN=$(getApplicationTokenByName 'PICSURE')
 
-echo "Replacing PICSURE token in standalone.xml"
-sed -i 's/<simple name="java:global/token_introspection_token" value=".*/<simple name="java:global/token_introspection_token" value="'$PICSURE_TOKEN'"/>/g' /var/tmp/config/wildfly/standalone.xml
-RC=$?
-echo "Response status: ${RC}"
+eplacePICSUREToken() {
+	PICSURE_TOKEN=$(getApplicationTokenByName 'PICSURE')
+	CONFIG_FILE_PATH="/var/tmp/config/wildfly/standalone.xml"
 
-echo "Replacing SEARCH_TOKEN in standalone.xml"
-sed -i 's/<simple name="java:global/SEARCH_TOKEN" value=".*/<simple name="java:global/SEARCH_TOKEN" value="'$PICSURE_TOKEN'"/>/g' /var/tmp/config/wildfly/standalone.xml
-RC=$?
-echo "Response status: ${RC}"
+	sed -i 's/<simple name="java:global\/token_introspection_token" value=".*" \/>/<simple name="java:global\/token_introspection_token" value="'$PICSURE_TOKEN'" \/>/' $CONFIG_FILE_PATH
+	RC=$?
+	echo "Replaced token_introspection_token value, with status ${RC}"
+	sed -i 's/<simple name="java:global\/SEARCH_TOKEN" value=".*" \/>/<simple name="java:global\/SEARCH_TOKEN" value="'$PICSURE_TOKEN'" \/>/' $CONFIG_FILE_PATH
+	RC=$?
+	echo "Replaced SEARCH_TOKEN value, with status ${RC}"
+}
 
-addTransmartPrivileges
+replaceIRCTToken() {
+	IRCT_TOKEN=$(getApplicationTokenByName 'IRCT')
+	CONFIG_FILE_PATH="/var/tmp/config/irct/standalone.xml"
+	sed -i 's/<simple name="java:global\/token_introspection_token" value=".*" \/>/<simple name="java:global\/token_introspection_token" value="'$IRCT_TOKEN'" \/>/' $CONFIG_FILE_PATH
+	RC=$?
+	echo "Replaced token_introspection_token (IRCT) value, with status ${RC}"
+}
+
+updateApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart/login/callback_processor'
+updateApplication 'PICSURE' 'PIC-SURE multiple data access API' '/picsureui'
+updateApplication 'IRCT' 'IRCT data access API'
+#addTransmartPrivileges
+
+replacePICSUREToken
+replaceIRCTToken
+
+echo "Finished reconfiguring the environment"
