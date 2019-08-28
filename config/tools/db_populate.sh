@@ -135,8 +135,7 @@ updateApplication 'IRCT' 'IRCT data access API'
 
 #addTransmartPrivileges
 
-
-eplacePICSUREToken() {
+replacePICSUREToken() {
 	PICSURE_TOKEN=$(getApplicationTokenByName 'PICSURE')
 	CONFIG_FILE_PATH="/var/tmp/config/wildfly/standalone.xml"
 
