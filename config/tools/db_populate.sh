@@ -22,6 +22,24 @@ export AUTOMATA_USER_TOKEN=$(python3 /tmp/get_token.py)
 
 export HOSTNAME="https://127.0.0.1/psama"
 
+APP_NAME='PICSURE'
+curl --silent -k \
+	-H "Authorization: Bearer ${AUTOMATA_USER_TOKEN}" \
+	-H "Content-type: application/json" \
+	--output /tmp/applications.json \
+	"${HOSTNAME}/application"
+jq -r '.[] | select(.name="'$APP_NAME'") | .token' /tmp/applications.json
+if [ $? -ne 0 ];
+then
+	echo "Could not parse the response from PSAMA!" >&2
+	cat /tmp/applications.json >&2
+	exit
+else
+	echo "Worker"
+fi
+
+exit
+
 addApplication() {
 	URL="${HOSTNAME}/application"
 
