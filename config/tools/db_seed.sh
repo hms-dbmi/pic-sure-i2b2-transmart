@@ -1,7 +1,8 @@
 #!/bin/sh
 
 apt-get update -y >/dev/null
-apt-get install -y apt-utils curl >/dev/null
+apt-get install -y apt-utils >/dev/null
+apt-get install -y curl >/dev/null 
 clear
 
 echo "Start setting up database schemas"

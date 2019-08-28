@@ -32,7 +32,7 @@ echo "Done"
 echo "Start replacement"
 for FN in `find ${CONFIG_DIR} -name "*.*"`
 do
-  FILE_TO_ACT_ON="${CONFIG_DIR}${FN}"
+  FILE_TO_ACT_ON="${FN}"
   echo "**************** Processing file ${FILE_TO_ACT_ON} ****************" >> ${LOGFILE}
   for KEY_VALUE_PAIR in $(cat ${SECRETS_FILE})
   do
