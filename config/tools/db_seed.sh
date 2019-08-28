@@ -71,11 +71,13 @@ addSuperUser() {
 		general_metadata,
 		connectionId,
 		email,
+		subject,
 		matched
 	) VALUES (
 		unhex(@uuidUser),
 		"{\"email\":\"${USER_EMAIL}\"}",
 		(SELECT uuid FROM connection WHERE label = '${USER_CONN}'),
+		'${USER_EMAIL}',
 		'${USER_EMAIL}',
 		false
 	);
