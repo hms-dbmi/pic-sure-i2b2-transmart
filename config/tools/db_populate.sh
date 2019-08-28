@@ -67,7 +67,7 @@ getApplicationUUIDByName() {
 		-H "Content-type: application/json" \
 		--output /tmp/applications.json \
 		"${HOSTNAME}/application"
-	jq '.[] | select(.name="'$APP_NAME'") | .uuid' /tmp/applications.json
+	jq -r '.[] | select(.name="'$APP_NAME'") | .uuid' /tmp/applications.json
 }
 
 getApplicationTokenByName() {
@@ -77,7 +77,7 @@ getApplicationTokenByName() {
 		-H "Content-type: application/json" \
 		--output /tmp/applications.json \
 		"${HOSTNAME}/application"
-	jq '.[] | select(.name="'$APP_NAME'") | .token' /tmp/applications.json
+	jq -r '.[] | select(.name="'$APP_NAME'") | .token' /tmp/applications.json
 }
 
 addTransmartPrivileges() {
