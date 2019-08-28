@@ -29,19 +29,8 @@ rm -fR ${CONFIG_DIR}/*
 cp -r config/template/* ${CONFIG_DIR}
 echo "Done"
 
-FILE_LIST="/i2b2-wildfly/wildfly/standalone/configuration/standalone.xml
-/irct/standalone.xml
-/wildfly/standalone.xml
-/httpd/htdocs/picsureui/settings/settings.json
-/httpd/htdocs/psamaui/settings/settings.json
-/transmart/transmartConfig/Config.groovy
-/transmart/transmartConfig/DataSource.groovy
-/db/login_config.irct
-/db/login_config.psama
-/db/login_config.picsure"
-
 echo "Start replacement"
-for FN in $FILE_LIST #`find ${CONFIG_DIR} -name "*.*"`
+for FN in `find ${CONFIG_DIR} -name "*.*"`
 do
   FILE_TO_ACT_ON="${CONFIG_DIR}${FN}"
   echo "**************** Processing file ${FILE_TO_ACT_ON} ****************" >> ${LOGFILE}
