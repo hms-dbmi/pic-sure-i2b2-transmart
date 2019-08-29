@@ -167,6 +167,14 @@ replaceIRCTToken() {
 	echo "Replaced token_introspection_token (IRCT) value, with status ${RC}"
 }
 
+replaceTRANSMARTToken() {
+	TRANSMART_TOKEN=$(getApplicationTokenByName 'TRANSMART')
+	CONFIG_FILE_PATH="/var/tmp/config/transmart/transmartConfig/Config.groovy"
+	sed -i 's/org.transmart.security.oauth.service_token = .*/org.transmart.security.oauth.service_token = "'$TRANSMART_TOKEN'"/' $CONFIG_FILE_PATH
+	RC=$?
+	echo "Replaced ...oauth.service_token value, with status ${RC}"
+}
+
 updateApplication 'TRANSMART' 'i2b2/tranSmart Web Application' '/transmart/login/callback_processor'
 updateApplication 'PICSURE' 'PIC-SURE multiple data access API' '/picsureui'
 updateApplication 'IRCT' 'IRCT data access API'
@@ -174,5 +182,6 @@ updateApplication 'IRCT' 'IRCT data access API'
 
 replacePICSUREToken
 replaceIRCTToken
+replaceTRANSMARTToken
 
 echo "Finished reconfiguring the environment"
