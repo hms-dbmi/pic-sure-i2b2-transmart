@@ -56,6 +56,8 @@ updateApplication() {
   then
     echo "Application ${APP_NAME} does not exist. Let's create it then"
     addApplication $APP_NAME "${APP_DESCRIPTION}" "${APP_URL}"
+	else
+		echo "Application ${APP_NAME} exists. The UUID is ${APP_UUID}"
   fi
 }
 
