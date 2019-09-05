@@ -106,6 +106,8 @@ EOT
 # with the assignRoleToUser() sub call.
 addNormalUser() {
 	USER_EMAIL=$1
+	CURRENT_TIMESTAMP=`date`
+	
 	cat <<EOT > db_psama_createNormalUser.sql
 	START TRANSACTION;
 
@@ -124,7 +126,9 @@ addNormalUser() {
 		'${USER_EMAIL}',
 		'${USER_EMAIL}',
 		false
-	);
+	) ON DUPLICATE KEY UPDATE
+		general_metadata = '{"email":"${USER_EMAIL}","note":"${CURRENT_TIMESTAMP} reinstalling"}'
+	;
 	COMMIT;
 EOT
 	mysql --connect-timeout=$CONNECTION_TIMEOUT_SECONDS ${PSAMA_DB_NAME} < db_psama_createNormalUser.sql
