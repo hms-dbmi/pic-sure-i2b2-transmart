@@ -3,5 +3,8 @@
 	"auth0domain":"__PSAMA_AUTH_DOMAIN__",
 	"psamaServiceUrl":"/psama",
 	"customizeAuth0Login": true,
-	"basePath":"/psama"
+	"basePath":"/psama",
+	"idp_provider": "__PSAMA_UI_IDP_PROVIDER__",
+	"fence_client_id": "__FENCE_CLIENT_ID__",
+	"fence_redirect_url": "__FENCE_REDIRECT_URL__"
 }
